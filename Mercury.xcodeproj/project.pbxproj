@@ -38,7 +38,7 @@
 
 /* Begin PBXFileReference section */
 		79DEC46E1DD7BBF000A5BF16 /* Mercury.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mercury.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		79DEC4711DD7BBF000A5BF16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		79DEC4711DD7BBF000A5BF16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; usesTabs = 0; };
 		79DEC4731DD7BBF000A5BF16 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		79DEC4751DD7BBF000A5BF16 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		79DEC4771DD7BBF000A5BF16 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -515,6 +515,7 @@
 				79DEC49E1DD7BBF000A5BF16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		79DEC49F1DD7BBF000A5BF16 /* Build configuration list for PBXNativeTarget "MercuryTests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +524,7 @@
 				79DEC4A11DD7BBF000A5BF16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		79DEC4A21DD7BBF000A5BF16 /* Build configuration list for PBXNativeTarget "MercuryUITests" */ = {
 			isa = XCConfigurationList;
@@ -531,6 +533,7 @@
 				79DEC4A41DD7BBF000A5BF16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
