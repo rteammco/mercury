@@ -8,16 +8,15 @@
 
 import SpriteKit
 
-class Player : GameObject {
+class Player: GameObject {
   
   init(xPos: Int, yPos: Int, size: Int) {
     super.init()
     
+    // TODO: temporary color and shape
     self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
     if let gameSceneNode = self.gameSceneNode {
-      // Position at bottom center (screen is centered at (0, 0))
       gameSceneNode.position = CGPoint(x: xPos, y: yPos)
-      // TODO: temporary color and shape
       gameSceneNode.fillColor = SKColor.blue
     }
   }

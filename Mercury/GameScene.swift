@@ -11,9 +11,14 @@ import GameplayKit
 
 class GameScene: SKScene {
   
-  // The player node.
+  // The player game object.
   private var player : Player?
-  private var playerNode : SKShapeNode?
+  
+  // A line that fades out over time.
+  private var linePathNode : SKShapeNode?
+  
+  // If set, this indicates the last position.
+  private var lastTouchPosition : CGPoint?
   
   // Template for the node (animated).
   // TODO: remove this, and its initialization in didMove()
@@ -30,42 +35,34 @@ class GameScene: SKScene {
       self.addChild(player.getSceneNode())
     }
     
-    // Create shape node to use during mouse interaction
-    // TODO: remove this
-    let w = (self.size.width + self.size.height) * 0.05
-    print(w)
-    self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-    if let spinnyNode = self.spinnyNode {
-      spinnyNode.lineWidth = 2.5
-      spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(M_PI), duration: 1)))
-      spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                        SKAction.fadeOut(withDuration: 0.5),
-                                        SKAction.removeFromParent()]))
-      }
+    // Create a template for the fading-out lines to be rendered to visualize touches.
+    //self.linePathNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+    self.linePathNode = SKShapeNode.init()
+    if let linePathNode = self.linePathNode {
+      linePathNode.lineWidth = 25.0
+      linePathNode.strokeColor = SKColor.green
+      linePathNode.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.5),
+                                          SKAction.removeFromParent()]))
+    }
   }
   
   func touchDown(atPoint pos : CGPoint) {
-    if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-      n.position = pos
-      n.strokeColor = SKColor.green
-      self.addChild(n)
-    }
+    self.lastTouchPosition = pos
   }
   
   func touchMoved(toPoint pos : CGPoint) {
-    if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-      n.position = pos
-      n.strokeColor = SKColor.blue
-      self.addChild(n)
+    if let lastTouchPosition = self.lastTouchPosition, let linePathNode = self.linePathNode?.copy() as! SKShapeNode? {
+      let path = CGMutablePath.init()
+      path.move(to: lastTouchPosition)
+      path.addLine(to: pos)
+      linePathNode.path = path
+      self.addChild(linePathNode)
     }
+    self.lastTouchPosition = pos
   }
   
   func touchUp(atPoint pos : CGPoint) {
-    if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-      n.position = pos
-      n.strokeColor = SKColor.red
-      self.addChild(n)
-    }
+    // TODO: here
   }
   
   // Called when user starts a touch action.
