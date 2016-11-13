@@ -17,11 +17,17 @@ class GameScene: SKScene {
   // A line that fades out over time.
   private var linePathNode : SKShapeNode?
   
-  // If set, this indicates the last position.
+  // The size of the world (half of the average of the width and height).
+  private var worldSize : Double?
+  
+  // If set, this indicates the first and most recent touch positions.
   private var lastTouchPosition : CGPoint?
+  private var firstTouchPosition : CGPoint?
   
   // Called whenever the scene is presented into the view.
   override func didMove(to view: SKView) {
+    self.worldSize = Double(self.size.width + self.size.height) / 4.0
+    
     // Add the player to the bottom of the screen
     let size = (self.size.width + self.size.height) * 0.05
     let xPos = 0
@@ -49,6 +55,7 @@ class GameScene: SKScene {
       }
     }
     self.lastTouchPosition = pos
+    self.firstTouchPosition = pos
   }
   
   func touchMoved(toPoint pos : CGPoint) {
@@ -63,10 +70,14 @@ class GameScene: SKScene {
   }
   
   func touchUp(atPoint pos : CGPoint) {
-    if let player = self.player {
+    if let player = self.player, let firstTouchPosition = self.firstTouchPosition, let worldSize = self.worldSize {
       if player.isTouched {
         player.touchUp()
-        player.moveTo(to: pos)
+        let xDist = pos.x - firstTouchPosition.x
+        let yDist = pos.y - firstTouchPosition.y
+        let distance = Double(sqrt(xDist * xDist + yDist * yDist))
+        let duration = distance / worldSize
+        player.moveTo(to: pos, duration: duration)
       }
     }
   }

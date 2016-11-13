@@ -15,13 +15,17 @@ class GameObject {
   // The scene node for animation and rendering.
   var gameSceneNode : SKShapeNode?
   
+  // How fast the object moves in the world.
+  var movementSpeed = 1.0
+  
   // This node name is assigned to the sprite/shape nodes returned by getSceneNode(). Use an identifier for detecting those nodes in the scene.
   var nodeName = "object"
   
   // Moves the scene node to the given location.
-  func moveTo(to loc : CGPoint) {
+  func moveTo(to loc : CGPoint, duration: Double) {
     if let gameSceneNode = self.gameSceneNode {
-      gameSceneNode.run(SKAction.move(to: loc, duration: 1.0))
+      let time = duration / self.movementSpeed
+      gameSceneNode.run(SKAction.move(to: loc, duration: time))
     }
   }
 
