@@ -13,7 +13,7 @@ import SpriteKit
 class GameObject {
   
   // The scene node for animation and rendering.
-  var gameSceneNode : SKShapeNode?
+  var gameSceneNode: SKShapeNode?
   
   // How fast the object moves in the world.
   var movementSpeed = 1.0
@@ -21,8 +21,18 @@ class GameObject {
   // This node name is assigned to the sprite/shape nodes returned by getSceneNode(). Use an identifier for detecting those nodes in the scene.
   var nodeName = "object"
   
+  // Returns the distance of this object (its node) to to given point. Returns 0 if the node is not defined.
+  func distanceTo(loc: CGPoint) -> Double {
+    if let gameSceneNode = self.gameSceneNode {
+      let xDist = loc.x - gameSceneNode.position.x
+      let yDist = loc.y - gameSceneNode.position.y
+      return Double(sqrt(xDist * xDist + yDist * yDist))
+    }
+    return 0.0
+  }
+  
   // Moves the scene node to the given location. Removes any previous move actions.
-  func moveTo(to loc : CGPoint, duration: Double) {
+  func moveTo(to loc: CGPoint, duration: Double) {
     if let gameSceneNode = self.gameSceneNode {
       let time = duration / self.movementSpeed
       gameSceneNode.removeAction(forKey: "moveAction")

@@ -12,17 +12,16 @@ import GameplayKit
 class GameScene: SKScene {
   
   // The player game object.
-  private var player : Player?
+  private var player: Player?
   
   // A line that fades out over time.
-  private var linePathNode : SKShapeNode?
+  private var linePathNode: SKShapeNode?
   
   // The size of the world (half of the average of the width and height).
-  private var worldSize : Double?
+  private var worldSize: Double?
   
   // If set, this indicates the first and most recent touch positions.
-  private var lastTouchPosition : CGPoint?
-  private var firstTouchPosition : CGPoint?
+  private var lastTouchPosition: CGPoint?
   
   // Called whenever the scene is presented into the view.
   override func didMove(to view: SKView) {
@@ -32,7 +31,7 @@ class GameScene: SKScene {
     let size = (self.size.width + self.size.height) * 0.05
     let xPos = 0
     let yPos = Int(-self.size.height / 2 + size)
-    self.player = Player(xPos :xPos, yPos: yPos, size: Int(size))
+    self.player = Player(xPos: xPos, yPos: yPos, size: Int(size))
     if let player = self.player {
       self.addChild(player.getSceneNode())
     }
@@ -47,7 +46,18 @@ class GameScene: SKScene {
     }
   }
   
-  func touchDown(atPoint pos : CGPoint) {
+  // Checks if player has been touched (thus toggled for movement), and then moves the player to the given location.
+  func movePlayerIfTouched(to pos: CGPoint) {
+    if let player = self.player, let worldSize = self.worldSize {
+      if player.isTouched {
+        let distance = player.distanceTo(loc: pos)
+        let duration = distance / worldSize
+        player.moveTo(to: pos, duration: duration)
+      }
+    }
+  }
+  
+  func touchDown(atPoint pos: CGPoint) {
     let touchedNodes = self.nodes(at: pos)
     for node in touchedNodes {
       if node.name == self.player?.nodeName {
@@ -55,10 +65,9 @@ class GameScene: SKScene {
       }
     }
     self.lastTouchPosition = pos
-    self.firstTouchPosition = pos
   }
   
-  func touchMoved(toPoint pos : CGPoint) {
+  func touchMoved(toPoint pos: CGPoint) {
     if let lastTouchPosition = self.lastTouchPosition, let linePathNode = self.linePathNode?.copy() as! SKShapeNode? {
       let path = CGMutablePath.init()
       path.move(to: lastTouchPosition)
@@ -69,15 +78,12 @@ class GameScene: SKScene {
     self.lastTouchPosition = pos
   }
   
-  func touchUp(atPoint pos : CGPoint) {
-    if let player = self.player, let firstTouchPosition = self.firstTouchPosition, let worldSize = self.worldSize {
+  func touchUp(atPoint pos: CGPoint) {
+    self.movePlayerIfTouched(to: pos)
+    // Separately, if the player is touched, un-touch it.
+    if let player = self.player {
       if player.isTouched {
         player.touchUp()
-        let xDist = pos.x - firstTouchPosition.x
-        let yDist = pos.y - firstTouchPosition.y
-        let distance = Double(sqrt(xDist * xDist + yDist * yDist))
-        let duration = distance / worldSize
-        player.moveTo(to: pos, duration: duration)
       }
     }
   }
