@@ -20,10 +20,6 @@ class GameScene: SKScene {
   // If set, this indicates the last position.
   private var lastTouchPosition : CGPoint?
   
-  // Template for the node (animated).
-  // TODO: remove this, and its initialization in didMove()
-  private var spinnyNode : SKShapeNode?
-  
   // Called whenever the scene is presented into the view.
   override func didMove(to view: SKView) {
     // Add the player to the bottom of the screen
@@ -36,7 +32,6 @@ class GameScene: SKScene {
     }
     
     // Create a template for the fading-out lines to be rendered to visualize touches.
-    //self.linePathNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
     self.linePathNode = SKShapeNode.init()
     if let linePathNode = self.linePathNode {
       linePathNode.lineWidth = 25.0
@@ -71,6 +66,7 @@ class GameScene: SKScene {
     if let player = self.player {
       if player.isTouched {
         player.touchUp()
+        player.moveTo(to: pos)
       }
     }
   }
