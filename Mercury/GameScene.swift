@@ -12,6 +12,7 @@ import GameplayKit
 class GameScene: SKScene {
   
   // The player node.
+  private var player : Player?
   private var playerNode : SKShapeNode?
   
   // Template for the node (animated).
@@ -21,16 +22,12 @@ class GameScene: SKScene {
   // Called whenever the scene is presented into the view.
   override func didMove(to view: SKView) {
     // Add the player to the bottom of the screen
-    self.playerNode = SKShapeNode.init(rectOf: CGSize.init(width: 140, height: 140))
-    if let playerNode = self.playerNode {
-      // Screen is centered at (0, 0)
-      let xPos = 0
-      let yPos = -Int(self.size.height / 2) + 150
-      playerNode.position = CGPoint(x: xPos, y: yPos)
-      playerNode.fillColor = SKColor.green
-      playerNode.lineWidth = 2.5
-      playerNode.strokeColor = SKColor.red
-      self.addChild(playerNode)
+    let size = (self.size.width + self.size.height) * 0.05
+    let xPos = 0
+    let yPos = Int(-self.size.height / 2 + size)
+    self.player = Player(xPos :xPos, yPos: yPos, size: Int(size))
+    if let player = self.player {
+      self.addChild(player.getSceneNode())
     }
     
     // Create shape node to use during mouse interaction
