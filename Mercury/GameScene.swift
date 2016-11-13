@@ -47,6 +47,12 @@ class GameScene: SKScene {
   }
   
   func touchDown(atPoint pos : CGPoint) {
+    let touchedNodes = self.nodes(at: pos)
+    for node in touchedNodes {
+      if node.name == self.player?.nodeName {
+        self.player?.touchDown()
+      }
+    }
     self.lastTouchPosition = pos
   }
   
@@ -62,7 +68,11 @@ class GameScene: SKScene {
   }
   
   func touchUp(atPoint pos : CGPoint) {
-    // TODO: here
+    if let player = self.player {
+      if player.isTouched {
+        player.touchUp()
+      }
+    }
   }
   
   // Called when user starts a touch action.
