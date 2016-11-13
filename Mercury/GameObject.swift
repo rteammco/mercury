@@ -21,11 +21,12 @@ class GameObject {
   // This node name is assigned to the sprite/shape nodes returned by getSceneNode(). Use an identifier for detecting those nodes in the scene.
   var nodeName = "object"
   
-  // Moves the scene node to the given location.
+  // Moves the scene node to the given location. Removes any previous move actions.
   func moveTo(to loc : CGPoint, duration: Double) {
     if let gameSceneNode = self.gameSceneNode {
       let time = duration / self.movementSpeed
-      gameSceneNode.run(SKAction.move(to: loc, duration: time))
+      gameSceneNode.removeAction(forKey: "moveAction")
+      gameSceneNode.run(SKAction.move(to: loc, duration: time), withKey: "moveAction")
     }
   }
 
