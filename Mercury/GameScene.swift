@@ -46,6 +46,22 @@ class GameScene: SKScene {
     }
   }
   
+  // Adds the given GameObject type to the scene by appending its node.
+  func addGameObject(gameObject: GameObject) {
+    if let gameSceneNode = gameObject.gameSceneNode {
+      self.addChild(gameSceneNode)
+    }
+  }
+  
+  // Returns the previous position on the screen that a user's touch occured. The previous location is the one before the latest touch action. If no touch was previously recorded, returns (0, 0) which is the center of the screen.
+  func getPreviousTouchPosition() -> CGPoint {
+    if let previousTouchPosition = self.lastTouchPosition {
+      return previousTouchPosition
+    } else {
+      return CGPoint(x: 0, y: 0)
+    }
+  }
+  
   // Checks if player has been touched (thus toggled for movement), and then moves the player to the given location.
   func movePlayerIfTouched(to pos: CGPoint) {
     if let player = self.player, let worldSize = self.worldSize {
