@@ -13,7 +13,7 @@ class Player: InteractiveGameObject {
   init(xPos: Int, yPos: Int, size: Int) {
     super.init()
     self.nodeName = "player"
-    self.movementSpeed = 0.25
+    self.movementSpeed = 4.0
     
     // TODO: temporary color and shape
     self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
