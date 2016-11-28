@@ -51,12 +51,12 @@ class Level {
   }
   
   // Checks if player has been touched (thus toggled for movement), and then moves the player to the given location.
-  private func movePlayerIfTouched(to pos: CGPoint) {
+  private func movePlayerIfTouched(to position: CGPoint) {
     if let player = self.player {
       if player.isTouched {
-        let distance = player.distanceTo(loc: pos)
+        let distance = player.distanceTo(loc: position)
         let duration = distance / self.worldSize
-        player.moveTo(to: pos, duration: duration)
+        player.moveTo(to: position, duration: duration)
       }
     }
   }
