@@ -39,6 +39,12 @@ class GameObject {
       gameSceneNode.run(SKAction.move(to: loc, duration: time), withKey: "moveAction")
     }
   }
+  
+  func moveBy(dx: CGFloat, dy: CGFloat) {
+    if let gameSceneNode = self.gameSceneNode {
+      gameSceneNode.position = CGPoint(x: gameSceneNode.position.x + dx, y: gameSceneNode.position.y + dy)
+    }
+  }
 
   // Returns the scene node for this object. If it was not initialized, the returned object will be an empty SKShapeNode.
   func getSceneNode() -> SKShapeNode {
@@ -48,6 +54,11 @@ class GameObject {
     } else {
       return SKShapeNode()
     }
+  }
+  
+  // Updates the GameObject given the elapsed time (in seconds) since the last frame.
+  func update(_ elapsedTime: TimeInterval) {
+    // Override as needed. Otherwise, this does nothing.
   }
   
 }

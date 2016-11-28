@@ -43,7 +43,7 @@ class Level {
   // Creates a line that fades over time for visualization of the user's touch input.
   private func createLinePathNode() {
     let linePathNode = SKShapeNode.init()
-    linePathNode.lineWidth = 25.0
+    linePathNode.lineWidth = 5.0
     linePathNode.strokeColor = SKColor.green
     linePathNode.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.5),
                                         SKAction.removeFromParent()]))
@@ -51,7 +51,7 @@ class Level {
   }
   
   // Checks if player has been touched (thus toggled for movement), and then moves the player to the given location.
-  private func movePlayerIfTouched(to position: CGPoint) {
+  /*private func movePlayerIfTouched(to position: CGPoint) {
     if let player = self.player {
       if player.isTouched {
         let distance = player.distanceTo(loc: position)
@@ -59,6 +59,23 @@ class Level {
         player.moveTo(to: position, duration: duration)
       }
     }
+  }*/
+  
+  private func movePlayerIfTouched(to position: CGPoint) {
+    if let player = self.player {
+      let playerPosition = player.getSceneNode().position
+      let dx = (position.x - playerPosition.x) * CGFloat(player.movementSpeed)
+      let dy = (position.y - playerPosition.y) * CGFloat(player.movementSpeed)
+      player.moveBy(dx: dx, dy: dy)
+    }
+    /*var dx = location.x - sprite.position.x
+    var dy = location.y - sprite.position.y
+    // How fast to move the node. Adjust this as needed
+    let speed:CGFloat = 0.25
+    // Scale vector
+    dx = dx * speed
+    dy = dy * speed
+    sprite.position = CGPoint(x:sprite.position.x+dx, y:sprite.position.y+dy)*/
   }
   
   func touchDown(atPoint position: CGPoint) {
@@ -79,15 +96,23 @@ class Level {
       linePathNode.path = path
       self.gameScene.addChild(linePathNode)
     }
+    //movePlayerIfTouched(to: position)
   }
   
   func touchUp(atPoint position: CGPoint) {
-    self.movePlayerIfTouched(to: position)
+    //self.movePlayerIfTouched(to: position)
     if let player = self.player {
       if player.isTouched {
         player.touchUp()
       }
     }
+  }
+  
+  // Updates all of the GameObjects as needed, given the elapsed time (in seconds) since the previous frame.
+  func update(_ elapsedTime: TimeInterval) {
+    // TODO: currently only supports player.
+    //player?.update(elapsedTime)
+    movePlayerIfTouched(to: self.gameScene.getPreviousTouchPosition())
   }
   
 }

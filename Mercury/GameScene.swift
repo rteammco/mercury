@@ -14,6 +14,9 @@ class GameScene: SKScene {
   // The active level (or menu).
   private var level: Level?
   
+  // The time of the last frame. The time elapsed between frames is the new time minus this time.
+  private var lastFrameTime: TimeInterval?
+  
   // If set, this indicates the first and most recent touch positions.
   private var lastTouchPosition: CGPoint?
   
@@ -71,8 +74,13 @@ class GameScene: SKScene {
     for t in touches { self.touchUp(atPoint: t.location(in: self)) }
   }
   
+  // Called before each frame is rendered with the current time. This measures the elapsed time since the last frame and updates the current game level.
   override func update(_ currentTime: TimeInterval) {
-    // Called before each frame is rendered
+    if let lastFrameTime = self.lastFrameTime {
+      let elapsedTime = currentTime - lastFrameTime
+      level?.update(elapsedTime)
+    }
+    self.lastFrameTime = currentTime
   }
   
 }
