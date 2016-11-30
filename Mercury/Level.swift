@@ -19,12 +19,16 @@ class Level {
   // The player game object.
   private var player: Player?
   
+  // Projectiles (e.g. bullets) fired by the player or units friendly to the player.
+  private var frieldlyProjectiles: [GameObject]
+  
   // A line that fades out over time. Used for visualization of the user's touch input.
   private var linePathNode: SKShapeNode?
   
   init(gameScene: GameScene) {
     self.gameScene = gameScene
     self.worldSize = Double(self.gameScene.size.width + self.gameScene.size.height) / 4.0
+    self.frieldlyProjectiles = [GameObject]()
     createPlayer()
     createLinePathNode()
   }

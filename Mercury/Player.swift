@@ -12,11 +12,15 @@ import SpriteKit
 class Player: InteractiveGameObject {
   
   // How often the player fires a bullet (in seconds) when firing.
-  private var fireIntervalSeconds: Double
+  private let fireIntervalSeconds: Double
+  
+  // The bullet fire timer.
+  private var fireBulletTimer: Timer?
   
   init(xPos: Int, yPos: Int, size: Int) {
-    self.fireIntervalSeconds = 0.25
+    self.fireIntervalSeconds = 0.1
     super.init()
+    
     self.nodeName = "player"
     self.movementSpeed = 4.0
     
@@ -33,6 +37,7 @@ class Player: InteractiveGameObject {
     if let gameSceneNode = self.gameSceneNode {
       gameSceneNode.fillColor = SKColor.red
     }
+    startFireBulletTimer()
   }
   
   override func touchUp() {
@@ -40,6 +45,18 @@ class Player: InteractiveGameObject {
     if let gameSceneNode = self.gameSceneNode {
       gameSceneNode.fillColor = SKColor.blue
     }
+    if let fireBulletTimer = self.fireBulletTimer {
+      fireBulletTimer.invalidate()
+    }
   }
   
+  private func startFireBulletTimer() {
+    let fireBulletTimer = Timer.scheduledTimer(timeInterval: self.fireIntervalSeconds, target: self, selector: #selector(self.fireBullet), userInfo: nil, repeats: true)
+    self.fireBulletTimer = fireBulletTimer
+    fireBullet()  // Also fire at time 0 before the timer ticks.
+  }
+  
+  @objc func fireBullet() {
+    print("Fired")
+  }
 }
