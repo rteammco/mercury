@@ -10,7 +10,11 @@ import SpriteKit
 
 class Player: InteractiveGameObject {
   
+  // How often the player fires a bullet (in seconds) when firing.
+  private var fireIntervalSeconds: Double
+  
   init(xPos: Int, yPos: Int, size: Int) {
+    self.fireIntervalSeconds = 0.25
     super.init()
     self.nodeName = "player"
     self.movementSpeed = 4.0
