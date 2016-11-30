@@ -40,7 +40,7 @@ class Level {
     let size = (screenSize.width + screenSize.height) * 0.05
     let xPos = 0
     let yPos = Int(-screenSize.height / 2 + size)
-    let player = Player(xPos: xPos, yPos: yPos, size: Int(size))
+    let player = Player(xPos: xPos, yPos: yPos, size: Int(size), level: self)
     self.player = player
     self.gameScene.addGameObject(gameObject: player)
   }
@@ -55,19 +55,9 @@ class Level {
     self.linePathNode = linePathNode
   }
   
-  // Checks if player has been touched (thus toggled for movement), and then moves the player towards the given location.
-  // This is called at every frame udpate interval. The speed of movement is scaled by the player's movementSpeed variable as well as the elapsed time (shorter time intervals will yield smaller movements).
-  private func movePlayerIfTouched(to position: CGPoint, elapsedTime: TimeInterval) {
-    if let player = self.player {
-      if player.isTouched {
-        let playerPosition = player.getSceneNode().position
-        var dx = position.x - playerPosition.x
-        var dy = position.y - playerPosition.y
-        dx = dx * CGFloat(player.movementSpeed) * CGFloat(elapsedTime)
-        dy = dy * CGFloat(player.movementSpeed) * CGFloat(elapsedTime)
-        player.moveBy(dx: dx, dy: dy)
-      }
-    }
+  func addFriendlyProjectile(projectile: GameObject) {
+    self.frieldlyProjectiles.append(projectile)
+    self.gameScene.addGameObject(gameObject: projectile)
   }
   
   func touchDown(atPoint position: CGPoint) {

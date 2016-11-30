@@ -11,13 +11,17 @@ import SpriteKit
 
 class Player: InteractiveGameObject {
   
+  // The level that's currently running the player. This is necessary so the Player object can communicate to the Level (e.g. for triggering bullet fires).
+  private let level: Level
+  
   // How often the player fires a bullet (in seconds) when firing.
   private let fireBulletIntervalSeconds: Double
   
   // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
   private var fireBulletTimer: Timer?
   
-  init(xPos: Int, yPos: Int, size: Int) {
+  init(xPos: Int, yPos: Int, size: Int, level: Level) {
+    self.level = level
     self.fireBulletIntervalSeconds = 0.1
     super.init()
     
@@ -63,7 +67,9 @@ class Player: InteractiveGameObject {
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
   // TODO: we may want to move this method into the GameObject super class.
   @objc func fireBullet() {
-    print("Fired")
+    let playerPosition = self.getSceneNode().position
+    let bullet = Bullet(xPos: playerPosition.x, yPos: playerPosition.y, movementSpeed: 1.0)
+    self.level.addFriendlyProjectile(projectile: bullet)
   }
   
   override func touchDown() {

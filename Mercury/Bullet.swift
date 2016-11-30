@@ -12,7 +12,7 @@ import SpriteKit
 // TODO: We might want to make a super class for Projectiles in general, since there will likely be common functionality between all of the projectiles.
 class Bullet: GameObject {
   
-  init(xPos: Int, yPos: Int, movementSpeed: Double) {
+  init(xPos: CGFloat, yPos: CGFloat, movementSpeed: Double) {
     super.init()
     self.nodeName = "bullet"
     self.movementSpeed = movementSpeed
