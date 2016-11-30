@@ -5,6 +5,7 @@
 //  Created by Richard Teammco on 11/12/16.
 //  Copyright © 2016 Richard Teammco. All rights reserved.
 //
+//  The GameScene controlls all of the sprites, animations, and physics in the app. It also handles user touch inputs. The Level instance that's currently being run handles all of the game logic, and works closely with the GameScene for detecting sprite interactions.
 
 import SpriteKit
 import GameplayKit
@@ -31,7 +32,8 @@ class GameScene: SKScene {
     self.addChild(gameObject.getSceneNode())
   }
   
-  // Returns the previous position on the screen that a user's touch occured. The previous location is the one before the latest touch action. If no touch was previously recorded, returns (0, 0) which is the center of the screen.
+  // Returns the previous position on the screen that a user's touch occured.
+  // The previous location is the one before the latest touch action. If no touch was previously recorded, returns (0, 0) which is the center of the screen.
   func getPreviousTouchPosition() -> CGPoint {
     if let previousTouchPosition = self.lastTouchPosition {
       return previousTouchPosition
@@ -74,7 +76,8 @@ class GameScene: SKScene {
     for t in touches { self.touchUp(atPoint: t.location(in: self)) }
   }
   
-  // Called before each frame is rendered with the current time. This measures the elapsed time since the last frame and updates the current game level.
+  // This method measures the elapsed time since the last frame and updates the current game level.
+  // Called before each frame is rendered with the current time.
   override func update(_ currentTime: TimeInterval) {
     if let lastFrameTime = self.lastFrameTime {
       let elapsedTime = currentTime - lastFrameTime

@@ -6,7 +6,6 @@
 //  Copyright © 2016 Richard Teammco. All rights reserved.
 //
 //  The GameObject provides a collection of methods and properties shared by all visible objects that can exist in the game scene. This includes interactive nodes, such as the player or enemies, as well as non-interactive visual elements such as touch visualization effects.
-//
 
 import SpriteKit
 
@@ -18,10 +17,12 @@ class GameObject {
   // How fast the object moves in the world.
   var movementSpeed = 1.0
   
-  // This node name is assigned to the sprite/shape nodes returned by getSceneNode(). Use an identifier for detecting those nodes in the scene.
+  // This node name is assigned to the sprite/shape nodes returned by getSceneNode(). Use an
+  // identifier for detecting those nodes in the scene.
   var nodeName = "object"
   
-  // Returns the distance of this object (its node) to to given point. Returns 0 if the node is not defined.
+  // Returns the distance of this object (its node) to to given point. Returns 0 if the node is not
+  // defined.
   func distanceTo(loc: CGPoint) -> Double {
     if let gameSceneNode = self.gameSceneNode {
       let xDist = loc.x - gameSceneNode.position.x

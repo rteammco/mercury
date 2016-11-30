@@ -32,7 +32,8 @@ class Level {
   // Add the player centered at the bottom of the screen.
   private func createPlayer() {
     let screenSize = self.gameScene.size
-    let size = (screenSize.width + screenSize.height) * 0.05  // TODO: make this an easily adjustable constant equation somewhere
+    // TODO: make size an easily adjustable constant equation somewhere.
+    let size = (screenSize.width + screenSize.height) * 0.05
     let xPos = 0
     let yPos = Int(-screenSize.height / 2 + size)
     let player = Player(xPos: xPos, yPos: yPos, size: Int(size))
@@ -50,7 +51,8 @@ class Level {
     self.linePathNode = linePathNode
   }
   
-  // Checks if player has been touched (thus toggled for movement), and then moves the player towards the given location. This is called at every frame udpate interval. The speed of movement is scaled by the player's movementSpeed variable as well as the elapsed time (shorter time intervals will yield smaller movements).
+  // Checks if player has been touched (thus toggled for movement), and then moves the player towards the given location.
+  // This is called at every frame udpate interval. The speed of movement is scaled by the player's movementSpeed variable as well as the elapsed time (shorter time intervals will yield smaller movements).
   private func movePlayerIfTouched(to position: CGPoint, elapsedTime: TimeInterval) {
     if let player = self.player {
       if player.isTouched {

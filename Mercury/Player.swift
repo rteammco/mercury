@@ -5,6 +5,7 @@
 //  Created by Richard Teammco on 11/13/16.
 //  Copyright © 2016 Richard Teammco. All rights reserved.
 //
+//  The Player object is controlled by the user by touching and dragging. It can fire bullets and perform other specialized attacks against enemies. If the Player's life depleats to 0, it's game over!
 
 import SpriteKit
 

@@ -6,7 +6,6 @@
 //  Copyright © 2016 Richard Teammco. All rights reserved.
 //
 //  The UserInteractive protocol allows a GameObject to be interactable by the user.
-//
 
 protocol UserInteractive {
   

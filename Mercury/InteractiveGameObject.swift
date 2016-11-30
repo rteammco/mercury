@@ -6,7 +6,6 @@
 //  Copyright © 2016 Richard Teammco. All rights reserved.
 //
 //  A GameObject extension that features user interaction.
-//
 
 class InteractiveGameObject: GameObject, UserInteractive {
   
