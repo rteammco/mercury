@@ -14,22 +14,20 @@ class GameObject {
   // The scene node for animation and rendering.
   var gameSceneNode: SKShapeNode?
   
-  // How fast the object moves in the world. This is private, and should only ever be modified with scaleMovementSpeed().
+  // Reference to the GameScene running the current Level.
+  var gameScene: GameScene?
+  
+  // How fast the object moves in the world.
+  // This is a relative value and is scaled by the GameScene depending on the screen size. It should only ever be modified with scaleMovementSpeed().
   private var movementSpeed: Double = 1.0
   
   // The direction of the object's motion (unit vector, scaled by movementSpeed).
-  // By default, this motion is towards the top of the screen. Modify as needed.
+  // By default, this motion is towards the top of the screen. Modify as needed with setMovementDirection().
   private var movementDirection = CGVector(dx: 0.0, dy: 1.0)
   
   // This node name is assigned to the sprite/shape nodes returned by getSceneNode(). Use an
   // identifier for detecting those nodes in the scene.
   var nodeName = "object"
-  
-  // The maximum and minumum x and y coordinates of the screen. This must be set from GameScene, otherwise all locations will be considered "outside" of the screen bounds.
-  var minimumScreenX: CGFloat = 0.0
-  var minimumScreenY: CGFloat = 0.0
-  var maximumScreenX: CGFloat = 0.0
-  var maximumScreenY: CGFloat = 0.0
   
   // This flag is used to trigger cleanup of objects at each frame. If isAlive is set to false, this object will be removed from the game during the next frame update.
   var isAlive: Bool = true
@@ -54,14 +52,12 @@ class GameObject {
     self.movementDirection.dy = dy / norm
   }
   
-  // Returns true as long as this object is within screen bounds. For this to work correctly, the maximum x and y coordinates must be set. This is done automatically if you use GameScene.addGameObject to add this object to the scene.
+  // Returns true if this object is within screen bounds. Uses the GameScene's implementation.
   func isWithinScreenBounds() -> Bool {
-    let position = self.getSceneNode().position
-    if position.x < self.minimumScreenX || position.x > self.maximumScreenX || position.y < self.minimumScreenY || position.y > self.maximumScreenY {
-      return false
-    } else {
-      return true
+    if let gameScene = self.gameScene {
+      return gameScene.isGameObjectWithinScreenBounds(gameObject: self)
     }
+    return true
   }
   
   // Returns the distance of this object (its node) to to given point. Returns 0 if the node is not

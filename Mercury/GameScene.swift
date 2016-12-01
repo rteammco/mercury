@@ -18,6 +18,12 @@ class GameScene: SKScene {
   // The size of the world (half of the average of the screen width and height).
   private var worldSize: Double?
   
+  // The maximum and minumum x and y coordinates of the screen. This is used to determine if objects are within the screen.
+  private var minimumScreenX: CGFloat?
+  private var minimumScreenY: CGFloat?
+  private var maximumScreenX: CGFloat?
+  private var maximumScreenY: CGFloat?
+  
   // The time of the last frame. The time elapsed between frames is the new time minus this time.
   private var lastFrameTime: TimeInterval?
   
@@ -28,7 +34,15 @@ class GameScene: SKScene {
   override func didMove(to view: SKView) {
     // TODO: this should create the appropriate level, not the general level.
     self.level = Level(gameScene: self)
+    
     self.worldSize = Double(self.size.width + self.size.height) / 4.0
+    
+    let halfScreenWidth = self.size.width / 2
+    let halfScreenHeight = self.size.height / 2
+    self.minimumScreenX = -halfScreenWidth
+    self.maximumScreenX = halfScreenWidth
+    self.minimumScreenY = -halfScreenHeight
+    self.maximumScreenY = halfScreenHeight
   }
   
   // Adds the given GameObject type to the scene by appending its node. In addition, scales the movement speed of the GameObject by the world size to account for the size of the device screen.
@@ -36,13 +50,19 @@ class GameScene: SKScene {
     if let worldSize = self.worldSize {
       gameObject.scaleMovementSpeed(worldSize)
     }
-    let halfScreenWidth = self.size.width / 2
-    let halfScreenHeight = self.size.height / 2
-    gameObject.minimumScreenX = -halfScreenWidth
-    gameObject.maximumScreenX = halfScreenWidth
-    gameObject.minimumScreenY = -halfScreenHeight
-    gameObject.maximumScreenY = halfScreenHeight
+    gameObject.gameScene = self
     self.addChild(gameObject.getSceneNode())
+  }
+  
+  // Returns true if the given object is within screen bounds.
+  func isGameObjectWithinScreenBounds(gameObject: GameObject) -> Bool {
+    let position = gameObject.getSceneNode().position
+    if let minX = self.minimumScreenX, let maxX = self.maximumScreenX, let minY = self.minimumScreenY, let maxY = self.maximumScreenY {
+      if position.x < minX || position.x > maxX || position.y < minY || position.y > maxY {
+        return false
+      }
+    }
+    return true
   }
   
   // Returns the previous position on the screen that a user's touch occured.
