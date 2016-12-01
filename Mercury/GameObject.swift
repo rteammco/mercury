@@ -25,6 +25,15 @@ class GameObject {
   // identifier for detecting those nodes in the scene.
   var nodeName = "object"
   
+  // The maximum and minumum x and y coordinates of the screen. This must be set from GameScene, otherwise all locations will be considered "outside" of the screen bounds.
+  var minimumScreenX: CGFloat = 0.0
+  var minimumScreenY: CGFloat = 0.0
+  var maximumScreenX: CGFloat = 0.0
+  var maximumScreenY: CGFloat = 0.0
+  
+  // This flag is used to trigger cleanup of objects at each frame. If isAlive is set to false, this object will be removed from the game during the next frame update.
+  var isAlive: Bool = true
+  
   // Scale the movement speed by the given non-negative value.
   func scaleMovementSpeed(_ speedScale: Double) {
     // Speed must be non-negative.
@@ -32,6 +41,16 @@ class GameObject {
       return
     }
     self.movementSpeed *= speedScale
+  }
+  
+  // Returns true as long as this object is within screen bounds. For this to work correctly, the maximum x and y coordinates must be set. This is done automatically if you use GameScene.addGameObject to add this object to the scene.
+  func isWithinScreenBounds() -> Bool {
+    let position = self.getSceneNode().position
+    if position.x < self.minimumScreenX || position.x > self.maximumScreenX || position.y < self.minimumScreenY || position.y > self.maximumScreenY {
+      return false
+    } else {
+      return true
+    }
   }
   
   // Returns the distance of this object (its node) to to given point. Returns 0 if the node is not
@@ -81,6 +100,11 @@ class GameObject {
     } else {
       return SKShapeNode()
     }
+  }
+  
+  // Removes this object's scene node from the game scene.
+  func removeSceneNodeFromGameScene() {
+    self.gameSceneNode?.removeFromParent()
   }
   
   // Updates the GameObject given the elapsed time (in seconds) since the last frame.

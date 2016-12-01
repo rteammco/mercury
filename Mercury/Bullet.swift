@@ -29,6 +29,9 @@ class Bullet: GameObject {
   // TODO: check for collisions.
   override func update(_ elapsedTime: TimeInterval) {
     self.moveUpdate(elapsedTime: elapsedTime)
+    if !self.isWithinScreenBounds() {
+      self.isAlive = false
+    }
   }
   
 }

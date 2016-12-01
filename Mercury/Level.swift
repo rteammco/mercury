@@ -90,10 +90,17 @@ class Level {
     let previousTouchPosition = self.gameScene.getPreviousTouchPosition()
     self.player?.movePlayerIfTouched(towards: previousTouchPosition, elapsedTime: elapsedTime)
     
-    // Update all projectiles.
+    // Update all projectiles, and only keep those that are still valid (i.e. still within screen bounds and did not collide).
+    var validFriendlyProjectiles = [GameObject]()
     for projectile in self.frieldlyProjectiles {
       projectile.update(elapsedTime)
+      if projectile.isAlive {
+        validFriendlyProjectiles.append(projectile)
+      } else {
+        projectile.removeSceneNodeFromGameScene()
+      }
     }
+    self.frieldlyProjectiles = validFriendlyProjectiles
   }
   
 }

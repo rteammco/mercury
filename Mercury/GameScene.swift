@@ -36,6 +36,12 @@ class GameScene: SKScene {
     if let worldSize = self.worldSize {
       gameObject.scaleMovementSpeed(worldSize)
     }
+    let halfScreenWidth = self.size.width / 2
+    let halfScreenHeight = self.size.height / 2
+    gameObject.minimumScreenX = -halfScreenWidth
+    gameObject.maximumScreenX = halfScreenWidth
+    gameObject.minimumScreenY = -halfScreenHeight
+    gameObject.maximumScreenY = halfScreenHeight
     self.addChild(gameObject.getSceneNode())
   }
   
