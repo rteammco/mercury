@@ -11,6 +11,7 @@ import SpriteKit
 
 class Level {
   
+  // A reference to the GameScene that's in charge of all the sprites and user interactions.
   private var gameScene: GameScene
   
   // The player game object.
@@ -51,11 +52,13 @@ class Level {
     self.linePathNode = linePathNode
   }
   
+  // Adds a friendly projectile (projected by the player or units friendly to the player) into the GameScene.
   func addFriendlyProjectile(projectile: GameObject) {
     self.frieldlyProjectiles.append(projectile)
     self.gameScene.addGameObject(gameObject: projectile)
   }
   
+  // Called by the GameScene when the user starts touching the device screen.
   func touchDown(atPoint position: CGPoint) {
     // TODO: is there a better way to get the exact node that was touched?
     let touchedNodes = self.gameScene.nodes(at: position)
@@ -66,6 +69,7 @@ class Level {
     }
   }
   
+  // Called by the GameScene when the user moves their finger while touching down on the screen.
   func touchMoved(toPoint position: CGPoint) {
     if let linePathNode = self.linePathNode?.copy() as! SKShapeNode? {
       let path = CGMutablePath.init()
@@ -76,6 +80,7 @@ class Level {
     }
   }
   
+  // Called by the GameScene when the user stops touching the device screen.
   func touchUp(atPoint position: CGPoint) {
     if let player = self.player {
       if player.isTouched {
@@ -85,6 +90,7 @@ class Level {
   }
   
   // Updates all of the GameObjects as needed, given the elapsed time (in seconds) since the previous frame.
+  // This calls update on all components of the level that need to be updated. This method also finds which objects need to be removed from the scene and handles collision detections.
   func update(_ elapsedTime: TimeInterval) {
     // Update the player.
     let previousTouchPosition = self.gameScene.getPreviousTouchPosition()
