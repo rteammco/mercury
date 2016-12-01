@@ -40,11 +40,9 @@ class Player: InteractiveGameObject {
   func movePlayerIfTouched(towards: CGPoint, elapsedTime: TimeInterval) {
     if self.isTouched {
       let playerPosition = self.getSceneNode().position
-      var dx = towards.x - playerPosition.x
-      var dy = towards.y - playerPosition.y
-      dx = dx * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
-      dy = dy * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
-      self.moveBy(dx: dx, dy: dy)
+      let dx = towards.x - playerPosition.x
+      let dy = towards.y - playerPosition.y
+      self.moveUpdate(dx: dx, dy: dy, elapsedTime: elapsedTime)
     }
   }
   

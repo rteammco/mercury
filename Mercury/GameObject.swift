@@ -17,6 +17,10 @@ class GameObject {
   // How fast the object moves in the world.
   var movementSpeed = 1.0
   
+  // The direction of the object's motion (unit vector, scaled by movementSpeed).
+  // By default, this motion is towards the top of the screen. Modify as needed.
+  var movementDirection = CGVector(dx: 0.0, dy: 1.0)
+  
   // This node name is assigned to the sprite/shape nodes returned by getSceneNode(). Use an
   // identifier for detecting those nodes in the scene.
   var nodeName = "object"
@@ -41,10 +45,18 @@ class GameObject {
     }
   }
   
+  // Moves the scene node by the given dx and dy instantly.
   func moveBy(dx: CGFloat, dy: CGFloat) {
     if let gameSceneNode = self.gameSceneNode {
       gameSceneNode.position = CGPoint(x: gameSceneNode.position.x + dx, y: gameSceneNode.position.y + dy)
     }
+  }
+  
+  // Updates the movement of this object in the given direction, scaled by the object's movement speed and the elapsed time interval.
+  func moveUpdate(dx: CGFloat, dy: CGFloat, elapsedTime: TimeInterval) {
+    let dxScaled = dx * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
+    let dyScaled = dy * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
+    self.moveBy(dx: dxScaled, dy: dyScaled)
   }
 
   // Returns the scene node for this object. If it was not initialized, the returned object will be an empty SKShapeNode.

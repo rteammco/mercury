@@ -90,9 +90,14 @@ class Level {
   
   // Updates all of the GameObjects as needed, given the elapsed time (in seconds) since the previous frame.
   func update(_ elapsedTime: TimeInterval) {
-    // TODO: currently only supports player.
+    // Update the player.
     let previousTouchPosition = self.gameScene.getPreviousTouchPosition()
     self.player?.movePlayerIfTouched(towards: previousTouchPosition, elapsedTime: elapsedTime)
+    
+    // Update all projectiles.
+    for projectile in self.frieldlyProjectiles {
+      projectile.update(elapsedTime)
+    }
   }
   
 }
