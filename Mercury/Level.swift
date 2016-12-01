@@ -17,6 +17,9 @@ class Level {
   // The player game object.
   private var player: Player?
   
+  // Enemies that are currently engaging with the player.
+  private var enemies: [Enemy]
+  
   // Projectiles (e.g. bullets) fired by the player or units friendly to the player.
   private var frieldlyProjectiles: [GameObject]
   
@@ -25,6 +28,7 @@ class Level {
   
   init(gameScene: GameScene) {
     self.gameScene = gameScene
+    self.enemies = [Enemy]()
     self.frieldlyProjectiles = [GameObject]()
     createPlayer()
     createLinePathNode()
@@ -52,6 +56,12 @@ class Level {
     self.linePathNode = linePathNode
   }
   
+  // Adds an enemy to the scene.
+  func addEnemy(enemy: Enemy) {
+    self.enemies.append(enemy)
+    self.gameScene.addGameObject(gameObject: enemy)
+  }
+  
   // Adds a friendly projectile (projected by the player or units friendly to the player) into the GameScene.
   func addFriendlyProjectile(projectile: GameObject) {
     self.frieldlyProjectiles.append(projectile)
@@ -67,6 +77,7 @@ class Level {
         self.player?.touchDown()
       }
     }
+    self.addEnemy(enemy: Enemy(xPos: 0, yPos: 700, speed: 0.25))
   }
   
   // Called by the GameScene when the user moves their finger while touching down on the screen.
@@ -95,6 +106,11 @@ class Level {
     // Update the player.
     let previousTouchPosition = self.gameScene.getPreviousTouchPosition()
     self.player?.movePlayerIfTouched(towards: previousTouchPosition, elapsedTime: elapsedTime)
+    
+    // Update all enemies.
+    for enemy in self.enemies {
+      enemy.update(elapsedTime)
+    }
     
     // Update all projectiles, and only keep those that are still valid (i.e. still within screen bounds and did not collide).
     var validFriendlyProjectiles = [GameObject]()

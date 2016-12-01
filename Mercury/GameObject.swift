@@ -19,7 +19,7 @@ class GameObject {
   
   // The direction of the object's motion (unit vector, scaled by movementSpeed).
   // By default, this motion is towards the top of the screen. Modify as needed.
-  var movementDirection = CGVector(dx: 0.0, dy: 1.0)
+  private var movementDirection = CGVector(dx: 0.0, dy: 1.0)
   
   // This node name is assigned to the sprite/shape nodes returned by getSceneNode(). Use an
   // identifier for detecting those nodes in the scene.
@@ -41,6 +41,17 @@ class GameObject {
       return
     }
     self.movementSpeed *= speedScale
+  }
+  
+  // Set the movement direction. This will automatically normalize the given vector (must be non-zero).
+  func setMovementDirection(dx: CGFloat, dy: CGFloat) {
+    let norm = sqrt(dx * dx + dy * dy)
+    // Cannot have a zero norm (divide by 0 error).
+    if norm <= 0 {
+      return
+    }
+    self.movementDirection.dx = dx / norm
+    self.movementDirection.dy = dy / norm
   }
   
   // Returns true as long as this object is within screen bounds. For this to work correctly, the maximum x and y coordinates must be set. This is done automatically if you use GameScene.addGameObject to add this object to the scene.
