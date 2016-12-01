@@ -11,16 +11,19 @@ import SpriteKit
 
 class Enemy: GameObject {
   
-  init(xPos: CGFloat, yPos: CGFloat, speed: Double) {
+  init(speed: Double) {
     super.init()
     self.nodeName = "enemy"
     self.scaleMovementSpeed(speed)
     self.setMovementDirection(dx: 0, dy: -1)  // Top to bottom of screen.
-    
-    // TODO: temporary color and shape
-    self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: 150, height: 150))
+  }
+  
+  // TODO: temporary color and shape.
+  override func createGameSceneNode(scale: Double, position: CGPoint) {
+    let size = 0.2 * scale
+    self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
     if let gameSceneNode = self.gameSceneNode {
-      gameSceneNode.position = CGPoint(x: xPos, y: yPos)
+      gameSceneNode.position = position
       gameSceneNode.fillColor = SKColor.cyan
     }
   }

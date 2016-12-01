@@ -20,18 +20,21 @@ class Player: InteractiveGameObject {
   // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
   private var fireBulletTimer: Timer?
   
-  init(xPos: Int, yPos: Int, size: Int, level: Level) {
+  init(level: Level) {
     self.level = level
     self.fireBulletIntervalSeconds = 0.1
     super.init()
     
     self.nodeName = "player"
     self.scaleMovementSpeed(4.0)
-    
-    // TODO: temporary color and shape
+  }
+  
+  // TODO: temporary color and shape.
+  override func createGameSceneNode(scale: Double, position: CGPoint) {
+    let size = 0.2 * scale
     self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
     if let gameSceneNode = self.gameSceneNode {
-      gameSceneNode.position = CGPoint(x: xPos, y: yPos)
+      gameSceneNode.position = position
       gameSceneNode.fillColor = SKColor.blue
     }
   }
@@ -66,8 +69,8 @@ class Player: InteractiveGameObject {
   // TODO: we may want to move this method into the GameObject super class.
   @objc func fireBullet() {
     let playerPosition = self.getSceneNode().position
-    let bullet = Bullet(xPos: playerPosition.x, yPos: playerPosition.y, speed: 1.0)
-    self.level.addFriendlyProjectile(projectile: bullet)
+    let bullet = Bullet(speed: 1.0)
+    self.level.addFriendlyProjectile(projectile: bullet, position: CGPoint(x: playerPosition.x, y: playerPosition.y))
   }
   
   override func touchDown() {

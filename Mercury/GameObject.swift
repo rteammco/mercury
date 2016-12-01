@@ -41,6 +41,17 @@ class GameObject {
     self.movementSpeed *= speedScale
   }
   
+  // Creates the Sprite node that gets added to the GameScene. The given scale is based on the size of the screen, so the node's size should adapt according to the screen size. The position is in absolute coordinates.
+  // Override as needed. By default, creates a blue square of (relative) size 0.5 which is about a third of the screen's width.
+  func createGameSceneNode(scale: Double, position: CGPoint) {
+    let size = 0.5 * scale
+    self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
+    if let gameSceneNode = self.gameSceneNode {
+      gameSceneNode.position = position
+      gameSceneNode.fillColor = SKColor.blue
+    }
+  }
+  
   // Set the movement direction. This will automatically normalize the given vector (must be non-zero).
   func setMovementDirection(dx: CGFloat, dy: CGFloat) {
     let norm = sqrt(dx * dx + dy * dy)
@@ -89,6 +100,7 @@ class GameObject {
   
   // Updates the movement of this object in the given direction, scaled by the object's movement speed and the elapsed time interval.
   func moveUpdate(dx: CGFloat, dy: CGFloat, elapsedTime: TimeInterval) {
+    print(self.movementSpeed)
     let dxScaled = dx * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
     let dyScaled = dy * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
     self.moveBy(dx: dxScaled, dy: dyScaled)

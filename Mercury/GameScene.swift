@@ -32,9 +32,6 @@ class GameScene: SKScene {
   
   // Called whenever the scene is presented into the view.
   override func didMove(to view: SKView) {
-    // TODO: this should create the appropriate level, not the general level.
-    self.level = Level(gameScene: self)
-    
     self.worldSize = Double(self.size.width + self.size.height) / 4.0
     
     let halfScreenWidth = self.size.width / 2
@@ -43,12 +40,19 @@ class GameScene: SKScene {
     self.maximumScreenX = halfScreenWidth
     self.minimumScreenY = -halfScreenHeight
     self.maximumScreenY = halfScreenHeight
+    
+    // TODO: this should create the appropriate level, not the general level.
+    self.level = Level(gameScene: self)
   }
   
-  // Adds the given GameObject type to the scene by appending its node. In addition, scales the movement speed of the GameObject by the world size to account for the size of the device screen.
-  func addGameObject(gameObject: GameObject) {
+  // Adds the given GameObject type to the scene by appending its node.
+  // In addition, scales the movement speed and Sprite node size of the GameObject by the world size to account for the size of the device screen. If scaleSpeed is set to false, the speed will not be scaled. This is useful for certain nodes such as the Player which are moved by user interaction, meaning the speed is already inherently scaled to the size/resolution of the screen.
+  func addGameObject(gameObject: GameObject, position: CGPoint, scaleSpeed: Bool = true) {
     if let worldSize = self.worldSize {
-      gameObject.scaleMovementSpeed(worldSize)
+      gameObject.createGameSceneNode(scale: worldSize, position: position)
+      if scaleSpeed {
+        gameObject.scaleMovementSpeed(worldSize)
+      }
     }
     gameObject.gameScene = self
     self.addChild(gameObject.getSceneNode())
