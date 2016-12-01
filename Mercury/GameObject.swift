@@ -100,7 +100,6 @@ class GameObject {
   
   // Updates the movement of this object in the given direction, scaled by the object's movement speed and the elapsed time interval.
   func moveUpdate(dx: CGFloat, dy: CGFloat, elapsedTime: TimeInterval) {
-    print(self.movementSpeed)
     let dxScaled = dx * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
     let dyScaled = dy * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
     self.moveBy(dx: dxScaled, dy: dyScaled)

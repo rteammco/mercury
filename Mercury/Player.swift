@@ -69,7 +69,7 @@ class Player: InteractiveGameObject {
   // TODO: we may want to move this method into the GameObject super class.
   @objc func fireBullet() {
     let playerPosition = self.getSceneNode().position
-    let bullet = Bullet(speed: 1.0)
+    let bullet = Bullet(speed: 2.0)
     self.level.addFriendlyProjectile(projectile: bullet, position: CGPoint(x: playerPosition.x, y: playerPosition.y))
   }
   
