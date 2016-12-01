@@ -12,10 +12,10 @@ import SpriteKit
 // TODO: We might want to make a super class for Projectiles in general, since there will likely be common functionality between all of the projectiles.
 class Bullet: GameObject {
   
-  init(xPos: CGFloat, yPos: CGFloat, movementSpeed: Double) {
+  init(xPos: CGFloat, yPos: CGFloat, speed: Double) {
     super.init()
     self.nodeName = "bullet"
-    self.movementSpeed = movementSpeed
+    self.scaleMovementSpeed(speed)
     
     // TODO: temporary color and shape
     self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: 5, height: 20))
@@ -28,7 +28,7 @@ class Bullet: GameObject {
   // Moves the bullet forward at the given speed.
   // TODO: check for collisions.
   override func update(_ elapsedTime: TimeInterval) {
-    // TODO: implement.
+    self.moveUpdate(elapsedTime: elapsedTime)
   }
   
 }

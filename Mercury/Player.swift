@@ -26,7 +26,7 @@ class Player: InteractiveGameObject {
     super.init()
     
     self.nodeName = "player"
-    self.movementSpeed = 4.0
+    self.scaleMovementSpeed(4.0)
     
     // TODO: temporary color and shape
     self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
@@ -66,7 +66,7 @@ class Player: InteractiveGameObject {
   // TODO: we may want to move this method into the GameObject super class.
   @objc func fireBullet() {
     let playerPosition = self.getSceneNode().position
-    let bullet = Bullet(xPos: playerPosition.x, yPos: playerPosition.y, movementSpeed: 1.0)
+    let bullet = Bullet(xPos: playerPosition.x, yPos: playerPosition.y, speed: 1.0)
     self.level.addFriendlyProjectile(projectile: bullet)
   }
   

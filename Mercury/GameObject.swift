@@ -14,8 +14,8 @@ class GameObject {
   // The scene node for animation and rendering.
   var gameSceneNode: SKShapeNode?
   
-  // How fast the object moves in the world.
-  var movementSpeed = 1.0
+  // How fast the object moves in the world. This is private, and should only ever be modified with scaleMovementSpeed().
+  private var movementSpeed: Double = 1.0
   
   // The direction of the object's motion (unit vector, scaled by movementSpeed).
   // By default, this motion is towards the top of the screen. Modify as needed.
@@ -24,6 +24,15 @@ class GameObject {
   // This node name is assigned to the sprite/shape nodes returned by getSceneNode(). Use an
   // identifier for detecting those nodes in the scene.
   var nodeName = "object"
+  
+  // Scale the movement speed by the given non-negative value.
+  func scaleMovementSpeed(_ speedScale: Double) {
+    // Speed must be non-negative.
+    if speedScale < 0 {
+      return
+    }
+    self.movementSpeed *= speedScale
+  }
   
   // Returns the distance of this object (its node) to to given point. Returns 0 if the node is not
   // defined.
@@ -57,6 +66,11 @@ class GameObject {
     let dxScaled = dx * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
     let dyScaled = dy * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
     self.moveBy(dx: dxScaled, dy: dyScaled)
+  }
+  
+  // Updates the movement of this object using the movementDirection vector.
+  func moveUpdate(elapsedTime: TimeInterval) {
+    self.moveUpdate(dx: self.movementDirection.dx, dy: self.movementDirection.dy, elapsedTime: elapsedTime)
   }
 
   // Returns the scene node for this object. If it was not initialized, the returned object will be an empty SKShapeNode.

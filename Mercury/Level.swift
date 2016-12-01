@@ -13,9 +13,6 @@ class Level {
   
   private var gameScene: GameScene
   
-  // The size of the world (half of the average of the screen width and height).
-  private var worldSize: Double
-  
   // The player game object.
   private var player: Player?
   
@@ -27,7 +24,6 @@ class Level {
   
   init(gameScene: GameScene) {
     self.gameScene = gameScene
-    self.worldSize = Double(self.gameScene.size.width + self.gameScene.size.height) / 4.0
     self.frieldlyProjectiles = [GameObject]()
     createPlayer()
     createLinePathNode()

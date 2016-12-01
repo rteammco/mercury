@@ -15,6 +15,9 @@ class GameScene: SKScene {
   // The active level (or menu).
   private var level: Level?
   
+  // The size of the world (half of the average of the screen width and height).
+  private var worldSize: Double?
+  
   // The time of the last frame. The time elapsed between frames is the new time minus this time.
   private var lastFrameTime: TimeInterval?
   
@@ -25,10 +28,14 @@ class GameScene: SKScene {
   override func didMove(to view: SKView) {
     // TODO: this should create the appropriate level, not the general level.
     self.level = Level(gameScene: self)
+    self.worldSize = Double(self.size.width + self.size.height) / 4.0
   }
   
-  // Adds the given GameObject type to the scene by appending its node.
+  // Adds the given GameObject type to the scene by appending its node. In addition, scales the movement speed of the GameObject by the world size to account for the size of the device screen.
   func addGameObject(gameObject: GameObject) {
+    if let worldSize = self.worldSize {
+      gameObject.scaleMovementSpeed(worldSize)
+    }
     self.addChild(gameObject.getSceneNode())
   }
   
