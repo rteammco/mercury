@@ -14,6 +14,7 @@ class Enemy: GameObject {
   init(speed: Double) {
     super.init()
     self.nodeName = "enemy"
+    self.team = Team.enemy
     self.scaleMovementSpeed(speed)
     self.setMovementDirection(dx: 0, dy: -1)  // Top to bottom of screen.
   }

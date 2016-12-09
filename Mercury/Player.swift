@@ -26,6 +26,7 @@ class Player: InteractiveGameObject {
     super.init()
     
     self.nodeName = "player"
+    self.team = Team.friendly
     self.scaleMovementSpeed(4.0)
   }
   

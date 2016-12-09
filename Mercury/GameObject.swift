@@ -29,6 +29,9 @@ class GameObject {
   // identifier for detecting those nodes in the scene.
   var nodeName = "object"
   
+  // Each GameObject is assigned a Team that defines its interaction with the Player.
+  var team: Team = Team.neutral
+  
   // This flag is used to trigger cleanup of objects at each frame. If isAlive is set to false, this object will be removed from the game during the next frame update.
   var isAlive: Bool = true
   
@@ -71,6 +74,21 @@ class GameObject {
     return true
   }
   
+  // Returns the scene node for this object. If it was not initialized, the returned object will be an empty SKShapeNode.
+  func getSceneNode() -> SKShapeNode {
+    if let gameSceneNode = self.gameSceneNode {
+      gameSceneNode.name = self.nodeName
+      return gameSceneNode
+    } else {
+      return SKShapeNode()
+    }
+  }
+  
+  // Removes this object's scene node from the game scene.
+  func removeSceneNodeFromGameScene() {
+    self.gameSceneNode?.removeFromParent()
+  }
+  
   // Returns the distance of this object (its node) to to given point. Returns 0 if the node is not
   // defined.
   func distanceTo(loc: CGPoint) -> Double {
@@ -108,21 +126,6 @@ class GameObject {
   // Updates the movement of this object using the movementDirection vector.
   func moveUpdate(elapsedTime: TimeInterval) {
     self.moveUpdate(dx: self.movementDirection.dx, dy: self.movementDirection.dy, elapsedTime: elapsedTime)
-  }
-
-  // Returns the scene node for this object. If it was not initialized, the returned object will be an empty SKShapeNode.
-  func getSceneNode() -> SKShapeNode {
-    if let gameSceneNode = self.gameSceneNode {
-      gameSceneNode.name = self.nodeName
-      return gameSceneNode
-    } else {
-      return SKShapeNode()
-    }
-  }
-  
-  // Removes this object's scene node from the game scene.
-  func removeSceneNodeFromGameScene() {
-    self.gameSceneNode?.removeFromParent()
   }
   
   // Updates the GameObject given the elapsed time (in seconds) since the last frame.
