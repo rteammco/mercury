@@ -41,9 +41,9 @@ class Level {
     let size = (screenSize.width + screenSize.height) * 0.05
     let xPos = 0
     let yPos = Int(-screenSize.height / 2 + size)
-    let player = Player(level: self)
+    let player = Player(gameScene: self.gameScene, position: CGPoint(x: xPos, y: yPos), level: self)
     self.player = player
-    self.gameScene.addGameObject(gameObject: player, position: CGPoint(x: xPos, y: yPos), scaleSpeed: false)
+    self.gameScene.addGameObject(gameObject: player, scaleSpeed: false)
   }
   
   // Creates a line that fades over time for visualization of the user's touch input.
@@ -57,14 +57,14 @@ class Level {
   }
   
   // Adds an enemy to the scene.
-  func addEnemy(enemy: Enemy, position: CGPoint) {
-    self.gameScene.addGameObject(gameObject: enemy, position: position)
+  func addEnemy(enemy: Enemy) {
+    self.gameScene.addGameObject(gameObject: enemy)
     self.enemies.append(enemy)
   }
   
   // Adds a friendly projectile (projected by the player or units friendly to the player) into the GameScene.
-  func addFriendlyProjectile(projectile: GameObject, position: CGPoint) {
-    self.gameScene.addGameObject(gameObject: projectile, position: position)
+  func addFriendlyProjectile(projectile: GameObject) {
+    self.gameScene.addGameObject(gameObject: projectile)
     self.frieldlyProjectiles.append(projectile)
   }
   
@@ -77,7 +77,7 @@ class Level {
         self.player?.touchDown()
       }
     }
-    self.addEnemy(enemy: Enemy(speed: 0.25), position: CGPoint(x: 0, y: 700))  // TODO: remove!
+    self.addEnemy(enemy: Enemy(gameScene: self.gameScene, position: CGPoint(x: 0, y: 700), speed: 0.25))  // TODO: remove!
   }
   
   // Called by the GameScene when the user moves their finger while touching down on the screen.

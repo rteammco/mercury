@@ -11,8 +11,8 @@ import SpriteKit
 
 class Enemy: PhysicsEnabledGameObject {
   
-  init(speed: Double) {
-    super.init()
+  init(gameScene: GameScene, position: CGPoint, speed: Double) {
+    super.init(gameScene: gameScene, position: position)
     self.nodeName = "enemy"
     self.team = Team.enemy
     self.scaleMovementSpeed(speed)

@@ -12,8 +12,8 @@ import SpriteKit
 // TODO: We might want to make a super class for Projectiles in general, since there will likely be common functionality between all of the projectiles.
 class Bullet: PhysicsEnabledGameObject {
   
-  init(speed: Double) {
-    super.init()
+  init(gameScene: GameScene, position: CGPoint, speed: Double) {
+    super.init(gameScene: gameScene, position: position)
     self.nodeName = "bullet"
     self.scaleMovementSpeed(speed)
     self.applyImpulse(dx: 0.0, dy: 1.0 * CGFloat(speed))

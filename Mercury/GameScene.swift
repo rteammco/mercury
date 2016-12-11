@@ -30,21 +30,6 @@ class GameScene: SKScene {
   // If set, this indicates the first and most recent touch positions.
   private var lastTouchPosition: CGPoint?
   
-//  // Initialize the GameScene and set up the physics system.
-//  override init(size: CGSize) {
-//    super.init(size: size)
-//    
-//    // Set the contact delegate and disable gravity.
-//    self.physicsWorld.contactDelegate = ContactDelegate()
-//    self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
-//    print("created physics world")
-//  }
-//  
-//  // Required constructor (ignored).
-//  required init?(coder aDecoder: NSCoder) {
-//    super.init(coder: aDecoder)
-//  }
-  
   // Called whenever the scene is presented into the view.
   override func didMove(to view: SKView) {
     self.worldSize = Double(self.size.width + self.size.height) / 4.0
@@ -62,21 +47,24 @@ class GameScene: SKScene {
     // Set the contact delegate and disable gravity.
     self.physicsWorld.contactDelegate = ContactDelegate()
     self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
-    // TODO: frame around the edge of the screen?
-//    self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
-//    self.physicsBody?.friction = 0.0
+  }
+  
+  // Returns the proportionate size of the world, which is determined by the screen size.
+  func getWorldSize() -> Double {
+    if let worldSize = self.worldSize {
+      return worldSize
+    }
+    return 0.0
   }
   
   // Adds the given GameObject type to the scene by appending its node.
   // In addition, scales the movement speed and Sprite node size of the GameObject by the world size to account for the size of the device screen. If scaleSpeed is set to false, the speed will not be scaled. This is useful for certain nodes such as the Player which are moved by user interaction, meaning the speed is already inherently scaled to the size/resolution of the screen.
-  func addGameObject(gameObject: GameObject, position: CGPoint, scaleSpeed: Bool = true) {
-    if let worldSize = self.worldSize {
-      gameObject.createGameSceneNode(scale: worldSize, position: position)
+  func addGameObject(gameObject: GameObject, scaleSpeed: Bool = true) {
+    if let worldSize = self.worldSize {  // TODO?
       if scaleSpeed {
         gameObject.scaleMovementSpeed(worldSize)
       }
     }
-    gameObject.gameScene = self
     self.addChild(gameObject.getSceneNode())
   }
   

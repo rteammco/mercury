@@ -15,7 +15,7 @@ class GameObject {
   var gameSceneNode: SKShapeNode?
   
   // Reference to the GameScene running the current Level.
-  var gameScene: GameScene?
+  let gameScene: GameScene
   
   // How fast the object moves in the world.
   // This is a relative value and is scaled by the GameScene depending on the screen size. It should only ever be modified with scaleMovementSpeed().
@@ -35,6 +35,12 @@ class GameObject {
   // This flag is used to trigger cleanup of objects at each frame. If isAlive is set to false, this object will be removed from the game during the next frame update.
   var isAlive: Bool = true
   
+  // Create the object, and get the GameScene which is used to determine world size properties.
+  init(gameScene: GameScene, position: CGPoint) {
+    self.gameScene = gameScene
+    self.createGameSceneNode(scale: gameScene.getWorldSize(), position: position)
+  }
+  
   // Scale the movement speed by the given non-negative value.
   func scaleMovementSpeed(_ speedScale: Double) {
     // Speed must be non-negative.
@@ -46,6 +52,7 @@ class GameObject {
   
   // Creates the Sprite node that gets added to the GameScene. The given scale is based on the size of the screen, so the node's size should adapt according to the screen size. The position is in absolute coordinates.
   // Override as needed. By default, creates a blue square of (relative) size 0.5 which is about a third of the screen's width.
+  // Called in GameObject's init().
   func createGameSceneNode(scale: Double, position: CGPoint) {
     let size = 0.5 * scale
     self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
@@ -68,10 +75,7 @@ class GameObject {
   
   // Returns true if this object is within screen bounds. Uses the GameScene's implementation.
   func isWithinScreenBounds() -> Bool {
-    if let gameScene = self.gameScene {
-      return gameScene.isGameObjectWithinScreenBounds(gameObject: self)
-    }
-    return true
+    return self.gameScene.isGameObjectWithinScreenBounds(gameObject: self)
   }
   
   // Returns the scene node for this object. If it was not initialized, the returned object will be an empty SKShapeNode.

@@ -12,13 +12,14 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
 
   // TODO: self.gameSceneNode?.physicsBody?.categoryBitMask ...?
   
-  override init() {
-    super.init()
+  override init(gameScene: GameScene, position: CGPoint) {
+    super.init(gameScene: gameScene, position: position)
     createPhysicsBody()
   }
   
   // Creates a circular physics body (the most basic collision check) with default physical properties.
   // Override as needed for each GameObject.
+  // Called in PhysicsEnabledGameObject's init().
   func createPhysicsBody() {
     if let gameSceneNode = self.gameSceneNode {
       // Simple circular physics body. This can be defined as an arbitrary polygon for more realistic physical simulations.
@@ -33,9 +34,6 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
       
       gameSceneNode.physicsBody?.allowsRotation = false  // true = forces can impact angular velocity.
       gameSceneNode.physicsBody?.isDynamic = true        // true = this object is simulated by the physics subsystem; false = only acts on other objects (e.g. user-controlled objects).
-      
-//      let bitMask: UInt32 = 0x1 << 0    // ...0001
-//      gameSceneNode.physicsBody?.categoryBitMask = bitMask
     }
   }
   
