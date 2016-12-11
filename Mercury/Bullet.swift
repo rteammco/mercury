@@ -16,6 +16,7 @@ class Bullet: PhysicsEnabledGameObject {
     super.init()
     self.nodeName = "bullet"
     self.scaleMovementSpeed(speed)
+    self.applyImpulse(dx: 0.0, dy: 1.0 * CGFloat(speed))
   }
   
   // TODO: temporary color and shape.
@@ -32,7 +33,7 @@ class Bullet: PhysicsEnabledGameObject {
   // Moves the bullet forward at the given speed.
   // TODO: check for collisions.
   override func update(_ elapsedTime: TimeInterval) {
-    self.moveUpdate(elapsedTime: elapsedTime)
+    //self.moveUpdate(elapsedTime: elapsedTime)
     if !self.isWithinScreenBounds() {
       self.isAlive = false
     }

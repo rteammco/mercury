@@ -30,6 +30,21 @@ class GameScene: SKScene {
   // If set, this indicates the first and most recent touch positions.
   private var lastTouchPosition: CGPoint?
   
+//  // Initialize the GameScene and set up the physics system.
+//  override init(size: CGSize) {
+//    super.init(size: size)
+//    
+//    // Set the contact delegate and disable gravity.
+//    self.physicsWorld.contactDelegate = ContactDelegate()
+//    self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+//    print("created physics world")
+//  }
+//  
+//  // Required constructor (ignored).
+//  required init?(coder aDecoder: NSCoder) {
+//    super.init(coder: aDecoder)
+//  }
+  
   // Called whenever the scene is presented into the view.
   override func didMove(to view: SKView) {
     self.worldSize = Double(self.size.width + self.size.height) / 4.0
@@ -43,6 +58,13 @@ class GameScene: SKScene {
     
     // TODO: this should create the appropriate level, not the general level.
     self.level = Level(gameScene: self)
+    
+    // Set the contact delegate and disable gravity.
+    self.physicsWorld.contactDelegate = ContactDelegate()
+    self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+    // TODO: frame around the edge of the screen?
+//    self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+//    self.physicsBody?.friction = 0.0
   }
   
   // Adds the given GameObject type to the scene by appending its node.
