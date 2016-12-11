@@ -78,6 +78,7 @@ class GameObject {
   func getSceneNode() -> SKShapeNode {
     if let gameSceneNode = self.gameSceneNode {
       gameSceneNode.name = self.nodeName
+      gameSceneNode.userData?.setValue(self, forKey: "GameObject")
       return gameSceneNode
     } else {
       return SKShapeNode()
@@ -89,25 +90,27 @@ class GameObject {
     self.gameSceneNode?.removeFromParent()
   }
   
-  // Returns the distance of this object (its node) to to given point. Returns 0 if the node is not
-  // defined.
-  func distanceTo(loc: CGPoint) -> Double {
-    if let gameSceneNode = self.gameSceneNode {
-      let xDist = loc.x - gameSceneNode.position.x
-      let yDist = loc.y - gameSceneNode.position.y
-      return Double(sqrt(xDist * xDist + yDist * yDist))
-    }
-    return 0.0
-  }
-  
-  // Moves the scene node to the given location. Removes any previous move actions.
-  func moveTo(to loc: CGPoint, duration: Double) {
-    if let gameSceneNode = self.gameSceneNode {
-      let time = duration / self.movementSpeed
-      gameSceneNode.removeAction(forKey: "moveAction")
-      gameSceneNode.run(SKAction.move(to: loc, duration: time), withKey: "moveAction")
-    }
-  }
+// TODO: put this function back if it is needed again.
+//  // Returns the distance of this object (its node) to to given point. Returns 0 if the node is not
+//  // defined.
+//  func distanceTo(loc: CGPoint) -> Double {
+//    if let gameSceneNode = self.gameSceneNode {
+//      let xDist = loc.x - gameSceneNode.position.x
+//      let yDist = loc.y - gameSceneNode.position.y
+//      return Double(sqrt(xDist * xDist + yDist * yDist))
+//    }
+//    return 0.0
+//  }
+
+// TODO: put this function back if it is needed again.
+//  // Moves the scene node to the given location. Removes any previous move actions.
+//  func moveTo(to loc: CGPoint, duration: Double) {
+//    if let gameSceneNode = self.gameSceneNode {
+//      let time = duration / self.movementSpeed
+//      gameSceneNode.removeAction(forKey: "moveAction")
+//      gameSceneNode.run(SKAction.move(to: loc, duration: time), withKey: "moveAction")
+//    }
+//  }
   
   // Moves the scene node by the given dx and dy instantly.
   func moveBy(dx: CGFloat, dy: CGFloat) {
