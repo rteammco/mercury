@@ -16,7 +16,6 @@ class Bullet: PhysicsEnabledGameObject {
     super.init(gameScene: gameScene, position: position)
     self.nodeName = "bullet"
     self.scaleMovementSpeed(speed)
-    self.applyImpulse(dx: 0.0, dy: 1.0 * CGFloat(speed))
   }
   
   // TODO: temporary color and shape.
