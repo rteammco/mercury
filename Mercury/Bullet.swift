@@ -12,14 +12,14 @@ import SpriteKit
 // TODO: We might want to make a super class for Projectiles in general, since there will likely be common functionality between all of the projectiles.
 class Bullet: PhysicsEnabledGameObject {
   
-  init(gameScene: GameScene, position: CGPoint, speed: Double) {
+  init(gameScene: GameScene, position: CGPoint, speed: CGFloat) {
     super.init(gameScene: gameScene, position: position)
     self.nodeName = "bullet"
     self.scaleMovementSpeed(speed)
   }
   
   // TODO: temporary color and shape.
-  override func createGameSceneNode(scale: Double, position: CGPoint) {
+  override func createGameSceneNode(scale: CGFloat, position: CGPoint) {
     let width = 0.01 * scale
     let height = 0.04 * scale
     self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: width, height: height))

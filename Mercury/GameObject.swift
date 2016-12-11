@@ -19,11 +19,11 @@ class GameObject {
   
   // How fast the object moves in the world.
   // This is a relative value and is scaled by the GameScene depending on the screen size. It should only ever be modified with scaleMovementSpeed().
-  private var movementSpeed: Double = 1.0
+  var movementSpeed: CGFloat = 1.0
   
   // The direction of the object's motion (unit vector, scaled by movementSpeed).
   // By default, this motion is towards the top of the screen. Modify as needed with setMovementDirection().
-  private var movementDirection = CGVector(dx: 0.0, dy: 1.0)
+  var movementDirection = CGVector(dx: 0.0, dy: 1.0)
   
   // This node name is assigned to the sprite/shape nodes returned by getSceneNode(). Use an
   // identifier for detecting those nodes in the scene.
@@ -42,7 +42,7 @@ class GameObject {
   }
   
   // Scale the movement speed by the given non-negative value.
-  func scaleMovementSpeed(_ speedScale: Double) {
+  func scaleMovementSpeed(_ speedScale: CGFloat) {
     // Speed must be non-negative.
     if speedScale < 0 {
       return
@@ -53,7 +53,7 @@ class GameObject {
   // Creates the Sprite node that gets added to the GameScene. The given scale is based on the size of the screen, so the node's size should adapt according to the screen size. The position is in absolute coordinates.
   // Override as needed. By default, creates a blue square of (relative) size 0.5 which is about a third of the screen's width.
   // Called in GameObject's init().
-  func createGameSceneNode(scale: Double, position: CGPoint) {
+  func createGameSceneNode(scale: CGFloat, position: CGPoint) {
     let size = 0.5 * scale
     self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
     if let gameSceneNode = self.gameSceneNode {

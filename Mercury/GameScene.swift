@@ -16,7 +16,7 @@ class GameScene: SKScene {
   private var level: Level?
   
   // The size of the world (half of the average of the screen width and height).
-  private var worldSize: Double?
+  private var worldSize: CGFloat?
   
   // The maximum and minumum x and y coordinates of the screen. This is used to determine if objects are within the screen.
   private var minimumScreenX: CGFloat?
@@ -32,7 +32,7 @@ class GameScene: SKScene {
   
   // Called whenever the scene is presented into the view.
   override func didMove(to view: SKView) {
-    self.worldSize = Double(self.size.width + self.size.height) / 4.0
+    self.worldSize = (self.size.width + self.size.height) / 4.0
     
     let halfScreenWidth = self.size.width / 2
     let halfScreenHeight = self.size.height / 2
@@ -50,7 +50,7 @@ class GameScene: SKScene {
   }
   
   // Returns the proportionate size of the world, which is determined by the screen size.
-  func getWorldSize() -> Double {
+  func getWorldSize() -> CGFloat {
     if let worldSize = self.worldSize {
       return worldSize
     }

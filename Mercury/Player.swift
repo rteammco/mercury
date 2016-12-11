@@ -31,7 +31,7 @@ class Player: InteractiveGameObject {
   }
   
   // TODO: temporary color and shape.
-  override func createGameSceneNode(scale: Double, position: CGPoint) {
+  override func createGameSceneNode(scale: CGFloat, position: CGPoint) {
     let size = 0.2 * scale
     self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
     if let gameSceneNode = self.gameSceneNode {

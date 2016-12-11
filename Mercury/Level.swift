@@ -65,7 +65,7 @@ class Level {
   // Adds a friendly projectile (projected by the player or units friendly to the player) into the GameScene.
   func addFriendlyProjectile(projectile: PhysicsEnabledGameObject) {
     self.gameScene.addGameObject(gameObject: projectile)
-    projectile.applyImpulse(dx: 0.0, dy: 300.0)
+    projectile.applyDefaultImpulse()
     self.frieldlyProjectiles.append(projectile)
   }
   

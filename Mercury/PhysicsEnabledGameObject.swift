@@ -41,4 +41,11 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
     self.gameSceneNode?.physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
   }
   
+  // Applies an impulse based on the movement speed and direction of the GameObject.
+  func applyDefaultImpulse() {
+    let dx = self.movementDirection.dx * self.movementSpeed
+    let dy = self.movementDirection.dy * self.movementSpeed
+    self.applyImpulse(dx: dx, dy: dy)
+  }
+  
 }
