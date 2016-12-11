@@ -10,7 +10,7 @@
 import SpriteKit
 
 // TODO: We might want to make a super class for Projectiles in general, since there will likely be common functionality between all of the projectiles.
-class Bullet: GameObject {
+class Bullet: PhysicsEnabledGameObject {
   
   init(speed: Double) {
     super.init()

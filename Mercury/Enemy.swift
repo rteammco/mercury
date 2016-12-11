@@ -9,7 +9,7 @@
 
 import SpriteKit
 
-class Enemy: GameObject {
+class Enemy: PhysicsEnabledGameObject {
   
   init(speed: Double) {
     super.init()
