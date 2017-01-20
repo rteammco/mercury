@@ -17,8 +17,8 @@ class GameScene: SKScene {
   private var enemies: [Enemy]?
   private var frieldlyProjectiles: [GameObject]?
   
-  // Animations.
-  private var linePathNode: SKShapeNode?
+  // The size of the world used for scaling all displayed scene nodes.
+  private var worldSize: CGFloat?
   
   // User touch interaction variables.
   private var lastTouchPosition: CGPoint?
@@ -26,15 +26,8 @@ class GameScene: SKScene {
   // Animation variables.
   private var lastFrameTime: TimeInterval?
   
-  // The size of the world (half of the average of the screen width and height).
-  private var worldSize: CGFloat?
-  
-  // The maximum and minumum x and y coordinates of the screen. This is used to determine if objects are within the screen.
-  private var minimumScreenX: CGFloat?
-  private var minimumScreenY: CGFloat?
-  private var maximumScreenX: CGFloat?
-  private var maximumScreenY: CGFloat?
-  private var level: Level?
+  // Animation display objects.
+  private var linePathNode: SKShapeNode?
   
   //------------------------------------------------------------------------------
   // Scene initialization.
@@ -42,28 +35,9 @@ class GameScene: SKScene {
   
   // Called whenever the scene is presented into the view.
   override func didMove(to view: SKView) {
-    self.worldSize = (self.size.width + self.size.height) / 4.0
-    
-    let halfScreenWidth = self.size.width / 2
-    let halfScreenHeight = self.size.height / 2
-    self.minimumScreenX = -halfScreenWidth
-    self.maximumScreenX = halfScreenWidth
-    self.minimumScreenY = -halfScreenHeight
-    self.maximumScreenY = halfScreenHeight
-    
-    // TODO: this should create the appropriate level, not the general level.
-    //self.level = Level(gameScene: self)
-    
-    // TEMPORARY
     self.scaleMode = SKSceneScaleMode.aspectFill
-    let width: CGFloat = 0.1
-    let height: CGFloat = 0.1
-    let node = SKShapeNode.init(rectOf: CGSize.init(width: CGFloat(self.worldSize!) * width, height: CGFloat(self.worldSize!) * height))
-    node.position = CGPoint(x: 0, y: 0)
-    node.fillColor = SKColor.blue
-    self.addChild(node)
-    
-    print(self.size.width, self.size.height)
+    self.worldSize = min(self.size.width, self.size.height)
+    //self.worldSize = (self.size.width + self.size.height) / 4.0
     
     initializePhysics()
     initializeScene()
@@ -75,7 +49,19 @@ class GameScene: SKScene {
     self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
   }
   
+  // Add the player object to the scene (optional).
+  func createPlayer() {
+    // TEMPORARY
+    let playerSize = CGSize(width: 0.15, height: 0.15)
+    let playerNode = SKShapeNode.init(rectOf: getScaledSize(playerSize))
+    playerNode.position = CGPoint(x: 0, y: 0)
+    playerNode.fillColor = SKColor.blue
+    self.addChild(playerNode)
+  }
+  
+  // Initialize the current level scene by setting up all GameObjects and events.
   func initializeScene() {
+    createPlayer()
     // Override function as needed.
   }
   
@@ -83,12 +69,11 @@ class GameScene: SKScene {
   // General level methods.
   //------------------------------------------------------------------------------
   
-  // Returns the proportionate size of the world, which is determined by the screen size.
-  func getWorldSize() -> CGFloat {
+  func getScaledSize(_ normalizedSize: CGSize) -> CGSize {
     if let worldSize = self.worldSize {
-      return worldSize
+      return CGSize(width: worldSize * normalizedSize.width, height: worldSize * normalizedSize.height)
     }
-    return 0.0
+    return normalizedSize
   }
   
   // Adds the given GameObject type to the scene by appending its node.
@@ -104,12 +89,7 @@ class GameScene: SKScene {
   
   // Returns true if the given object is within screen bounds.
   func isGameObjectWithinScreenBounds(gameObject: GameObject) -> Bool {
-    let position = gameObject.getSceneNode().position
-    if let minX = self.minimumScreenX, let maxX = self.maximumScreenX, let minY = self.minimumScreenY, let maxY = self.maximumScreenY {
-      if position.x < minX || position.x > maxX || position.y < minY || position.y > maxY {
-        return false
-      }
-    }
+    // TODO
     return true
   }
   
@@ -124,22 +104,40 @@ class GameScene: SKScene {
   }
   
   //------------------------------------------------------------------------------
-  // Touch event handlers.
+  // Touch event methods.
   //------------------------------------------------------------------------------
   
   func touchDown(atPoint pos: CGPoint) {
-    self.level?.touchDown(atPoint: pos)
+    // TODO
     self.lastTouchPosition = pos
   }
   
   func touchMoved(toPoint pos: CGPoint) {
-    self.level?.touchMoved(toPoint: pos)
+    // TODO
     self.lastTouchPosition = pos
   }
   
   func touchUp(atPoint pos: CGPoint) {
-    self.level?.touchUp(atPoint: pos)
+    // TODO
   }
+  
+  //------------------------------------------------------------------------------
+  // Animation update methods.
+  //------------------------------------------------------------------------------
+  
+  // This method measures the elapsed time since the last frame and updates the current game level.
+  // Called before each frame is rendered with the current time.
+  override func update(_ currentTime: TimeInterval) {
+    // TODO
+    //if let lastFrameTime = self.lastFrameTime {
+    //  let elapsedTime = currentTime - lastFrameTime
+    //}
+    self.lastFrameTime = currentTime
+  }
+  
+  //------------------------------------------------------------------------------
+  // SKScene multitouch handlers.
+  //------------------------------------------------------------------------------
   
   // Called when user starts a touch action.
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -159,16 +157,6 @@ class GameScene: SKScene {
   // Called when a touch action is interrupted or otherwise cancelled.
   override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
     for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-  }
-  
-  // This method measures the elapsed time since the last frame and updates the current game level.
-  // Called before each frame is rendered with the current time.
-  override func update(_ currentTime: TimeInterval) {
-    if let lastFrameTime = self.lastFrameTime {
-      let elapsedTime = currentTime - lastFrameTime
-      level?.update(elapsedTime)
-    }
-    self.lastFrameTime = currentTime
   }
   
 }

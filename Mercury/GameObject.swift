@@ -38,7 +38,7 @@ class GameObject {
   // Create the object, and get the GameScene which is used to determine world size properties.
   init(gameScene: GameScene, position: CGPoint) {
     self.gameScene = gameScene
-    self.createGameSceneNode(scale: gameScene.getWorldSize(), position: position)
+    //self.createGameSceneNode(scale: gameScene.getWorldSize(), position: position)
   }
   
   // Scale the movement speed by the given non-negative value.
