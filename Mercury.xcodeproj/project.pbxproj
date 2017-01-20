@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7906C4641DDD144A00187846 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7906C4631DDD144A00187846 /* Level.swift */; };
+		792DDE5A1E29649A00AED88E /* TestLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792DDE591E29649A00AED88E /* TestLevel.swift */; };
 		7960143B1DD8EB23004640E9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143A1DD8EB23004640E9 /* Player.swift */; };
 		7960143D1DD8EB5A004640E9 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143C1DD8EB5A004640E9 /* GameObject.swift */; };
 		7960143F1DD904B1004640E9 /* UserInteractive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143E1DD904B1004640E9 /* UserInteractive.swift */; };
@@ -49,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		7906C4631DDD144A00187846 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
+		792DDE591E29649A00AED88E /* TestLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLevel.swift; sourceTree = "<group>"; };
 		7960143A1DD8EB23004640E9 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		7960143C1DD8EB5A004640E9 /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		7960143E1DD904B1004640E9 /* UserInteractive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInteractive.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				7906C4631DDD144A00187846 /* Level.swift */,
+				792DDE591E29649A00AED88E /* TestLevel.swift */,
 			);
 			name = Levels;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				7906C4641DDD144A00187846 /* Level.swift in Sources */,
 				79C4ABBE1DFDEE3A006DDCAF /* PhysicsEnabled.swift in Sources */,
 				796014411DD90684004640E9 /* InteractiveGameObject.swift in Sources */,
+				792DDE5A1E29649A00AED88E /* TestLevel.swift in Sources */,
 				79D2294E1DEF6339003F68F9 /* Bullet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

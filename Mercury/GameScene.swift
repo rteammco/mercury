@@ -12,8 +12,19 @@ import GameplayKit
 
 class GameScene: SKScene {
   
-  // The active level (or menu).
-  private var level: Level?
+  // Game units.
+  private var player: Player?
+  private var enemies: [Enemy]?
+  private var frieldlyProjectiles: [GameObject]?
+  
+  // Animations.
+  private var linePathNode: SKShapeNode?
+  
+  // User touch interaction variables.
+  private var lastTouchPosition: CGPoint?
+  
+  // Animation variables.
+  private var lastFrameTime: TimeInterval?
   
   // The size of the world (half of the average of the screen width and height).
   private var worldSize: CGFloat?
@@ -23,12 +34,11 @@ class GameScene: SKScene {
   private var minimumScreenY: CGFloat?
   private var maximumScreenX: CGFloat?
   private var maximumScreenY: CGFloat?
+  private var level: Level?
   
-  // The time of the last frame. The time elapsed between frames is the new time minus this time.
-  private var lastFrameTime: TimeInterval?
-  
-  // If set, this indicates the first and most recent touch positions.
-  private var lastTouchPosition: CGPoint?
+  //------------------------------------------------------------------------------
+  // Scene initialization.
+  //------------------------------------------------------------------------------
   
   // Called whenever the scene is presented into the view.
   override func didMove(to view: SKView) {
@@ -42,12 +52,36 @@ class GameScene: SKScene {
     self.maximumScreenY = halfScreenHeight
     
     // TODO: this should create the appropriate level, not the general level.
-    self.level = Level(gameScene: self)
+    //self.level = Level(gameScene: self)
     
-    // Set the contact delegate and disable gravity.
+    // TEMPORARY
+    self.scaleMode = SKSceneScaleMode.aspectFill
+    let width: CGFloat = 0.1
+    let height: CGFloat = 0.1
+    let node = SKShapeNode.init(rectOf: CGSize.init(width: CGFloat(self.worldSize!) * width, height: CGFloat(self.worldSize!) * height))
+    node.position = CGPoint(x: 0, y: 0)
+    node.fillColor = SKColor.blue
+    self.addChild(node)
+    
+    print(self.size.width, self.size.height)
+    
+    initializePhysics()
+    initializeScene()
+  }
+  
+  // Set the contact delegate and disable gravity.
+  private func initializePhysics() {
     self.physicsWorld.contactDelegate = ContactDelegate()
     self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
   }
+  
+  func initializeScene() {
+    // Override function as needed.
+  }
+  
+  //------------------------------------------------------------------------------
+  // General level methods.
+  //------------------------------------------------------------------------------
   
   // Returns the proportionate size of the world, which is determined by the screen size.
   func getWorldSize() -> CGFloat {
@@ -88,6 +122,10 @@ class GameScene: SKScene {
       return CGPoint(x: 0, y: 0)
     }
   }
+  
+  //------------------------------------------------------------------------------
+  // Touch event handlers.
+  //------------------------------------------------------------------------------
   
   func touchDown(atPoint pos: CGPoint) {
     self.level?.touchDown(atPoint: pos)
