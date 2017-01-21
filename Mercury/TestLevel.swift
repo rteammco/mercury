@@ -11,7 +11,7 @@ import SpriteKit
 class TestLevel: GameScene {
     
   override func initializeScene() {
-    createPlayer(atPosition: CGPoint(x: 0.0, y: -0.5))
+    createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
   /*
      // TODO: use events to build the level, e.g. like this:
      

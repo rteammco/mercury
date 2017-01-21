@@ -35,14 +35,12 @@ class GameScene: SKScene {
   
   // Called whenever the scene is presented into the view.
   override func didMove(to view: SKView) {
-    // Set the size of the world to the screen's current size.
-//    self.size = view.bounds.size
-//    self.scaleMode = SKSceneScaleMode.aspectFill
+    // Set the size of the world based on the scene's size.
     self.worldSize = min(self.size.width, self.size.height)
-    //self.worldSize = (self.size.width + self.size.height) / 4.0
     
     self.enemies = [Enemy]()
     self.friendlyProjectiles = [GameObject]()
+    
     initializePhysics()
     initializeScene()
   }
@@ -66,9 +64,7 @@ class GameScene: SKScene {
   
   // Initialize the current level scene by setting up all GameObjects and events.
   func initializeScene() {
-    createPlayer(atPosition: CGPoint(x: 0.0, y: 0.0))
     // Override function as needed.
-    
     let testLevel = TestLevel()
     setCurrentLevel(to: testLevel)
   }
@@ -76,6 +72,15 @@ class GameScene: SKScene {
   //------------------------------------------------------------------------------
   // General level methods.
   //------------------------------------------------------------------------------
+  
+  // Adds the given GameObject type to the scene by appending its node.
+  // In addition, scales the movement speed and Sprite node size of the GameObject by the world size to account for the size of the device screen. If scaleSpeed is set to false, the speed will not be scaled. This is useful for certain nodes such as the Player which are moved by user interaction, meaning the speed is already inherently scaled to the size/resolution of the screen.
+  func addGameObject(gameObject: GameObject) {
+    if let worldSize = self.worldSize {
+      let sceneNode = gameObject.createGameSceneNode(scale: worldSize)
+      addChild(sceneNode)
+    }
+  }
   
   // Sets the current GameScene to the object defined in the given GameScene file. This GameScene will be presented to the view.
   func setCurrentLevel(to nextLevel: GameScene) {
@@ -88,6 +93,7 @@ class GameScene: SKScene {
     }
   }
   
+  // Returns a scaled version of the given normalized size (where a size of 1.0 is the width of the screen). The scaled version will reflect the pixel size of the screen.
   func getScaledSize(_ normalizedSize: CGSize) -> CGSize {
     if let worldSize = self.worldSize {
       return CGSize(width: worldSize * normalizedSize.width, height: worldSize * normalizedSize.height)
@@ -95,22 +101,13 @@ class GameScene: SKScene {
     return normalizedSize
   }
   
+  // Returns a scaled version of the given normalized position. Position (0, 0) is in the center. If the X coordinate is -1, that's the left-most side of the screen; +1 is the right-most side. Since the screen is taller than it is wide, +/-1 in the Y axis is not going to be completely at the bottom or top.
   func getScaledPosition(_ normalizedPosition: CGPoint) -> CGPoint {
     if let worldSize = self.worldSize {
-      return CGPoint(x: worldSize * normalizedPosition.x, y: worldSize * normalizedPosition.y)
+      let halfWorldSize = worldSize / 2.0
+      return CGPoint(x: halfWorldSize * normalizedPosition.x, y: halfWorldSize * normalizedPosition.y)
     }
     return normalizedPosition
-  }
-  
-  // Adds the given GameObject type to the scene by appending its node.
-  // In addition, scales the movement speed and Sprite node size of the GameObject by the world size to account for the size of the device screen. If scaleSpeed is set to false, the speed will not be scaled. This is useful for certain nodes such as the Player which are moved by user interaction, meaning the speed is already inherently scaled to the size/resolution of the screen.
-  func addGameObject(gameObject: GameObject, scaleSpeed: Bool = true) {
-    if let worldSize = self.worldSize {  // TODO?
-      if scaleSpeed {
-        gameObject.scaleMovementSpeed(worldSize)
-      }
-    }
-    self.addChild(gameObject.getSceneNode())
   }
   
   // Returns true if the given object is within screen bounds.

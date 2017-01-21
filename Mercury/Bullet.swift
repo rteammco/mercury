@@ -12,30 +12,30 @@ import SpriteKit
 // TODO: We might want to make a super class for Projectiles in general, since there will likely be common functionality between all of the projectiles.
 class Bullet: PhysicsEnabledGameObject {
   
-  init(gameScene: GameScene, position: CGPoint, speed: CGFloat) {
-    super.init(gameScene: gameScene, position: position)
+  init(position: CGPoint, speed: CGFloat) {
+    super.init(position: position)
     self.nodeName = "bullet"
     self.scaleMovementSpeed(speed)
   }
   
   // TODO: temporary color and shape.
-  override func createGameSceneNode(scale: CGFloat, position: CGPoint) {
+  override func createGameSceneNode(scale: CGFloat) -> SKNode {
     let width = 0.01 * scale
     let height = 0.04 * scale
-    self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: width, height: height))
-    if let gameSceneNode = self.gameSceneNode {
-      gameSceneNode.position = position
-      gameSceneNode.fillColor = SKColor.yellow
-    }
+    let node = SKShapeNode.init(rectOf: CGSize.init(width: width, height: height))
+    node.position = position
+    node.fillColor = SKColor.yellow
+    self.gameSceneNode = node
+    return node
   }
   
   // Moves the bullet forward at the given speed.
   // TODO: check for collisions.
   override func update(_ elapsedTime: TimeInterval) {
     //self.moveUpdate(elapsedTime: elapsedTime)
-    if !self.isWithinScreenBounds() {
-      self.isAlive = false
-    }
+    //if !self.isWithinScreenBounds() {
+    //  self.isAlive = false
+    //}
   }
   
 }

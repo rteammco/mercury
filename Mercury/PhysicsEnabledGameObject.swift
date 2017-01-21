@@ -12,8 +12,8 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
 
   // TODO: self.gameSceneNode?.physicsBody?.categoryBitMask ...?
   
-  override init(gameScene: GameScene, position: CGPoint) {
-    super.init(gameScene: gameScene, position: position)
+  override init(position: CGPoint) {
+    super.init(position: position)
     createPhysicsBody()
   }
   

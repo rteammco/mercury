@@ -9,7 +9,7 @@
 
 import SpriteKit
 
-class Player: InteractiveGameObject {
+class Player: UserInteractiveGameObject {
   
   // The level that's currently running the player. This is necessary so the Player object can communicate to the Level (e.g. for triggering bullet fires).
   private let level: Level
@@ -20,10 +20,10 @@ class Player: InteractiveGameObject {
   // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
   private var fireBulletTimer: Timer?
   
-  init(gameScene: GameScene, position: CGPoint, level: Level) {
+  init(position: CGPoint, level: Level) {
     self.level = level
     self.fireBulletIntervalSeconds = 0.1
-    super.init(gameScene: gameScene, position: position)
+    super.init(position: position)
     
     self.nodeName = "player"
     self.team = Team.friendly
@@ -31,13 +31,13 @@ class Player: InteractiveGameObject {
   }
   
   // TODO: temporary color and shape.
-  override func createGameSceneNode(scale: CGFloat, position: CGPoint) {
+  override func createGameSceneNode(scale: CGFloat) -> SKNode {
     let size = 0.2 * scale
-    self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
-    if let gameSceneNode = self.gameSceneNode {
-      gameSceneNode.position = position
-      gameSceneNode.fillColor = SKColor.blue
-    }
+    let node = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
+    node.position = position
+    node.fillColor = SKColor.blue
+    self.gameSceneNode = node
+    return node
   }
   
   // Moves the player towards the user's touch position if the player is currently touched down.
@@ -70,13 +70,13 @@ class Player: InteractiveGameObject {
   // TODO: we may want to move this method into the GameObject super class.
   @objc func fireBullet() {
     let playerPosition = self.getSceneNode().position
-    let bullet = Bullet(gameScene: self.gameScene, position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: 2.0)
+    let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: 2.0)
     self.level.addFriendlyProjectile(projectile: bullet)
   }
   
   override func touchDown() {
     super.touchDown()
-    if let gameSceneNode = self.gameSceneNode {
+    if let gameSceneNode = self.gameSceneNode as? SKShapeNode {
       gameSceneNode.fillColor = SKColor.red
     }
     startFireBulletTimer()
@@ -84,7 +84,7 @@ class Player: InteractiveGameObject {
   
   override func touchUp() {
     super.touchUp()
-    if let gameSceneNode = self.gameSceneNode {
+    if let gameSceneNode = self.gameSceneNode as? SKShapeNode {
       gameSceneNode.fillColor = SKColor.blue
     }
     stopFireBulletTimer()

@@ -12,7 +12,7 @@
 		7960143B1DD8EB23004640E9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143A1DD8EB23004640E9 /* Player.swift */; };
 		7960143D1DD8EB5A004640E9 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143C1DD8EB5A004640E9 /* GameObject.swift */; };
 		7960143F1DD904B1004640E9 /* UserInteractive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143E1DD904B1004640E9 /* UserInteractive.swift */; };
-		796014411DD90684004640E9 /* InteractiveGameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796014401DD90684004640E9 /* InteractiveGameObject.swift */; };
+		796014411DD90684004640E9 /* UserInteractiveGameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796014401DD90684004640E9 /* UserInteractiveGameObject.swift */; };
 		79C4ABBA1DF0BBBE006DDCAF /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4ABB91DF0BBBE006DDCAF /* Enemy.swift */; };
 		79C4ABBC1DFB37E6006DDCAF /* Teams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4ABBB1DFB37E6006DDCAF /* Teams.swift */; };
 		79C4ABBE1DFDEE3A006DDCAF /* PhysicsEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4ABBD1DFDEE3A006DDCAF /* PhysicsEnabled.swift */; };
@@ -54,7 +54,7 @@
 		7960143A1DD8EB23004640E9 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		7960143C1DD8EB5A004640E9 /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		7960143E1DD904B1004640E9 /* UserInteractive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInteractive.swift; sourceTree = "<group>"; };
-		796014401DD90684004640E9 /* InteractiveGameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveGameObject.swift; sourceTree = "<group>"; };
+		796014401DD90684004640E9 /* UserInteractiveGameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInteractiveGameObject.swift; sourceTree = "<group>"; };
 		79C4ABB91DF0BBBE006DDCAF /* Enemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		79C4ABBB1DFB37E6006DDCAF /* Teams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Teams.swift; sourceTree = "<group>"; };
 		79C4ABBD1DFDEE3A006DDCAF /* PhysicsEnabled.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhysicsEnabled.swift; sourceTree = "<group>"; };
@@ -113,15 +113,23 @@
 			name = Levels;
 			sourceTree = "<group>";
 		};
+		79381B851E341A15006EC04C /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				79C4ABBD1DFDEE3A006DDCAF /* PhysicsEnabled.swift */,
+				7960143E1DD904B1004640E9 /* UserInteractive.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
 		796014391DD8EAFD004640E9 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				79D2294F1DEF6369003F68F9 /* Game Objects */,
+				79381B851E341A15006EC04C /* Protocols */,
 				7960143C1DD8EB5A004640E9 /* GameObject.swift */,
-				796014401DD90684004640E9 /* InteractiveGameObject.swift */,
-				7960143E1DD904B1004640E9 /* UserInteractive.swift */,
-				79C4ABBD1DFDEE3A006DDCAF /* PhysicsEnabled.swift */,
 				79C4ABC11DFDF536006DDCAF /* PhysicsEnabledGameObject.swift */,
+				796014401DD90684004640E9 /* UserInteractiveGameObject.swift */,
+				79D2294F1DEF6369003F68F9 /* Game Objects */,
 				79C4ABBF1DFDEF1B006DDCAF /* ContactDelegate.swift */,
 				79C4ABBB1DFB37E6006DDCAF /* Teams.swift */,
 			);
@@ -342,7 +350,7 @@
 				79C4ABBA1DF0BBBE006DDCAF /* Enemy.swift in Sources */,
 				7906C4641DDD144A00187846 /* Level.swift in Sources */,
 				79C4ABBE1DFDEE3A006DDCAF /* PhysicsEnabled.swift in Sources */,
-				796014411DD90684004640E9 /* InteractiveGameObject.swift in Sources */,
+				796014411DD90684004640E9 /* UserInteractiveGameObject.swift in Sources */,
 				792DDE5A1E29649A00AED88E /* TestLevel.swift in Sources */,
 				79D2294E1DEF6339003F68F9 /* Bullet.swift in Sources */,
 			);

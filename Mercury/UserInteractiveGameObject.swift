@@ -7,7 +7,7 @@
 //
 //  A GameObject extension that features user interaction.
 
-class InteractiveGameObject: GameObject, UserInteractive {
+class UserInteractiveGameObject: GameObject, UserInteractive {
   
   var isTouched: Bool = false
   

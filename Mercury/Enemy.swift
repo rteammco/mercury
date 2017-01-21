@@ -11,8 +11,8 @@ import SpriteKit
 
 class Enemy: PhysicsEnabledGameObject {
   
-  init(gameScene: GameScene, position: CGPoint, speed: CGFloat) {
-    super.init(gameScene: gameScene, position: position)
+  init(position: CGPoint, speed: CGFloat) {
+    super.init(position: position)
     self.nodeName = "enemy"
     self.team = Team.enemy
     self.scaleMovementSpeed(speed)
@@ -20,21 +20,21 @@ class Enemy: PhysicsEnabledGameObject {
   }
   
   // TODO: temporary color and shape.
-  override func createGameSceneNode(scale: CGFloat, position: CGPoint) {
+  override func createGameSceneNode(scale: CGFloat) -> SKNode {
     let size = 0.2 * scale
-    self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
-    if let gameSceneNode = self.gameSceneNode {
-      gameSceneNode.position = position
-      gameSceneNode.fillColor = SKColor.cyan
-    }
+    let node = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
+    node.position = self.position
+    node.fillColor = SKColor.cyan
+    self.gameSceneNode = node
+    return node
   }
   
   // Moves down every frame until it flies off screen.
   override func update(_ elapsedTime: TimeInterval) {
     self.moveUpdate(elapsedTime: elapsedTime)
-    if !self.isWithinScreenBounds() {
-      self.isAlive = false
-    }
+    //if !self.isWithinScreenBounds() {
+    //  self.isAlive = false
+    //}
   }
   
 }

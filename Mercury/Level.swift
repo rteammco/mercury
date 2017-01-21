@@ -41,9 +41,9 @@ class Level {
     let size = (screenSize.width + screenSize.height) * 0.05
     let xPos = 0
     let yPos = Int(-screenSize.height / 2 + size)
-    let player = Player(gameScene: self.gameScene, position: CGPoint(x: xPos, y: yPos), level: self)
+    let player = Player(position: CGPoint(x: xPos, y: yPos), level: self)
     self.player = player
-    self.gameScene.addGameObject(gameObject: player, scaleSpeed: false)
+    self.gameScene.addGameObject(gameObject: player)
   }
   
   // Creates a line that fades over time for visualization of the user's touch input.
@@ -78,7 +78,7 @@ class Level {
         self.player?.touchDown()
       }
     }
-    self.addEnemy(enemy: Enemy(gameScene: self.gameScene, position: CGPoint(x: 0, y: 700), speed: 0.25))  // TODO: remove!
+    self.addEnemy(enemy: Enemy(position: CGPoint(x: 0, y: 700), speed: 0.25))  // TODO: remove!
   }
   
   // Called by the GameScene when the user moves their finger while touching down on the screen.

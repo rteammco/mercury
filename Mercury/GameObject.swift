@@ -12,10 +12,8 @@ import SpriteKit
 class GameObject {
   
   // The scene node for animation and rendering.
-  var gameSceneNode: SKShapeNode?
-  
-  // Reference to the GameScene running the current Level.
-  let gameScene: GameScene
+  var gameSceneNode: SKNode?
+  var position: CGPoint
   
   // How fast the object moves in the world.
   // This is a relative value and is scaled by the GameScene depending on the screen size. It should only ever be modified with scaleMovementSpeed().
@@ -36,9 +34,8 @@ class GameObject {
   var isAlive: Bool = true
   
   // Create the object, and get the GameScene which is used to determine world size properties.
-  init(gameScene: GameScene, position: CGPoint) {
-    self.gameScene = gameScene
-    //self.createGameSceneNode(scale: gameScene.getWorldSize(), position: position)
+  init(position: CGPoint) {
+    self.position = position
   }
   
   // Scale the movement speed by the given non-negative value.
@@ -53,13 +50,14 @@ class GameObject {
   // Creates the Sprite node that gets added to the GameScene. The given scale is based on the size of the screen, so the node's size should adapt according to the screen size. The position is in absolute coordinates.
   // Override as needed. By default, creates a blue square of (relative) size 0.5 which is about a third of the screen's width.
   // Called in GameObject's init().
-  func createGameSceneNode(scale: CGFloat, position: CGPoint) {
-    let size = 0.5 * scale
-    self.gameSceneNode = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
-    if let gameSceneNode = self.gameSceneNode {
-      gameSceneNode.position = position
-      gameSceneNode.fillColor = SKColor.blue
-    }
+  func createGameSceneNode(scale: CGFloat) -> SKNode {
+    // Override as needed.
+    let size = 0.15 * scale
+    let node = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
+    node.position = position
+    node.fillColor = SKColor.blue
+    self.gameSceneNode = node
+    return node
   }
   
   // Set the movement direction. This will automatically normalize the given vector (must be non-zero).
@@ -73,13 +71,8 @@ class GameObject {
     self.movementDirection.dy = dy / norm
   }
   
-  // Returns true if this object is within screen bounds. Uses the GameScene's implementation.
-  func isWithinScreenBounds() -> Bool {
-    return self.gameScene.isGameObjectWithinScreenBounds(gameObject: self)
-  }
-  
   // Returns the scene node for this object. If it was not initialized, the returned object will be an empty SKShapeNode.
-  func getSceneNode() -> SKShapeNode {
+  func getSceneNode() -> SKNode {
     if let gameSceneNode = self.gameSceneNode {
       gameSceneNode.name = self.nodeName
       gameSceneNode.userData?.setValue(self, forKey: "GameObject")
