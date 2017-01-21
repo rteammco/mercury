@@ -13,12 +13,12 @@ import GameplayKit
 class GameScene: SKScene {
   
   // Game units.
-  private var player: Player?
-  private var enemies: [Enemy]?
-  private var frieldlyProjectiles: [GameObject]?
+  var player: Player?
+  var enemies: [Enemy]?
+  var friendlyProjectiles: [GameObject]?
   
   // The size of the world used for scaling all displayed scene nodes.
-  private var worldSize: CGFloat?
+  var worldSize: CGFloat?
   
   // User touch interaction variables.
   private var lastTouchPosition: CGPoint?
@@ -35,10 +35,14 @@ class GameScene: SKScene {
   
   // Called whenever the scene is presented into the view.
   override func didMove(to view: SKView) {
-    self.scaleMode = SKSceneScaleMode.aspectFill
+    // Set the size of the world to the screen's current size.
+//    self.size = view.bounds.size
+//    self.scaleMode = SKSceneScaleMode.aspectFill
     self.worldSize = min(self.size.width, self.size.height)
     //self.worldSize = (self.size.width + self.size.height) / 4.0
     
+    self.enemies = [Enemy]()
+    self.friendlyProjectiles = [GameObject]()
     initializePhysics()
     initializeScene()
   }
@@ -50,30 +54,52 @@ class GameScene: SKScene {
   }
   
   // Add the player object to the scene (optional).
-  func createPlayer() {
+  func createPlayer(atPosition position: CGPoint) {
     // TEMPORARY
     let playerSize = CGSize(width: 0.15, height: 0.15)
-    let playerNode = SKShapeNode.init(rectOf: getScaledSize(playerSize))
-    playerNode.position = CGPoint(x: 0, y: 0)
+    let playerNode = SKShapeNode(rectOf: getScaledSize(playerSize))
+    playerNode.position = getScaledPosition(position)
+    print(playerNode.position)
     playerNode.fillColor = SKColor.blue
     self.addChild(playerNode)
   }
   
   // Initialize the current level scene by setting up all GameObjects and events.
   func initializeScene() {
-    createPlayer()
+    createPlayer(atPosition: CGPoint(x: 0.0, y: 0.0))
     // Override function as needed.
+    
+    let testLevel = TestLevel()
+    setCurrentLevel(to: testLevel)
   }
   
   //------------------------------------------------------------------------------
   // General level methods.
   //------------------------------------------------------------------------------
   
+  // Sets the current GameScene to the object defined in the given GameScene file. This GameScene will be presented to the view.
+  func setCurrentLevel(to nextLevel: GameScene) {
+    if let view = self.view {
+      // Copy the current GameScene's properties.
+      nextLevel.size = self.size
+      nextLevel.scaleMode = self.scaleMode
+      nextLevel.anchorPoint = self.anchorPoint
+      view.presentScene(nextLevel)
+    }
+  }
+  
   func getScaledSize(_ normalizedSize: CGSize) -> CGSize {
     if let worldSize = self.worldSize {
       return CGSize(width: worldSize * normalizedSize.width, height: worldSize * normalizedSize.height)
     }
     return normalizedSize
+  }
+  
+  func getScaledPosition(_ normalizedPosition: CGPoint) -> CGPoint {
+    if let worldSize = self.worldSize {
+      return CGPoint(x: worldSize * normalizedPosition.x, y: worldSize * normalizedPosition.y)
+    }
+    return normalizedPosition
   }
   
   // Adds the given GameObject type to the scene by appending its node.

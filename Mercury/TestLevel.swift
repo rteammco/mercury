@@ -6,11 +6,12 @@
 //  Copyright © 2017 Richard Teammco. All rights reserved.
 //
 
-import Foundation
+import SpriteKit
 
 class TestLevel: GameScene {
     
   override func initializeScene() {
+    createPlayer(atPosition: CGPoint(x: 0.0, y: -0.5))
   /*
      // TODO: use events to build the level, e.g. like this:
      
