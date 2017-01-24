@@ -51,13 +51,6 @@ class GameScene: SKScene {
     self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
   }
   
-  // Add the player object to the scene (optional).
-  func createPlayer(atPosition position: CGPoint) {
-    let player = Player(position: getScaledPosition(position))
-    addGameObject(player)
-    self.player = player
-  }
-  
   // Initialize the current level scene by setting up all GameObjects and events.
   func initializeScene() {
     // Override function as needed.
@@ -65,12 +58,18 @@ class GameScene: SKScene {
     setCurrentLevel(to: testLevel)
   }
   
+  // Add the player object to the scene (optional).
+  func createPlayer(atPosition position: CGPoint) {
+    let player = Player(position: getScaledPosition(position))
+    addGameObject(player)
+    self.player = player
+  }
+  
   //------------------------------------------------------------------------------
   // General level methods.
   //------------------------------------------------------------------------------
   
-  // Adds the given GameObject type to the scene by appending its node.
-  // In addition, scales the movement speed and Sprite node size of the GameObject by the world size to account for the size of the device screen. If scaleSpeed is set to false, the speed will not be scaled. This is useful for certain nodes such as the Player which are moved by user interaction, meaning the speed is already inherently scaled to the size/resolution of the screen.
+  // Adds the given GameObject type to the scene by appending its node. The object is automatically scaled according to the screen size.
   func addGameObject(_ gameObject: GameObject) {
     if let worldSize = self.worldSize {
       let sceneNode = gameObject.createGameSceneNode(scale: worldSize)
@@ -89,24 +88,6 @@ class GameScene: SKScene {
     }
   }
   
-  /* TODO: we may not need these methods.
-  // Returns the world's scaling factor that's used for objects to scale their graphics and other visualization or motion parameters.
-  func getWorldScale() -> CGFloat {
-    if let worldSize = self.worldSize {
-      return worldSize  // This should always be defined.
-    }
-    return 1.0
-  }
-  
-  // Returns a scaled version of the given normalized size (where a size of 1.0 is the width of the screen). The scaled version will reflect the pixel size of the screen.
-  func getScaledSize(_ normalizedSize: CGSize) -> CGSize {
-    if let worldSize = self.worldSize {
-      return CGSize(width: worldSize * normalizedSize.width, height: worldSize * normalizedSize.height)
-    }
-    return normalizedSize
-  }
-   */
-  
   // Returns a scaled version of the given normalized position. Position (0, 0) is in the center. If the X coordinate is -1, that's the left-most side of the screen; +1 is the right-most side. Since the screen is taller than it is wide, +/-1 in the Y axis is not going to be completely at the bottom or top.
   func getScaledPosition(_ normalizedPosition: CGPoint) -> CGPoint {
     if let worldSize = self.worldSize {
@@ -114,12 +95,6 @@ class GameScene: SKScene {
       return CGPoint(x: halfWorldSize * normalizedPosition.x, y: halfWorldSize * normalizedPosition.y)
     }
     return normalizedPosition
-  }
-  
-  // Returns true if the given object is within screen bounds.
-  func isGameObjectWithinScreenBounds(gameObject: GameObject) -> Bool {
-    // TODO
-    return true
   }
   
   // Returns the previous position on the screen that a user's touch occured.

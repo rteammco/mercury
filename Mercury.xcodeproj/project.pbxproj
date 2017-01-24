@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7906C4641DDD144A00187846 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7906C4631DDD144A00187846 /* Level.swift */; };
 		792DDE5A1E29649A00AED88E /* TestLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792DDE591E29649A00AED88E /* TestLevel.swift */; };
 		7960143B1DD8EB23004640E9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143A1DD8EB23004640E9 /* Player.swift */; };
 		7960143D1DD8EB5A004640E9 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143C1DD8EB5A004640E9 /* GameObject.swift */; };
@@ -28,6 +27,7 @@
 		79DEC4821DD7BBF000A5BF16 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79DEC4801DD7BBF000A5BF16 /* LaunchScreen.storyboard */; };
 		79DEC48D1DD7BBF000A5BF16 /* MercuryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEC48C1DD7BBF000A5BF16 /* MercuryTests.swift */; };
 		79DEC4981DD7BBF000A5BF16 /* MercuryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEC4971DD7BBF000A5BF16 /* MercuryUITests.swift */; };
+		79DFF9C91E37EBE600F50514 /* SwipePathAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9C81E37EBE600F50514 /* SwipePathAnimation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +48,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7906C4631DDD144A00187846 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		792DDE591E29649A00AED88E /* TestLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLevel.swift; sourceTree = "<group>"; };
 		7960143A1DD8EB23004640E9 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		7960143C1DD8EB5A004640E9 /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
@@ -75,6 +74,7 @@
 		79DEC4931DD7BBF000A5BF16 /* MercuryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MercuryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		79DEC4971DD7BBF000A5BF16 /* MercuryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MercuryUITests.swift; sourceTree = "<group>"; };
 		79DEC4991DD7BBF000A5BF16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79DFF9C81E37EBE600F50514 /* SwipePathAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipePathAnimation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +105,6 @@
 		7906C4621DDD142000187846 /* Levels */ = {
 			isa = PBXGroup;
 			children = (
-				7906C4631DDD144A00187846 /* Level.swift */,
 				792DDE591E29649A00AED88E /* TestLevel.swift */,
 			);
 			name = Levels;
@@ -166,6 +165,7 @@
 		79DEC4701DD7BBF000A5BF16 /* Mercury */ = {
 			isa = PBXGroup;
 			children = (
+				79DFF9C71E37EBCC00F50514 /* Animations */,
 				7906C4621DDD142000187846 /* Levels */,
 				796014391DD8EAFD004640E9 /* Game */,
 				79DEC4771DD7BBF000A5BF16 /* GameScene.swift */,
@@ -197,6 +197,14 @@
 				79DEC4991DD7BBF000A5BF16 /* Info.plist */,
 			);
 			path = MercuryUITests;
+			sourceTree = "<group>";
+		};
+		79DFF9C71E37EBCC00F50514 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				79DFF9C81E37EBE600F50514 /* SwipePathAnimation.swift */,
+			);
+			name = Animations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -336,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7960143B1DD8EB23004640E9 /* Player.swift in Sources */,
+				79DFF9C91E37EBE600F50514 /* SwipePathAnimation.swift in Sources */,
 				79DEC4781DD7BBF000A5BF16 /* GameScene.swift in Sources */,
 				79DEC47A1DD7BBF000A5BF16 /* GameViewController.swift in Sources */,
 				7960143F1DD904B1004640E9 /* UserInteractive.swift in Sources */,
@@ -344,7 +353,6 @@
 				79C4ABC21DFDF536006DDCAF /* PhysicsEnabledGameObject.swift in Sources */,
 				7960143D1DD8EB5A004640E9 /* GameObject.swift in Sources */,
 				79C4ABBA1DF0BBBE006DDCAF /* Enemy.swift in Sources */,
-				7906C4641DDD144A00187846 /* Level.swift in Sources */,
 				79C4ABBE1DFDEE3A006DDCAF /* PhysicsEnabled.swift in Sources */,
 				796014411DD90684004640E9 /* UserInteractiveGameObject.swift in Sources */,
 				792DDE5A1E29649A00AED88E /* TestLevel.swift in Sources */,
