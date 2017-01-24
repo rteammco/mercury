@@ -14,7 +14,6 @@
 		7960143F1DD904B1004640E9 /* UserInteractive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143E1DD904B1004640E9 /* UserInteractive.swift */; };
 		796014411DD90684004640E9 /* UserInteractiveGameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796014401DD90684004640E9 /* UserInteractiveGameObject.swift */; };
 		79C4ABBA1DF0BBBE006DDCAF /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4ABB91DF0BBBE006DDCAF /* Enemy.swift */; };
-		79C4ABBC1DFB37E6006DDCAF /* Teams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4ABBB1DFB37E6006DDCAF /* Teams.swift */; };
 		79C4ABBE1DFDEE3A006DDCAF /* PhysicsEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4ABBD1DFDEE3A006DDCAF /* PhysicsEnabled.swift */; };
 		79C4ABC01DFDEF1B006DDCAF /* ContactDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4ABBF1DFDEF1B006DDCAF /* ContactDelegate.swift */; };
 		79C4ABC21DFDF536006DDCAF /* PhysicsEnabledGameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C4ABC11DFDF536006DDCAF /* PhysicsEnabledGameObject.swift */; };
@@ -56,7 +55,6 @@
 		7960143E1DD904B1004640E9 /* UserInteractive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInteractive.swift; sourceTree = "<group>"; };
 		796014401DD90684004640E9 /* UserInteractiveGameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInteractiveGameObject.swift; sourceTree = "<group>"; };
 		79C4ABB91DF0BBBE006DDCAF /* Enemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
-		79C4ABBB1DFB37E6006DDCAF /* Teams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Teams.swift; sourceTree = "<group>"; };
 		79C4ABBD1DFDEE3A006DDCAF /* PhysicsEnabled.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhysicsEnabled.swift; sourceTree = "<group>"; };
 		79C4ABBF1DFDEF1B006DDCAF /* ContactDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDelegate.swift; sourceTree = "<group>"; };
 		79C4ABC11DFDF536006DDCAF /* PhysicsEnabledGameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhysicsEnabledGameObject.swift; sourceTree = "<group>"; };
@@ -131,7 +129,6 @@
 				796014401DD90684004640E9 /* UserInteractiveGameObject.swift */,
 				79D2294F1DEF6369003F68F9 /* Game Objects */,
 				79C4ABBF1DFDEF1B006DDCAF /* ContactDelegate.swift */,
-				79C4ABBB1DFB37E6006DDCAF /* Teams.swift */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -345,7 +342,6 @@
 				79C4ABC01DFDEF1B006DDCAF /* ContactDelegate.swift in Sources */,
 				79DEC4721DD7BBF000A5BF16 /* AppDelegate.swift in Sources */,
 				79C4ABC21DFDF536006DDCAF /* PhysicsEnabledGameObject.swift in Sources */,
-				79C4ABBC1DFB37E6006DDCAF /* Teams.swift in Sources */,
 				7960143D1DD8EB5A004640E9 /* GameObject.swift in Sources */,
 				79C4ABBA1DF0BBBE006DDCAF /* Enemy.swift in Sources */,
 				7906C4641DDD144A00187846 /* Level.swift in Sources */,

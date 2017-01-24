@@ -18,6 +18,7 @@ class TestLevel: GameScene {
      createPlayer(position)
      
      // create the scripted events
+     when(player, IsTouched()).do(PlayerShoot())
      
      when(EnemyDies()).do(AwardPlayerPoints(10), Spawn(TEST_LEVEL_BASIC_ENEMY)).until(NumberOfEnemiesDead(equals: 10))
      when(NumberOfEnemiesDead(equals: 10)).do(Spawn(TEST_LEVEL_BOSS_1)).then(MakeImmune())

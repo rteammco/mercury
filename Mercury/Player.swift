@@ -11,30 +11,24 @@ import SpriteKit
 
 class Player: UserInteractiveGameObject {
   
-  // The level that's currently running the player. This is necessary so the Player object can communicate to the Level (e.g. for triggering bullet fires).
-  private let level: Level
-  
   // How often the player fires a bullet (in seconds) when firing.
   private let fireBulletIntervalSeconds: Double
   
   // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
   private var fireBulletTimer: Timer?
   
-  init(position: CGPoint, level: Level) {
-    self.level = level
+  override init(position: CGPoint) {
     self.fireBulletIntervalSeconds = 0.1
     super.init(position: position)
-    
     self.nodeName = "player"
-    self.team = Team.friendly
-    self.scaleMovementSpeed(4.0)
   }
   
   // TODO: temporary color and shape.
   override func createGameSceneNode(scale: CGFloat) -> SKNode {
-    let size = 0.2 * scale
+    let size = 0.15 * scale
     let node = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
-    node.position = position
+    node.position = self.position
+    print(node.position)
     node.fillColor = SKColor.blue
     self.gameSceneNode = node
     return node
@@ -71,7 +65,7 @@ class Player: UserInteractiveGameObject {
   @objc func fireBullet() {
     let playerPosition = self.getSceneNode().position
     let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: 2.0)
-    self.level.addFriendlyProjectile(projectile: bullet)
+    //self.level.addFriendlyProjectile(projectile: bullet)
   }
   
   override func touchDown() {

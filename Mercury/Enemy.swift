@@ -14,7 +14,6 @@ class Enemy: PhysicsEnabledGameObject {
   init(position: CGPoint, speed: CGFloat) {
     super.init(position: position)
     self.nodeName = "enemy"
-    self.team = Team.enemy
     self.scaleMovementSpeed(speed)
     self.setMovementDirection(dx: 0, dy: -1)  // Top to bottom of screen.
   }

@@ -41,9 +41,9 @@ class Level {
     let size = (screenSize.width + screenSize.height) * 0.05
     let xPos = 0
     let yPos = Int(-screenSize.height / 2 + size)
-    let player = Player(position: CGPoint(x: xPos, y: yPos), level: self)
+    let player = Player(position: CGPoint(x: xPos, y: yPos))
     self.player = player
-    self.gameScene.addGameObject(gameObject: player)
+    self.gameScene.addGameObject(player)
   }
   
   // Creates a line that fades over time for visualization of the user's touch input.
@@ -58,13 +58,13 @@ class Level {
   
   // Adds an enemy to the scene.
   func addEnemy(enemy: Enemy) {
-    self.gameScene.addGameObject(gameObject: enemy)
+    self.gameScene.addGameObject(enemy)
     self.enemies.append(enemy)
   }
   
   // Adds a friendly projectile (projected by the player or units friendly to the player) into the GameScene.
   func addFriendlyProjectile(projectile: PhysicsEnabledGameObject) {
-    self.gameScene.addGameObject(gameObject: projectile)
+    self.gameScene.addGameObject(projectile)
     projectile.applyDefaultImpulse()
     self.frieldlyProjectiles.append(projectile)
   }

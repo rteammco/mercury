@@ -27,9 +27,6 @@ class GameObject {
   // identifier for detecting those nodes in the scene.
   var nodeName = "object"
   
-  // Each GameObject is assigned a Team that defines its interaction with the Player.
-  var team: Team = Team.neutral
-  
   // This flag is used to trigger cleanup of objects at each frame. If isAlive is set to false, this object will be removed from the game during the next frame update.
   var isAlive: Bool = true
   
