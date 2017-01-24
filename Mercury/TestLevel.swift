@@ -12,15 +12,14 @@ class TestLevel: GameScene {
     
   override func initializeScene() {
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
+    
   /*
      // TODO: use events to build the level, e.g. like this:
      
-     createPlayer(position)
-     
      // create the scripted events
-     when(player, IsTouched()).do(PlayerShoot())
+     when(player, IsTouched()).execute(action: PlayerShoot())
      
-     when(EnemyDies()).do(AwardPlayerPoints(10), Spawn(TEST_LEVEL_BASIC_ENEMY)).until(NumberOfEnemiesDead(equals: 10))
+     when(EnemyDies()).execute(actions: AwardPlayerPoints(10), Spawn(TEST_LEVEL_BASIC_ENEMY)).until(NumberOfEnemiesDead(equals: 10))
      when(NumberOfEnemiesDead(equals: 10)).do(Spawn(TEST_LEVEL_BOSS_1)).then(MakeImmune())
      when(Spawned(TEST_LEVEL_BOSS_1)).do(ShakeScreen(seconds: 5)).then(StartEvent()).then(MakeNotImmune())
      

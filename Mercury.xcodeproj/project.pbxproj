@@ -28,6 +28,10 @@
 		79DEC48D1DD7BBF000A5BF16 /* MercuryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEC48C1DD7BBF000A5BF16 /* MercuryTests.swift */; };
 		79DEC4981DD7BBF000A5BF16 /* MercuryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEC4971DD7BBF000A5BF16 /* MercuryUITests.swift */; };
 		79DFF9C91E37EBE600F50514 /* SwipePathAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9C81E37EBE600F50514 /* SwipePathAnimation.swift */; };
+		79DFF9CC1E37EFB400F50514 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9CB1E37EFB400F50514 /* Event.swift */; };
+		79DFF9CE1E37F5CD00F50514 /* EventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9CD1E37F5CD00F50514 /* EventProtocol.swift */; };
+		79DFF9D01E37F5EA00F50514 /* EventAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9CF1E37F5EA00F50514 /* EventAction.swift */; };
+		79DFF9D21E37F74400F50514 /* EventStopCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9D11E37F74400F50514 /* EventStopCriteria.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +79,10 @@
 		79DEC4971DD7BBF000A5BF16 /* MercuryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MercuryUITests.swift; sourceTree = "<group>"; };
 		79DEC4991DD7BBF000A5BF16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79DFF9C81E37EBE600F50514 /* SwipePathAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipePathAnimation.swift; sourceTree = "<group>"; };
+		79DFF9CB1E37EFB400F50514 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		79DFF9CD1E37F5CD00F50514 /* EventProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventProtocol.swift; sourceTree = "<group>"; };
+		79DFF9CF1E37F5EA00F50514 /* EventAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAction.swift; sourceTree = "<group>"; };
+		79DFF9D11E37F74400F50514 /* EventStopCriteria.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventStopCriteria.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,20 +118,20 @@
 			name = Levels;
 			sourceTree = "<group>";
 		};
-		79381B851E341A15006EC04C /* Protocols */ = {
+		79381B851E341A15006EC04C /* GameObject Protocols */ = {
 			isa = PBXGroup;
 			children = (
 				79C4ABBD1DFDEE3A006DDCAF /* PhysicsEnabled.swift */,
 				7960143E1DD904B1004640E9 /* UserInteractive.swift */,
 			);
-			name = Protocols;
+			name = "GameObject Protocols";
 			sourceTree = "<group>";
 		};
 		796014391DD8EAFD004640E9 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				79381B851E341A15006EC04C /* Protocols */,
 				7960143C1DD8EB5A004640E9 /* GameObject.swift */,
+				79381B851E341A15006EC04C /* GameObject Protocols */,
 				79C4ABC11DFDF536006DDCAF /* PhysicsEnabledGameObject.swift */,
 				796014401DD90684004640E9 /* UserInteractiveGameObject.swift */,
 				79D2294F1DEF6369003F68F9 /* Game Objects */,
@@ -167,6 +175,7 @@
 			children = (
 				79DFF9C71E37EBCC00F50514 /* Animations */,
 				7906C4621DDD142000187846 /* Levels */,
+				79DFF9CA1E37EF3B00F50514 /* Events */,
 				796014391DD8EAFD004640E9 /* Game */,
 				79DEC4771DD7BBF000A5BF16 /* GameScene.swift */,
 				79DEC4711DD7BBF000A5BF16 /* AppDelegate.swift */,
@@ -205,6 +214,17 @@
 				79DFF9C81E37EBE600F50514 /* SwipePathAnimation.swift */,
 			);
 			name = Animations;
+			sourceTree = "<group>";
+		};
+		79DFF9CA1E37EF3B00F50514 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				79DFF9CD1E37F5CD00F50514 /* EventProtocol.swift */,
+				79DFF9CB1E37EFB400F50514 /* Event.swift */,
+				79DFF9CF1E37F5EA00F50514 /* EventAction.swift */,
+				79DFF9D11E37F74400F50514 /* EventStopCriteria.swift */,
+			);
+			name = Events;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -345,8 +365,10 @@
 			files = (
 				7960143B1DD8EB23004640E9 /* Player.swift in Sources */,
 				79DFF9C91E37EBE600F50514 /* SwipePathAnimation.swift in Sources */,
+				79DFF9CE1E37F5CD00F50514 /* EventProtocol.swift in Sources */,
 				79DEC4781DD7BBF000A5BF16 /* GameScene.swift in Sources */,
 				79DEC47A1DD7BBF000A5BF16 /* GameViewController.swift in Sources */,
+				79DFF9CC1E37EFB400F50514 /* Event.swift in Sources */,
 				7960143F1DD904B1004640E9 /* UserInteractive.swift in Sources */,
 				79C4ABC01DFDEF1B006DDCAF /* ContactDelegate.swift in Sources */,
 				79DEC4721DD7BBF000A5BF16 /* AppDelegate.swift in Sources */,
@@ -354,9 +376,11 @@
 				7960143D1DD8EB5A004640E9 /* GameObject.swift in Sources */,
 				79C4ABBA1DF0BBBE006DDCAF /* Enemy.swift in Sources */,
 				79C4ABBE1DFDEE3A006DDCAF /* PhysicsEnabled.swift in Sources */,
+				79DFF9D01E37F5EA00F50514 /* EventAction.swift in Sources */,
 				796014411DD90684004640E9 /* UserInteractiveGameObject.swift in Sources */,
 				792DDE5A1E29649A00AED88E /* TestLevel.swift in Sources */,
 				79D2294E1DEF6339003F68F9 /* Bullet.swift in Sources */,
+				79DFF9D21E37F74400F50514 /* EventStopCriteria.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
