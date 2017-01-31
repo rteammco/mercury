@@ -77,6 +77,12 @@ class GameScene: SKScene {
     }
   }
   
+  // Displays text on the screen that disappears after a few seconds.
+  func displayTextOnScreen(message: NSString) {
+    // TODO: actually display this text, not just print it.
+    print("In displayTextOnScreen. Message is:", message)
+  }
+  
   // Sets the current GameScene to the object defined in the given GameScene file. This GameScene will be presented to the view.
   func setCurrentLevel(to nextLevel: GameScene) {
     if let view = self.view {
