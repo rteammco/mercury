@@ -42,7 +42,7 @@ class Event {
   }
   
   // A single action to be performed when this event is triggered.
-  func execute(action: EventAction) -> Event {
+  @discardableResult func execute(action: EventAction) -> Event {
     if let caller = self.caller {
       action.setCaller(to: caller)
     }
@@ -51,7 +51,7 @@ class Event {
   }
   
   // A set of actions to be performed when this event is triggered.
-  func execute(actions: EventAction...) -> Event {
+  @discardableResult func execute(actions: EventAction...) -> Event {
     for action in actions {
       _ = execute(action: action)
     }
@@ -59,7 +59,7 @@ class Event {
   }
   
   // After triggering, this event will reset and restart repeatedly until the given criteria is met.
-  func until(_ stopCriteria: EventStopCriteria) -> Event {
+  @discardableResult func until(_ stopCriteria: EventStopCriteria) -> Event {
     if let caller = self.caller {
       stopCriteria.setCaller(to: caller)
     }
@@ -68,27 +68,15 @@ class Event {
   }
   
   // After this event is complete (that is, all criteria are satisfied and the event is not repeating), the given event will be started next.
-  func then(_ nextEvent: Event) -> Event {
+  @discardableResult func then(_ nextEvent: Event) -> Event {
     if let caller = self.caller {
       nextEvent.setCaller(to: caller)
     }
     return nextEvent
   }
   
-  // Starts the event. The event won't do anything until start is called.
-  func start() {
-    // TODO
-    // e.g. start a clock timer, and once it's done, call self.trigger()
-  }
-  
-  // Resets the event.
-  func reset() {
-    // TODO
-    // reset variables, and then call start() again
-  }
-  
   // Executes all the actions to be performed when the event occurs.
-  private func trigger() {
+  func trigger() {
     for action in self.eventActions {
       action.execute()
     }
@@ -104,6 +92,21 @@ class Event {
     } else if let nextEvent = self.nextEvent {
       nextEvent.start()
     }
+  }
+  
+  //------------------------------------------------------------------------------
+  // The following methods need to be implemented by each Event object.
+  //------------------------------------------------------------------------------
+  
+  // Starts the event. The event won't do anything until start is called.
+  func start() {
+    // Override as needed, e.g. start a clock timer, and once it's done, call self.trigger().
+  }
+  
+  // Resets the event variables and calls start() again to loop the event from the beginning.
+  func reset() {
+    // Override as needed to reset any variables and start the event again.
+    start()
   }
   
 }

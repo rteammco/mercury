@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		792DDE5A1E29649A00AED88E /* TestLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792DDE591E29649A00AED88E /* TestLevel.swift */; };
+		793377D51E405BE100D4701C /* TimerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793377D41E405BE100D4701C /* TimerEvent.swift */; };
 		7960143B1DD8EB23004640E9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143A1DD8EB23004640E9 /* Player.swift */; };
 		7960143D1DD8EB5A004640E9 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143C1DD8EB5A004640E9 /* GameObject.swift */; };
 		7960143F1DD904B1004640E9 /* UserInteractive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143E1DD904B1004640E9 /* UserInteractive.swift */; };
@@ -53,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		792DDE591E29649A00AED88E /* TestLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLevel.swift; sourceTree = "<group>"; };
+		793377D41E405BE100D4701C /* TimerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerEvent.swift; sourceTree = "<group>"; };
 		7960143A1DD8EB23004640E9 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		7960143C1DD8EB5A004640E9 /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		7960143E1DD904B1004640E9 /* UserInteractive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInteractive.swift; sourceTree = "<group>"; };
@@ -114,8 +116,17 @@
 			isa = PBXGroup;
 			children = (
 				792DDE591E29649A00AED88E /* TestLevel.swift */,
+				793377D31E405BA800D4701C /* Level Events */,
 			);
 			name = Levels;
+			sourceTree = "<group>";
+		};
+		793377D31E405BA800D4701C /* Level Events */ = {
+			isa = PBXGroup;
+			children = (
+				793377D41E405BE100D4701C /* TimerEvent.swift */,
+			);
+			name = "Level Events";
 			sourceTree = "<group>";
 		};
 		79381B851E341A15006EC04C /* GameObject Protocols */ = {
@@ -368,6 +379,7 @@
 				79DFF9CE1E37F5CD00F50514 /* EventProtocol.swift in Sources */,
 				79DEC4781DD7BBF000A5BF16 /* GameScene.swift in Sources */,
 				79DEC47A1DD7BBF000A5BF16 /* GameViewController.swift in Sources */,
+				793377D51E405BE100D4701C /* TimerEvent.swift in Sources */,
 				79DFF9CC1E37EFB400F50514 /* Event.swift in Sources */,
 				7960143F1DD904B1004640E9 /* UserInteractive.swift in Sources */,
 				79C4ABC01DFDEF1B006DDCAF /* ContactDelegate.swift in Sources */,

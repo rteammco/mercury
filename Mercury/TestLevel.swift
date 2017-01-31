@@ -13,6 +13,7 @@ class TestLevel: GameScene {
   override func initializeScene() {
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
     
+    when(TimerEvent(seconds: 5)).execute(action: EventAction())
   /*
      // TODO: use events to build the level, e.g. like this:
      

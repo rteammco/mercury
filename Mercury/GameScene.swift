@@ -164,3 +164,15 @@ class GameScene: SKScene {
   }
   
 }
+
+
+// Extend the GameScene class to implement the EventProtocol, giving it the when() method and allowing events to be used.
+extension GameScene: EventProtocol {
+  
+  func when(_ event: Event) -> Event {
+    event.setCaller(to: self)
+    event.start()
+    return event
+  }
+  
+}
