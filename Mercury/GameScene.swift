@@ -5,7 +5,7 @@
 //  Created by Richard Teammco on 11/12/16.
 //  Copyright © 2016 Richard Teammco. All rights reserved.
 //
-//  The GameScene controlls all of the sprites, animations, and physics in the app. It also handles user touch inputs. The Level instance that's currently being run handles all of the game logic, and works closely with the GameScene for detecting sprite interactions.
+//  The GameScene controlls all of the sprites, animations, and physics in the app. It also handles user touch inputs.
 
 import SpriteKit
 import GameplayKit
@@ -29,6 +29,9 @@ class GameScene: SKScene {
   // Animation display objects.
   private var linePathNode: SKShapeNode?
   
+  // GameState that keeps track of all of the game's state variables.
+  private var gameState: GameState?
+  
   //------------------------------------------------------------------------------
   // Scene initialization.
   //------------------------------------------------------------------------------
@@ -40,6 +43,7 @@ class GameScene: SKScene {
     
     self.enemies = [Enemy]()
     self.friendlyProjectiles = [GameObject]()
+    self.gameState = GameState()
     
     initializePhysics()
     initializeScene()
@@ -111,6 +115,14 @@ class GameScene: SKScene {
     } else {
       return CGPoint(x: 0, y: 0)
     }
+  }
+  
+  // Returns the GameState for this GameScene. This GameState contains all game state variables and should be updated by any and all objects that need to set their variables to the global game state for Events and other objects to reference.
+  func getGameState() -> GameState {
+    if let gameState = self.gameState {
+      return gameState
+    }
+    return GameState()
   }
   
   //------------------------------------------------------------------------------

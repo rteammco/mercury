@@ -110,3 +110,10 @@ class Event {
   }
   
 }
+
+// This extension is used by Events that need to subscribe to certain game state changes to trigger. Note that the game state variables need to be actively updated by the GameScene or other objects in order to work effectively.
+extension Event: GameStateListener {
+  func reportStateChange(key: String, value: Any) {
+    // Override as needed.
+  }
+}

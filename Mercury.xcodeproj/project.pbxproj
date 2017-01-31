@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79154F661E413ED300D9B71A /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79154F651E413ED300D9B71A /* GameState.swift */; };
+		79154F681E41431600D9B71A /* GameStateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79154F671E41431600D9B71A /* GameStateListener.swift */; };
 		792DDE5A1E29649A00AED88E /* TestLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792DDE591E29649A00AED88E /* TestLevel.swift */; };
 		793377D51E405BE100D4701C /* TimerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793377D41E405BE100D4701C /* TimerEvent.swift */; };
 		793377D81E40633200D4701C /* DisplayTextAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793377D71E40633200D4701C /* DisplayTextAction.swift */; };
@@ -54,6 +56,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		79154F651E413ED300D9B71A /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
+		79154F671E41431600D9B71A /* GameStateListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStateListener.swift; sourceTree = "<group>"; };
 		792DDE591E29649A00AED88E /* TestLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLevel.swift; sourceTree = "<group>"; };
 		793377D41E405BE100D4701C /* TimerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerEvent.swift; sourceTree = "<group>"; };
 		793377D71E40633200D4701C /* DisplayTextAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayTextAction.swift; sourceTree = "<group>"; };
@@ -152,6 +156,8 @@
 		796014391DD8EAFD004640E9 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				79154F671E41431600D9B71A /* GameStateListener.swift */,
+				79154F651E413ED300D9B71A /* GameState.swift */,
 				7960143C1DD8EB5A004640E9 /* GameObject.swift */,
 				79381B851E341A15006EC04C /* GameObject Protocols */,
 				79C4ABC11DFDF536006DDCAF /* PhysicsEnabledGameObject.swift */,
@@ -385,6 +391,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79154F661E413ED300D9B71A /* GameState.swift in Sources */,
 				7960143B1DD8EB23004640E9 /* Player.swift in Sources */,
 				79DFF9C91E37EBE600F50514 /* SwipePathAnimation.swift in Sources */,
 				79DFF9CE1E37F5CD00F50514 /* EventProtocol.swift in Sources */,
@@ -393,6 +400,7 @@
 				79DEC47A1DD7BBF000A5BF16 /* GameViewController.swift in Sources */,
 				793377D51E405BE100D4701C /* TimerEvent.swift in Sources */,
 				79DFF9CC1E37EFB400F50514 /* Event.swift in Sources */,
+				79154F681E41431600D9B71A /* GameStateListener.swift in Sources */,
 				7960143F1DD904B1004640E9 /* UserInteractive.swift in Sources */,
 				79C4ABC01DFDEF1B006DDCAF /* ContactDelegate.swift in Sources */,
 				79DEC4721DD7BBF000A5BF16 /* AppDelegate.swift in Sources */,
