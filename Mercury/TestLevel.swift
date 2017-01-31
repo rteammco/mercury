@@ -14,6 +14,7 @@ class TestLevel: GameScene {
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
     
     when(TimerEvent(seconds: 5)).execute(action: DisplayTextAction(message: "Hello, World"))
+    when(TimerEvent(seconds: 1)).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
     
   /*
      // TODO: use events to build the level, e.g. like this:
