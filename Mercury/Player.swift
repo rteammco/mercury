@@ -27,6 +27,8 @@ class Player: UserInteractiveGameObject, GameStateListener {
     self.gameState.subscribe(self, to: "screen touchDown")
     self.gameState.subscribe(self, to: "screen touchMoved")
     self.gameState.subscribe(self, to: "screen touchUp")
+    
+    // when(ScreenTouchStarts()).execute(FireBullet().then(Wait(seconds: 0.1))).until(ScreenTouchEnds())
   }
   
   // TODO: temporary color and shape.
