@@ -20,10 +20,18 @@ class GameState {
     self.gameStateListeners = [String: [GameStateListener]]()
   }
   
-  // Set a value for the GameState. If the value did not exist before, it will be modified.
+  // Set a value for the GameState. If the value did not exist before, it will be modified. Keys are case-sensitive and must match exactly.
   // Example: gameState.set("player health", to: 100)
   func set(_ key: String, to value: Any) {
     self.gameStateValues[key] = value
+    inform(key, value: value)
+  }
+  
+  // This informs all GameStateListeners subscribed to a variable of a change, but does not change the variable's value. The variable does not need to be set at all to call this method.
+  // Default value is set to "true" so this method can be called just to inform of an arbitrary change in a parameter.
+  // Example 1: gameState.inform("screen touched")
+  // Example 2: gameState.inform("score", 25)
+  func inform(_ key: String, value: Any = true) {
     if let listeners = self.gameStateListeners[key] {
       for listener in listeners {
         listener.reportStateChange(key: key, value: value)
@@ -31,7 +39,7 @@ class GameState {
     }
   }
   
-  // Returns the GameState value set to the given key. The returned value may be nil if it was not set before.
+  // Returns the GameState value set to the given key. The returned value may be nil if it was not set before. Keys are case-sensitive and must match exactly.
   func get(valueForKey key: String) -> Any {
     // TODO: what happens if the value was not set? Does it really return nil?
     return self.gameStateValues[key] as Any

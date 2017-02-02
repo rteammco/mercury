@@ -170,8 +170,8 @@
 		796014391DD8EAFD004640E9 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				79154F671E41431600D9B71A /* GameStateListener.swift */,
 				79154F651E413ED300D9B71A /* GameState.swift */,
+				79154F671E41431600D9B71A /* GameStateListener.swift */,
 				7960143C1DD8EB5A004640E9 /* GameObject.swift */,
 				79381B851E341A15006EC04C /* GameObject Protocols */,
 				79C4ABC11DFDF536006DDCAF /* PhysicsEnabledGameObject.swift */,

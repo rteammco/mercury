@@ -64,7 +64,7 @@ class GameScene: SKScene {
   
   // Add the player object to the scene (optional).
   func createPlayer(atPosition position: CGPoint) {
-    let player = Player(position: getScaledPosition(position))
+    let player = Player(position: getScaledPosition(position), gameState: getGameState())
     addGameObject(player)
     self.player = player
   }
@@ -85,17 +85,6 @@ class GameScene: SKScene {
   func displayTextOnScreen(message: NSString) {
     // TODO: actually display this text, not just print it.
     print("In displayTextOnScreen. Message is:", message)
-  }
-  
-  // Sets the current GameScene to the object defined in the given GameScene file. This GameScene will be presented to the view.
-  func setCurrentLevel(to nextLevel: GameScene) {
-    if let view = self.view {
-      // Copy the current GameScene's properties.
-      nextLevel.size = self.size
-      nextLevel.scaleMode = self.scaleMode
-      nextLevel.anchorPoint = self.anchorPoint
-      view.presentScene(nextLevel)
-    }
   }
   
   // Returns a scaled version of the given normalized position. Position (0, 0) is in the center. If the X coordinate is -1, that's the left-most side of the screen; +1 is the right-most side. Since the screen is taller than it is wide, +/-1 in the Y axis is not going to be completely at the bottom or top.
@@ -125,22 +114,33 @@ class GameScene: SKScene {
     return GameState()
   }
   
+  // Sets the current GameScene to the object defined in the given GameScene file. This GameScene will be presented to the view.
+  func setCurrentLevel(to nextLevel: GameScene) {
+    if let view = self.view {
+      // Copy the current GameScene's properties.
+      nextLevel.size = self.size
+      nextLevel.scaleMode = self.scaleMode
+      nextLevel.anchorPoint = self.anchorPoint
+      view.presentScene(nextLevel)
+    }
+  }
+  
   //------------------------------------------------------------------------------
   // Touch event methods.
   //------------------------------------------------------------------------------
   
   func touchDown(atPoint pos: CGPoint) {
-    // TODO
+    self.gameState?.inform("screen touchDown", value: pos)
     self.lastTouchPosition = pos
   }
   
   func touchMoved(toPoint pos: CGPoint) {
-    // TODO
+    self.gameState?.inform("screen touchMoved", value: pos)
     self.lastTouchPosition = pos
   }
   
   func touchUp(atPoint pos: CGPoint) {
-    // TODO
+    self.gameState?.inform("screen touchUp", value: pos)
   }
   
   //------------------------------------------------------------------------------

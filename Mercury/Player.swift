@@ -9,7 +9,7 @@
 
 import SpriteKit
 
-class Player: UserInteractiveGameObject {
+class Player: UserInteractiveGameObject, GameStateListener {
   
   // How often the player fires a bullet (in seconds) when firing.
   private let fireBulletIntervalSeconds: Double
@@ -17,10 +17,14 @@ class Player: UserInteractiveGameObject {
   // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
   private var fireBulletTimer: Timer?
   
-  override init(position: CGPoint) {
+  private let gameState: GameState
+  
+  init(position: CGPoint, gameState: GameState) {
     self.fireBulletIntervalSeconds = 0.1
+    self.gameState = gameState
     super.init(position: position)
     self.nodeName = "player"
+    self.gameState.subscribe(listener: self, to: "screen touchDown")
   }
   
   // TODO: temporary color and shape.
@@ -32,6 +36,11 @@ class Player: UserInteractiveGameObject {
     node.fillColor = SKColor.blue
     self.gameSceneNode = node
     return node
+  }
+  
+  // Required by GameStateListener protocol. The Player subscribes to touch events for moving based on user touch input.
+  func reportStateChange(key: String, value: Any) {
+    print("I received a state change report for", key)
   }
   
   // Moves the player towards the user's touch position if the player is currently touched down.
