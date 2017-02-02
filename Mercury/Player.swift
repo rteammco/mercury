@@ -24,7 +24,9 @@ class Player: UserInteractiveGameObject, GameStateListener {
     self.gameState = gameState
     super.init(position: position)
     self.nodeName = "player"
-    self.gameState.subscribe(listener: self, to: "screen touchDown")
+    self.gameState.subscribe(self, to: "screen touchDown")
+    self.gameState.subscribe(self, to: "screen touchMoved")
+    self.gameState.subscribe(self, to: "screen touchUp")
   }
   
   // TODO: temporary color and shape.
@@ -40,7 +42,19 @@ class Player: UserInteractiveGameObject, GameStateListener {
   
   // Required by GameStateListener protocol. The Player subscribes to touch events for moving based on user touch input.
   func reportStateChange(key: String, value: Any) {
-    print("I received a state change report for", key)
+    switch key {
+    case "screen touchDown":
+      print("touchDown")
+    case "screen touchMoved":
+      // TODO: this is hacky, and it needs to be animated.
+      let location = value as! CGPoint
+      self.getSceneNode().position = location
+      break
+    case "screen touchUp":
+      print("touchUp")
+      break
+    default: break
+    }
   }
   
   // Moves the player towards the user's touch position if the player is currently touched down.

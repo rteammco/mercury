@@ -46,7 +46,7 @@ class GameState {
   }
   
   // Subscribes a GameStateListener to listen to the state variable identified by the given key. Whenever this state variable is updated, the listener will be notified via the reportStateChange method.
-  func subscribe(listener: GameStateListener, to key: String) {
+  func subscribe(_ listener: GameStateListener, to key: String) {
     if var listeners = self.gameStateListeners[key] {
       listeners.append(listener)
     } else {
