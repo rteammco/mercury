@@ -13,7 +13,7 @@ class TestLevel: GameScene {
   override func initializeScene() {
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
     
-    when(TimerEvent(seconds: 5)).execute(action: DisplayTextAction(message: "Hello, World"))
+    when(TimerEvent(seconds: 5)).execute(action: DisplayText(message: "Hello, World"))
     when(TimerEvent(seconds: 1)).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
     
   /*

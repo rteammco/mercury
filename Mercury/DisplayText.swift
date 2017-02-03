@@ -9,7 +9,7 @@
 
 import Foundation
 
-class DisplayTextAction: EventAction {
+class DisplayText: EventAction {
   
   let message: NSString
   

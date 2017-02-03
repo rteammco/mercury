@@ -6,7 +6,7 @@
 //  Copyright © 2017 Richard Teammco. All rights reserved.
 //
 
-class NumberOfEnemiesSpawned: EventStopCriteria {
+class NumberOfEnemiesSpawned: EventStopper {
   
   let numberOfEnemies: Int
   
