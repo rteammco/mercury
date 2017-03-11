@@ -17,6 +17,7 @@
 //   }
 protocol EventCaller {
   func when(_ event: Event) -> Event
+  func execute(action: EventAction)
 }
 
 
@@ -79,11 +80,20 @@ class Event: EventStopCriteria {
   
   // Executes all the actions to be performed when the event occurs.
   func trigger() {
-    for action in self.eventActions {
-      action.execute()
-    }
     self.wasTriggered = true
-    // If a stop criteria was given and it is not yet satisfied, reset the event and run it again.
+    // Run the actions, but verify that a stop criteria wasn't satisfied already.
+    var canExecuteActions = true
+    if let stopCriteria = self.stopCriteria {
+      if stopCriteria.isSatisfied() {
+        canExecuteActions = false
+      }
+    }
+    if canExecuteActions {
+      for action in self.eventActions {
+        action.execute()
+      }
+    }
+    // If a stop criteria was given and it is not yet satisfied after the actions were executed, reset the event and run it again.
     var willEventRepeat = false
     if let stopCriteria = self.stopCriteria {
       if !stopCriteria.isSatisfied() {

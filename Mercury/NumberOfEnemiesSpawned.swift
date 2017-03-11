@@ -18,14 +18,13 @@ class NumberOfEnemiesSpawned: EventStopper {
   }
   
   override func isSatisfied() -> Bool {
-    // TODO: actually add this in:
-    //if let gameScene = self.caller as? GameScene {
-    //  let gameState = gameScene.getGameState()
-    //  let count = gameState.get(valueForKey: "number of enemies dead") as! Int
-    //  return count >= self.numberOfEnemies
-    //}
-    tempCounter = tempCounter + 1
-    return tempCounter >= 10  // TODO: temporary.
+    if let gameScene = self.caller as? GameScene {
+      let gameState = gameScene.getGameState()
+      let count = gameState.get(valueForKey: "enemy spawn count") as! Int
+      print(count)
+      return count >= self.numberOfEnemies
+    }
+    return false
   }
   
 }

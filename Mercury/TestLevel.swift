@@ -15,6 +15,8 @@ class TestLevel: GameScene {
     
     when(TimerEvent(seconds: 5)).execute(action: DisplayText(message: "Hello, World"))
     when(TimerEvent(seconds: 1)).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
+    //when(EnemyDies()).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
+    execute(action: SpawnEnemy("test"))
     
   /*
      // TODO: use events to build the level, e.g. like this:

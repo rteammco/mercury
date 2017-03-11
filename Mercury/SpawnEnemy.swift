@@ -17,6 +17,12 @@ class SpawnEnemy: EventAction {
   override func execute() {
     if let gameScene = self.caller as? GameScene {
       gameScene.displayTextOnScreen(message: "Spawning an enemy")  // TODO: change.
+      let gameState = gameScene.getGameState()
+      if let numEnemiesSpawned = gameState.get(valueForKey: "enemy spawn count") as? Int {
+        gameState.set("enemy spawn count", to: numEnemiesSpawned + 1)
+      } else {
+        gameState.set("enemy spawn count", to: 1)
+      }
     }
   }
   

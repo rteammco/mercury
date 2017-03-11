@@ -197,4 +197,9 @@ extension GameScene: EventCaller {
     return event
   }
   
+  func execute(action: EventAction) {
+    action.setCaller(to: self)
+    action.execute()
+  }
+  
 }
