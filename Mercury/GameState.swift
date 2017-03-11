@@ -40,9 +40,18 @@ class GameState {
   }
   
   // Returns the GameState value set to the given key. The returned value may be nil if it was not set before. Keys are case-sensitive and must match exactly.
+  //
+  // Use designated "getType" functions to guarantee a valid return value for any key (see below).
   func get(valueForKey key: String) -> Any {
-    // TODO: what happens if the value was not set? Does it really return nil?
     return self.gameStateValues[key] as Any
+  }
+  
+  // Returns the GameState value for the given key interpreted as an Int. If the value has not been set or its current type is not Int, the default value will be returned.
+  func getInt(forKey key: String, defaultValue: Int = 0) -> Int {
+    if let value = self.gameStateValues[key] as? Int {
+      return value
+    }
+    return defaultValue
   }
   
   // Subscribes a GameStateListener to listen to the state variable identified by the given key. Whenever this state variable is updated, the listener will be notified via the reportStateChange method.

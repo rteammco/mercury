@@ -127,6 +127,7 @@
 			children = (
 				792DDE591E29649A00AED88E /* TestLevel.swift */,
 				793377D31E405BA800D4701C /* Level Events */,
+				79B605EB1E74B5380090C791 /* Level EventStoppers */,
 				793377D61E40631B00D4701C /* Level EventActions */,
 			);
 			name = Levels;
@@ -136,7 +137,6 @@
 			isa = PBXGroup;
 			children = (
 				793377D41E405BE100D4701C /* TimerEvent.swift */,
-				79154F6C1E4147ED00D9B71A /* NumberOfEnemiesSpawned.swift */,
 			);
 			name = "Level Events";
 			sourceTree = "<group>";
@@ -173,6 +173,14 @@
 				79C4ABBF1DFDEF1B006DDCAF /* ContactDelegate.swift */,
 			);
 			name = Game;
+			sourceTree = "<group>";
+		};
+		79B605EB1E74B5380090C791 /* Level EventStoppers */ = {
+			isa = PBXGroup;
+			children = (
+				79154F6C1E4147ED00D9B71A /* NumberOfEnemiesSpawned.swift */,
+			);
+			name = "Level EventStoppers";
 			sourceTree = "<group>";
 		};
 		79D2294F1DEF6369003F68F9 /* Game Objects */ = {
