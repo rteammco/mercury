@@ -44,28 +44,32 @@ class Player: UserInteractiveGameObject, GameStateListener {
   
   // Required by GameStateListener protocol. The Player subscribes to touch events for moving based on user touch input.
   func reportStateChange(key: String, value: Any) {
-    switch key {
-    case "screen touchDown":
-      print("touchDown")
-    case "screen touchMoved":
-      // TODO: this is hacky, and it needs to be animated.
-      let location = value as! CGPoint
-      self.getSceneNode().position = location
-      break
-    case "screen touchUp":
-      print("touchUp")
-      break
-    default: break
+    if key.hasPrefix("screen touch") {
+      let touchInfo = value as! ScreenTouchInfo
+      switch key {
+      case "screen touchDown":
+        if touchInfo.touchedNode.name == self.nodeName {
+          touchDown()
+        }
+        break
+      case "screen touchMoved":
+        movePlayerIfTouched(towards: touchInfo.touchPosition)
+        break
+      case "screen touchUp":
+        touchUp()
+        break
+      default: break
+      }
     }
   }
   
   // Moves the player towards the user's touch position if the player is currently touched down.
-  func movePlayerIfTouched(towards: CGPoint, elapsedTime: TimeInterval) {
+  func movePlayerIfTouched(towards: CGPoint) {
     if self.isTouched {
       let playerPosition = self.getSceneNode().position
       let dx = towards.x - playerPosition.x
       let dy = towards.y - playerPosition.y
-      self.moveUpdate(dx: dx, dy: dy, elapsedTime: elapsedTime)
+      self.moveBy(dx: dx, dy: dy)
     }
   }
   
@@ -88,8 +92,9 @@ class Player: UserInteractiveGameObject, GameStateListener {
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
   // TODO: we may want to move this method into the GameObject super class.
   @objc func fireBullet() {
-    let playerPosition = self.getSceneNode().position
-    let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: 2.0)
+    // TODO: fix this and put back shooting.
+    //let playerPosition = self.getSceneNode().position
+    //let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: 2.0)
     //self.level.addFriendlyProjectile(projectile: bullet)
   }
   

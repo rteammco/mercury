@@ -77,6 +77,7 @@ class GameScene: SKScene {
   func addGameObject(_ gameObject: GameObject) {
     if let worldSize = self.worldSize {
       let sceneNode = gameObject.createGameSceneNode(scale: worldSize)
+      sceneNode.name = gameObject.nodeName
       addChild(sceneNode)
     }
   }
@@ -130,17 +131,20 @@ class GameScene: SKScene {
   //------------------------------------------------------------------------------
   
   func touchDown(atPoint pos: CGPoint) {
-    self.gameState?.inform("screen touchDown", value: pos)
+    let node: SKNode = atPoint(pos)
+    self.gameState?.inform("screen touchDown", value: ScreenTouchInfo(pos, node))
     self.lastTouchPosition = pos
   }
   
   func touchMoved(toPoint pos: CGPoint) {
-    self.gameState?.inform("screen touchMoved", value: pos)
+    let node: SKNode = atPoint(pos)
+    self.gameState?.inform("screen touchMoved", value: ScreenTouchInfo(pos, node))
     self.lastTouchPosition = pos
   }
   
   func touchUp(atPoint pos: CGPoint) {
-    self.gameState?.inform("screen touchUp", value: pos)
+    let node: SKNode = atPoint(pos)
+    self.gameState?.inform("screen touchUp", value: ScreenTouchInfo(pos, node))
   }
   
   //------------------------------------------------------------------------------
