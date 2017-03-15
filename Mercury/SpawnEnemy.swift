@@ -20,11 +20,11 @@ class SpawnEnemy: EventAction {
     if let gameScene = self.caller as? GameScene {
       let gameState = gameScene.getGameState()
       let enemy = Enemy(position: gameScene.getScaledPosition(CGPoint(x: 0, y: 0)), speed: 0.15)
-      gameState.inform(GameStateKey.spawnEnemy, value: enemy)
+      gameState.inform(.spawnEnemy, value: enemy)
       
       // Update the global game state by incrementing the enemy spawn count value.
-      let numEnemiesSpawned = gameState.getInt(forKey: GameStateKey.numSpawnedEnemies)
-      gameState.set(GameStateKey.numSpawnedEnemies, to: numEnemiesSpawned + 1)
+      let numEnemiesSpawned = gameState.getInt(forKey: .numSpawnedEnemies)
+      gameState.set(.numSpawnedEnemies, to: numEnemiesSpawned + 1)
     }
   }
   

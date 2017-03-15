@@ -142,19 +142,19 @@ class GameScene: SKScene {
   
   private func touchDown(atPoint pos: CGPoint) {
     let node: SKNode = atPoint(pos)
-    self.gameState?.inform(GameStateKey.screenTouchDown, value: ScreenTouchInfo(pos, node))
+    self.gameState?.inform(.screenTouchDown, value: ScreenTouchInfo(pos, node))
     self.lastTouchPosition = pos
   }
   
   private func touchMoved(toPoint pos: CGPoint) {
     let node: SKNode = atPoint(pos)
-    self.gameState?.inform(GameStateKey.screenTouchMoved, value: ScreenTouchInfo(pos, node))
+    self.gameState?.inform(.screenTouchMoved, value: ScreenTouchInfo(pos, node))
     self.lastTouchPosition = pos
   }
   
   private func touchUp(atPoint pos: CGPoint) {
     let node: SKNode = atPoint(pos)
-    self.gameState?.inform(GameStateKey.screenTouchUp, value: ScreenTouchInfo(pos, node))
+    self.gameState?.inform(.screenTouchUp, value: ScreenTouchInfo(pos, node))
   }
   
   //------------------------------------------------------------------------------
@@ -234,8 +234,8 @@ extension GameScene: GameStateListener {
   
   // Subscribe this GameScene to all relevant game state changes that it needs to handle. Extend as needed with custom subscriptions for a given level.
   func subscribeToStateChanges() {
-    self.getGameState().subscribe(self, to: GameStateKey.spawnPlayerBullet)
-    self.getGameState().subscribe(self, to: GameStateKey.spawnEnemy)
+    self.getGameState().subscribe(self, to: .spawnPlayerBullet)
+    self.getGameState().subscribe(self, to: .spawnEnemy)
   }
   
   // When a game state change is reported, handle it here. Extend as needed with custom handlers for a given level.

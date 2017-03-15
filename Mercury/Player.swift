@@ -24,9 +24,9 @@ class Player: UserInteractiveGameObject, GameStateListener {
     self.gameState = gameState
     super.init(position: position)
     self.nodeName = "player"
-    self.gameState.subscribe(self, to: GameStateKey.screenTouchDown)
-    self.gameState.subscribe(self, to: GameStateKey.screenTouchMoved)
-    self.gameState.subscribe(self, to: GameStateKey.screenTouchUp)
+    self.gameState.subscribe(self, to: .screenTouchDown)
+    self.gameState.subscribe(self, to: .screenTouchMoved)
+    self.gameState.subscribe(self, to: .screenTouchUp)
     
     // when(ScreenTouchStarts()).execute(FireBullet().then(Wait(seconds: 0.1))).until(ScreenTouchEnds())
   }
@@ -47,15 +47,15 @@ class Player: UserInteractiveGameObject, GameStateListener {
     if key.rawValue.hasPrefix("screenTouch") {
       let touchInfo = value as! ScreenTouchInfo
       switch key {
-      case GameStateKey.screenTouchDown:
+      case .screenTouchDown:
         if touchInfo.touchedNode.name == self.nodeName {
           touchDown()
         }
         break
-      case GameStateKey.screenTouchMoved:
+      case .screenTouchMoved:
         movePlayerIfTouched(towards: touchInfo.touchPosition)
         break
-      case GameStateKey.screenTouchUp:
+      case .screenTouchUp:
         touchUp()
         break
       default: break
@@ -93,7 +93,7 @@ class Player: UserInteractiveGameObject, GameStateListener {
   @objc func fireBullet() {
     let playerPosition = self.getSceneNode().position
     let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: 2.0)
-    self.gameState.inform(GameStateKey.spawnPlayerBullet, value: bullet)
+    self.gameState.inform(.spawnPlayerBullet, value: bullet)
   }
   
   override func touchDown() {
