@@ -18,7 +18,7 @@ class GameScene: SKScene {
   var friendlyProjectiles: [GameObject]?
   
   // The size of the world used for scaling all displayed scene nodes.
-  var worldSize: CGFloat?
+  private var worldSize: CGFloat?
   
   // User touch interaction variables.
   private var lastTouchPosition: CGPoint?
@@ -138,21 +138,34 @@ class GameScene: SKScene {
   // Touch event methods.
   //------------------------------------------------------------------------------
   
-  func touchDown(atPoint pos: CGPoint) {
+  private func touchDown(atPoint pos: CGPoint) {
     let node: SKNode = atPoint(pos)
     self.gameState?.inform("screen touchDown", value: ScreenTouchInfo(pos, node))
     self.lastTouchPosition = pos
   }
   
-  func touchMoved(toPoint pos: CGPoint) {
+  private func touchMoved(toPoint pos: CGPoint) {
     let node: SKNode = atPoint(pos)
     self.gameState?.inform("screen touchMoved", value: ScreenTouchInfo(pos, node))
     self.lastTouchPosition = pos
   }
   
-  func touchUp(atPoint pos: CGPoint) {
+  private func touchUp(atPoint pos: CGPoint) {
     let node: SKNode = atPoint(pos)
     self.gameState?.inform("screen touchUp", value: ScreenTouchInfo(pos, node))
+  }
+  
+  //------------------------------------------------------------------------------
+  // Scene management and cleanup methods.
+  //------------------------------------------------------------------------------
+  
+  // Removes all nodes that are no longer on the screen. For example, if a bullet flies off the screen, there is no reason to track or update it anymore. It's gone.
+  private func removeOffscreenNodes() {
+    enumerateChildNodes(withName: "*", using: { (node, stop) -> Void in
+      if !self.intersects(node) {
+        node.removeFromParent()
+      }
+    })
   }
   
   //------------------------------------------------------------------------------
@@ -167,6 +180,7 @@ class GameScene: SKScene {
     //  let elapsedTime = currentTime - lastFrameTime
     //}
     self.lastFrameTime = currentTime
+    self.removeOffscreenNodes()
   }
   
   //------------------------------------------------------------------------------
@@ -217,7 +231,7 @@ extension GameScene: EventCaller {
 extension GameScene: GameStateListener {
   
   func reportStateChange(key: String, value: Any) {
-    
+    // TODO: Add functionality as needed.
   }
   
 }

@@ -38,10 +38,9 @@ class GameObject {
   // Scale the movement speed by the given non-negative value.
   func scaleMovementSpeed(_ speedScale: CGFloat) {
     // Speed must be non-negative.
-    if speedScale < 0 {
-      return
+    if speedScale >= 0 {
+      self.movementSpeed *= speedScale
     }
-    self.movementSpeed *= speedScale
   }
   
   // Creates the Sprite node that gets added to the GameScene. The given scale is based on the size of the screen, so the node's size should adapt according to the screen size. The position is in absolute coordinates.
@@ -61,11 +60,10 @@ class GameObject {
   func setMovementDirection(dx: CGFloat, dy: CGFloat) {
     let norm = sqrt(dx * dx + dy * dy)
     // Cannot have a zero norm (divide by 0 error).
-    if norm <= 0 {
-      return
+    if norm > 0 {
+      self.movementDirection.dx = dx / norm
+      self.movementDirection.dy = dy / norm
     }
-    self.movementDirection.dx = dx / norm
-    self.movementDirection.dy = dy / norm
   }
   
   // Returns the scene node for this object. If it was not initialized, the returned object will be an empty SKShapeNode.
@@ -124,10 +122,10 @@ class GameObject {
 //  func moveUpdate(elapsedTime: TimeInterval) {
 //    self.moveUpdate(dx: self.movementDirection.dx, dy: self.movementDirection.dy, elapsedTime: elapsedTime)
 //  }
-//  
-//  // Updates the GameObject given the elapsed time (in seconds) since the last frame.
+  
+  // Updates the GameObject given the elapsed time (in seconds) since the last frame. This can be used for cosmetic things like animations or garbage collections (i.e. removing nodes from the game if they've gone too far off screen). For timers, use timer events. For collisions, movement, and physics, use the physics subsystem whenever possible.
 //  func update(_ elapsedTime: TimeInterval) {
-//    // Override as needed. Otherwise, this does nothing.
+//    
 //  }
   
 }
