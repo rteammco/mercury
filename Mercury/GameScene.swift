@@ -142,19 +142,19 @@ class GameScene: SKScene {
   
   private func touchDown(atPoint pos: CGPoint) {
     let node: SKNode = atPoint(pos)
-    self.gameState?.inform("screen touchDown", value: ScreenTouchInfo(pos, node))
+    self.gameState?.inform(GameStateKey.screenTouchDown, value: ScreenTouchInfo(pos, node))
     self.lastTouchPosition = pos
   }
   
   private func touchMoved(toPoint pos: CGPoint) {
     let node: SKNode = atPoint(pos)
-    self.gameState?.inform("screen touchMoved", value: ScreenTouchInfo(pos, node))
+    self.gameState?.inform(GameStateKey.screenTouchMoved, value: ScreenTouchInfo(pos, node))
     self.lastTouchPosition = pos
   }
   
   private func touchUp(atPoint pos: CGPoint) {
     let node: SKNode = atPoint(pos)
-    self.gameState?.inform("screen touchUp", value: ScreenTouchInfo(pos, node))
+    self.gameState?.inform(GameStateKey.screenTouchUp, value: ScreenTouchInfo(pos, node))
   }
   
   //------------------------------------------------------------------------------
@@ -234,16 +234,16 @@ extension GameScene: GameStateListener {
   
   // Subscribe this GameScene to all relevant game state changes that it needs to handle. Extend as needed with custom subscriptions for a given level.
   func subscribeToStateChanges() {
-    self.getGameState().subscribe(self, to: "player fire bullet")
-    self.getGameState().subscribe(self, to: "enemy spawned")
+    self.getGameState().subscribe(self, to: GameStateKey.spawnPlayerBullet)
+    self.getGameState().subscribe(self, to: GameStateKey.spawnEnemy)
   }
   
   // When a game state change is reported, handle it here. Extend as needed with custom handlers for a given level.
   //
   // TODO: Some of these might work better as separate functions, specific EventActions that handle all the mechanics, or even factory objects to make the code cleaner.
-  func reportStateChange(key: String, value: Any) {
+  func reportStateChange(key: GameStateKey, value: Any) {
     // Add spawned physics-enabled objects to the game.
-    if key == "player fire bullet" || key == "enemy spawned" {
+    if key == .spawnPlayerBullet || key == .spawnEnemy {
       if let gameObject = value as? PhysicsEnabledGameObject {
         gameObject.scaleMovementSpeed(getScaleValue())
         addGameObject(gameObject)

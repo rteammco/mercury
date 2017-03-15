@@ -24,9 +24,9 @@ class Player: UserInteractiveGameObject, GameStateListener {
     self.gameState = gameState
     super.init(position: position)
     self.nodeName = "player"
-    self.gameState.subscribe(self, to: "screen touchDown")
-    self.gameState.subscribe(self, to: "screen touchMoved")
-    self.gameState.subscribe(self, to: "screen touchUp")
+    self.gameState.subscribe(self, to: GameStateKey.screenTouchDown)
+    self.gameState.subscribe(self, to: GameStateKey.screenTouchMoved)
+    self.gameState.subscribe(self, to: GameStateKey.screenTouchUp)
     
     // when(ScreenTouchStarts()).execute(FireBullet().then(Wait(seconds: 0.1))).until(ScreenTouchEnds())
   }
@@ -43,19 +43,19 @@ class Player: UserInteractiveGameObject, GameStateListener {
   }
   
   // Required by GameStateListener protocol. The Player subscribes to touch events for moving based on user touch input.
-  func reportStateChange(key: String, value: Any) {
-    if key.hasPrefix("screen touch") {
+  func reportStateChange(key: GameStateKey, value: Any) {
+    if key.rawValue.hasPrefix("screenTouch") {
       let touchInfo = value as! ScreenTouchInfo
       switch key {
-      case "screen touchDown":
+      case GameStateKey.screenTouchDown:
         if touchInfo.touchedNode.name == self.nodeName {
           touchDown()
         }
         break
-      case "screen touchMoved":
+      case GameStateKey.screenTouchMoved:
         movePlayerIfTouched(towards: touchInfo.touchPosition)
         break
-      case "screen touchUp":
+      case GameStateKey.screenTouchUp:
         touchUp()
         break
       default: break
@@ -93,7 +93,7 @@ class Player: UserInteractiveGameObject, GameStateListener {
   @objc func fireBullet() {
     let playerPosition = self.getSceneNode().position
     let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: 2.0)
-    self.gameState.inform("player fire bullet", value: bullet)
+    self.gameState.inform(GameStateKey.spawnPlayerBullet, value: bullet)
   }
   
   override func touchDown() {

@@ -10,19 +10,19 @@
 class GameState {
   
   // Maps GameState variables (identified by a String key) to whatever value they are given.
-  var gameStateValues: [String: Any]
+  var gameStateValues: [GameStateKey: Any]
   
   // Maps variables (identified by their key) to a set of GameStateListeners which have subscribed to getting reports on changes for those variables.
-  var gameStateListeners: [String: [GameStateListener]]
+  var gameStateListeners: [GameStateKey: [GameStateListener]]
   
   init() {
-    self.gameStateValues = [String: Any]()
-    self.gameStateListeners = [String: [GameStateListener]]()
+    self.gameStateValues = [GameStateKey: Any]()
+    self.gameStateListeners = [GameStateKey: [GameStateListener]]()
   }
   
   // Set a value for the GameState. If the value did not exist before, it will be modified. Keys are case-sensitive and must match exactly.
   // Example: gameState.set("player health", to: 100)
-  func set(_ key: String, to value: Any) {
+  func set(_ key: GameStateKey, to value: Any) {
     self.gameStateValues[key] = value
     inform(key, value: value)
   }
@@ -31,7 +31,7 @@ class GameState {
   // Default value is set to "true" so this method can be called just to inform of an arbitrary change in a parameter.
   // Example 1: gameState.inform("screen touched")
   // Example 2: gameState.inform("score", 25)
-  func inform(_ key: String, value: Any = true) {
+  func inform(_ key: GameStateKey, value: Any = true) {
     if let listeners = self.gameStateListeners[key] {
       for listener in listeners {
         listener.reportStateChange(key: key, value: value)
@@ -42,12 +42,12 @@ class GameState {
   // Returns the GameState value set to the given key. The returned value may be nil if it was not set before. Keys are case-sensitive and must match exactly.
   //
   // Use designated "getType" functions to guarantee a valid return value for any key (see below).
-  func get(valueForKey key: String) -> Any {
+  func get(valueForKey key: GameStateKey) -> Any {
     return self.gameStateValues[key] as Any
   }
   
   // Returns the GameState value for the given key interpreted as an Int. If the value has not been set or its current type is not Int, the default value will be returned.
-  func getInt(forKey key: String, defaultValue: Int = 0) -> Int {
+  func getInt(forKey key: GameStateKey, defaultValue: Int = 0) -> Int {
     if let value = self.gameStateValues[key] as? Int {
       return value
     }
@@ -55,7 +55,7 @@ class GameState {
   }
   
   // Subscribes a GameStateListener to listen to the state variable identified by the given key. Whenever this state variable is updated, the listener will be notified via the reportStateChange method.
-  func subscribe(_ listener: GameStateListener, to key: String) {
+  func subscribe(_ listener: GameStateListener, to key: GameStateKey) {
     if var listeners = self.gameStateListeners[key] {
       listeners.append(listener)
     } else {

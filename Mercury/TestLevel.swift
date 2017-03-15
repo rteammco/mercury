@@ -38,7 +38,4 @@ class TestLevel: GameScene {
     self.subscribeToStateChanges()
   }
   
-  override func reportStateChange(key: String, value: Any) {
-    super.reportStateChange(key: key, value: value)
-  }
 }

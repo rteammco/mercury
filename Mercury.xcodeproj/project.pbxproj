@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		790B0B351E79E32100122B7B /* GameStateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790B0B341E79E32100122B7B /* GameStateKeys.swift */; };
 		79154F661E413ED300D9B71A /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79154F651E413ED300D9B71A /* GameState.swift */; };
 		79154F681E41431600D9B71A /* GameStateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79154F671E41431600D9B71A /* GameStateListener.swift */; };
 		79154F6A1E41469100D9B71A /* SpawnEnemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79154F691E41469100D9B71A /* SpawnEnemy.swift */; };
@@ -58,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		790B0B341E79E32100122B7B /* GameStateKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStateKeys.swift; sourceTree = "<group>"; };
 		79154F651E413ED300D9B71A /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		79154F671E41431600D9B71A /* GameStateListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStateListener.swift; sourceTree = "<group>"; };
 		79154F691E41469100D9B71A /* SpawnEnemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpawnEnemy.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 		796014391DD8EAFD004640E9 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				790B0B341E79E32100122B7B /* GameStateKeys.swift */,
 				79154F651E413ED300D9B71A /* GameState.swift */,
 				79154F671E41431600D9B71A /* GameStateListener.swift */,
 				7960143C1DD8EB5A004640E9 /* GameObject.swift */,
@@ -427,6 +430,7 @@
 				796014411DD90684004640E9 /* UserInteractiveGameObject.swift in Sources */,
 				792DDE5A1E29649A00AED88E /* TestLevel.swift in Sources */,
 				79154F6D1E4147ED00D9B71A /* NumberOfEnemiesSpawned.swift in Sources */,
+				790B0B351E79E32100122B7B /* GameStateKeys.swift in Sources */,
 				79D2294E1DEF6339003F68F9 /* Bullet.swift in Sources */,
 				79DFF9D21E37F74400F50514 /* EventStopCriteria.swift in Sources */,
 			);

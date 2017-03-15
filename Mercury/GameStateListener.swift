@@ -8,5 +8,5 @@
 //  Defines a protocol for any objects that wish to subscribe to a GameState variable.
 
 protocol GameStateListener {
-  func reportStateChange(key: String, value: Any)
+  func reportStateChange(key: GameStateKey, value: Any)
 }
