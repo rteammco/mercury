@@ -113,21 +113,21 @@ class GameObject {
     }
   }
   
-  // Updates the movement of this object in the given direction, scaled by the object's movement speed and the elapsed time interval.
-  func moveUpdate(dx: CGFloat, dy: CGFloat, elapsedTime: TimeInterval) {
-    let dxScaled = dx * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
-    let dyScaled = dy * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
-    self.moveBy(dx: dxScaled, dy: dyScaled)
-  }
-  
-  // Updates the movement of this object using the movementDirection vector.
-  func moveUpdate(elapsedTime: TimeInterval) {
-    self.moveUpdate(dx: self.movementDirection.dx, dy: self.movementDirection.dy, elapsedTime: elapsedTime)
-  }
-  
-  // Updates the GameObject given the elapsed time (in seconds) since the last frame.
-  func update(_ elapsedTime: TimeInterval) {
-    // Override as needed. Otherwise, this does nothing.
-  }
+//  // Updates the movement of this object in the given direction, scaled by the object's movement speed and the elapsed time interval.
+//  func moveUpdate(dx: CGFloat, dy: CGFloat, elapsedTime: TimeInterval) {
+//    let dxScaled = dx * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
+//    let dyScaled = dy * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
+//    self.moveBy(dx: dxScaled, dy: dyScaled)
+//  }
+//  
+//  // Updates the movement of this object using the movementDirection vector.
+//  func moveUpdate(elapsedTime: TimeInterval) {
+//    self.moveUpdate(dx: self.movementDirection.dx, dy: self.movementDirection.dy, elapsedTime: elapsedTime)
+//  }
+//  
+//  // Updates the GameObject given the elapsed time (in seconds) since the last frame.
+//  func update(_ elapsedTime: TimeInterval) {
+//    // Override as needed. Otherwise, this does nothing.
+//  }
   
 }

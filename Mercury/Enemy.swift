@@ -29,11 +29,11 @@ class Enemy: PhysicsEnabledGameObject {
   }
   
   // Moves down every frame until it flies off screen.
-  override func update(_ elapsedTime: TimeInterval) {
-    self.moveUpdate(elapsedTime: elapsedTime)
-    //if !self.isWithinScreenBounds() {
-    //  self.isAlive = false
-    //}
-  }
+//  override func update(_ elapsedTime: TimeInterval) {
+//    self.moveUpdate(elapsedTime: elapsedTime)
+//    //if !self.isWithinScreenBounds() {
+//    //  self.isAlive = false
+//    //}
+//  }
   
 }

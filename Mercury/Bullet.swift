@@ -29,13 +29,13 @@ class Bullet: PhysicsEnabledGameObject {
     return node
   }
   
-  // Moves the bullet forward at the given speed.
-  // TODO: check for collisions.
-  override func update(_ elapsedTime: TimeInterval) {
-    //self.moveUpdate(elapsedTime: elapsedTime)
-    //if !self.isWithinScreenBounds() {
-    //  self.isAlive = false
-    //}
-  }
+//  // Moves the bullet forward at the given speed.
+//  // TODO: check for collisions.
+//  override func update(_ elapsedTime: TimeInterval) {
+//    //self.moveUpdate(elapsedTime: elapsedTime)
+//    //if !self.isWithinScreenBounds() {
+//    //  self.isAlive = false
+//    //}
+//  }
   
 }
