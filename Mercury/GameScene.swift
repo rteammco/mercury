@@ -90,19 +90,21 @@ class GameScene: SKScene {
   
   // Returns a scaled version of the given normalized position. Position (0, 0) is in the center. If the X coordinate is -1, that's the left-most side of the screen; +1 is the right-most side. Since the screen is taller than it is wide, +/-1 in the Y axis is not going to be completely at the bottom or top.
   func getScaledPosition(_ normalizedPosition: CGPoint) -> CGPoint {
-    if let worldSize = self.worldSize {
-      let halfWorldSize = worldSize / 2.0
-      return CGPoint(x: halfWorldSize * normalizedPosition.x, y: halfWorldSize * normalizedPosition.y)
-    }
-    return normalizedPosition
+    let halfScaleValue = getScaleValue() / 2.0
+    return CGPoint(x: halfScaleValue * normalizedPosition.x, y: halfScaleValue * normalizedPosition.y)
   }
   
   // Given a normalized value (e.g. speed), returns the absolute speed by scaling it up with the size of the world (which is dictated by the screen size of the device).
   func getScaledValue(_ normalizedSpeed: CGFloat) -> CGFloat {
+    return normalizedSpeed * getScaleValue()
+  }
+  
+  // Returns the scale value (not a scaled value, but rather the scaling factor itself).
+  func getScaleValue() -> CGFloat {
     if let worldSize = self.worldSize {
-      return normalizedSpeed * worldSize
+      return worldSize
     }
-    return normalizedSpeed
+    return 1.0
   }
   
   // Returns the previous position on the screen that a user's touch occured.
@@ -240,16 +242,12 @@ extension GameScene: GameStateListener {
   //
   // TODO: Some of these might work better as separate functions, specific EventActions that handle all the mechanics, or even factory objects to make the code cleaner.
   func reportStateChange(key: String, value: Any) {
-    if key == "player fire bullet" {
-      if let playerPosition = value as? CGPoint {
-        let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: getScaledValue(2.0))
-        addGameObject(bullet)
-        bullet.applyDefaultImpulse()
-      }
-    } else if key == "enemy spawned" {
-      if let enemy = value as? Enemy {
-        addGameObject(enemy)
-        enemy.applyDefaultImpulse()
+    // Add spawned physics-enabled objects to the game.
+    if key == "player fire bullet" || key == "enemy spawned" {
+      if let gameObject = value as? PhysicsEnabledGameObject {
+        gameObject.scaleMovementSpeed(getScaleValue())
+        addGameObject(gameObject)
+        gameObject.applyDefaultImpulse()
       }
     }
   }

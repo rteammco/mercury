@@ -16,6 +16,12 @@ class Bullet: PhysicsEnabledGameObject {
     super.init(position: position)
     self.nodeName = "bullet"
     self.scaleMovementSpeed(speed)
+    
+    // Customize physics properties:
+    self.physicsMass = 0.0
+    self.physicsRestitution = 0.15
+    self.physicsFriction = 0.15
+    self.physicsAllowsRotation = true
   }
   
   // TODO: temporary color and shape.

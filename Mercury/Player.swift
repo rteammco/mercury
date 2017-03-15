@@ -91,7 +91,9 @@ class Player: UserInteractiveGameObject, GameStateListener {
   
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
   @objc func fireBullet() {
-    self.gameState.inform("player fire bullet", value: self.getSceneNode().position)
+    let playerPosition = self.getSceneNode().position
+    let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: 2.0)
+    self.gameState.inform("player fire bullet", value: bullet)
   }
   
   override func touchDown() {
