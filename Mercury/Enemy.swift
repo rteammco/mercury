@@ -16,6 +16,12 @@ class Enemy: PhysicsEnabledGameObject {
     self.nodeName = "enemy"
     self.scaleMovementSpeed(speed)
     self.setMovementDirection(dx: 0, dy: -1)  // Top to bottom of screen.
+    
+    // Customize physics properties:
+    self.physicsMass = 0.75
+    self.physicsRestitution = 0.5
+    self.physicsFriction = 0.5
+    self.physicsAllowsRotation = true
   }
   
   // TODO: temporary color and shape.
@@ -28,13 +34,5 @@ class Enemy: PhysicsEnabledGameObject {
     self.initializePhysics()
     return node
   }
-  
-  // Moves down every frame until it flies off screen.
-//  override func update(_ elapsedTime: TimeInterval) {
-//    self.moveUpdate(elapsedTime: elapsedTime)
-//    //if !self.isWithinScreenBounds() {
-//    //  self.isAlive = false
-//    //}
-//  }
   
 }

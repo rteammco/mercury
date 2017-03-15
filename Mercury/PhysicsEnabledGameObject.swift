@@ -15,7 +15,7 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
   // Physical attributes of this object. Modify in child class as needed.
   var physicsFriction: CGFloat = 0.0  // The amount of resistance applied to other objects that touch this one's surface.
   
-  var physicsMass: CGFloat = 0.0  // Determines how forces act on the obejct as well as momentum; 0.0 = forces control it completely and immediately.
+  var physicsMass: CGFloat = 0.0  // Determines how forces act on the object as well as momentum; 0.0 = forces control it completely and immediately.
   
   var physicsRestitution: CGFloat = 1.0  // How much energy is preserved on collision (i.e. "bounciness"); 1.0 = all energy is maintained.
   

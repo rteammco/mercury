@@ -12,7 +12,6 @@ class TestLevel: GameScene {
     
   override func initializeScene() {
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
-    self.getGameState().subscribe(self, to: "player fire bullet")
     
     when(TimerEvent(seconds: 5)).execute(action: DisplayText(message: "Hello, World"))
     when(TimerEvent(seconds: 1)).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
@@ -34,16 +33,12 @@ class TestLevel: GameScene {
      
      countdown(5)
    */
+    
+    // Need to call this to handle any state changes that are triggered by other objects.
+    self.subscribeToStateChanges()
   }
   
   override func reportStateChange(key: String, value: Any) {
     super.reportStateChange(key: key, value: value)
-    if key == "player fire bullet" {
-      if let playerPosition = value as? CGPoint {
-        let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: getScaledValue(2.0))
-        addGameObject(bullet)
-        bullet.applyDefaultImpulse()
-      }
-    }
   }
 }

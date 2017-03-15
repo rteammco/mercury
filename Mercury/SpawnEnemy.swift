@@ -7,6 +7,8 @@
 //
 //  An EventAction that spawns the enemy of the given name when triggered.
 
+import SpriteKit
+
 class SpawnEnemy: EventAction {
   
   // TODO: location, and actually switch between the appropriate enemies.
@@ -16,9 +18,11 @@ class SpawnEnemy: EventAction {
 
   override func execute() {
     if let gameScene = self.caller as? GameScene {
-      gameScene.displayTextOnScreen(message: "Spawning an enemy")  // TODO: change.
-      // Update the global game state by incrementing the enemy spawn count value.
       let gameState = gameScene.getGameState()
+      let enemy = Enemy(position: gameScene.getScaledPosition(CGPoint(x: 0, y: 0)), speed: 1.0)
+      gameState.inform("enemy spawned", value: enemy)
+      
+      // Update the global game state by incrementing the enemy spawn count value.
       let numEnemiesSpawned = gameState.getInt(forKey: "enemy spawn count")
       gameState.set("enemy spawn count", to: numEnemiesSpawned + 1)
     }

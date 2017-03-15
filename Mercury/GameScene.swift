@@ -230,8 +230,28 @@ extension GameScene: EventCaller {
 // Every GameScene is also a GameStateListener, where it can subscribe to changes in the GameState set by other objects active in the game.
 extension GameScene: GameStateListener {
   
+  // Subscribe this GameScene to all relevant game state changes that it needs to handle. Extend as needed with custom subscriptions for a given level.
+  func subscribeToStateChanges() {
+    self.getGameState().subscribe(self, to: "player fire bullet")
+    self.getGameState().subscribe(self, to: "enemy spawned")
+  }
+  
+  // When a game state change is reported, handle it here. Extend as needed with custom handlers for a given level.
+  //
+  // TODO: Some of these might work better as separate functions, specific EventActions that handle all the mechanics, or even factory objects to make the code cleaner.
   func reportStateChange(key: String, value: Any) {
-    // TODO: Add functionality as needed.
+    if key == "player fire bullet" {
+      if let playerPosition = value as? CGPoint {
+        let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: getScaledValue(2.0))
+        addGameObject(bullet)
+        bullet.applyDefaultImpulse()
+      }
+    } else if key == "enemy spawned" {
+      if let enemy = value as? Enemy {
+        addGameObject(enemy)
+        enemy.applyDefaultImpulse()
+      }
+    }
   }
   
 }

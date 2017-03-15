@@ -30,11 +30,4 @@ class Bullet: PhysicsEnabledGameObject {
     return node
   }
   
-//  override func update(_ elapsedTime: TimeInterval) {
-//    //self.moveUpdate(elapsedTime: elapsedTime)
-//    //if !self.isWithinScreenBounds() {
-//    //  self.isAlive = false
-//    //}
-//  }
-  
 }
