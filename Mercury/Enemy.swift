@@ -25,6 +25,7 @@ class Enemy: PhysicsEnabledGameObject {
     node.position = self.position
     node.fillColor = SKColor.cyan
     self.gameSceneNode = node
+    self.initializePhysics()
     return node
   }
   

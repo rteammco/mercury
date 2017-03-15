@@ -26,6 +26,7 @@ class Bullet: PhysicsEnabledGameObject {
     node.position = position
     node.fillColor = SKColor.yellow
     self.gameSceneNode = node
+    self.initializePhysics()
     return node
   }
   

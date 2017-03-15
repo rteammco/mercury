@@ -93,8 +93,10 @@ class Player: UserInteractiveGameObject, GameStateListener {
   // TODO: we may want to move this method into the GameObject super class.
   @objc func fireBullet() {
     // TODO: fix this and put back shooting.
+    self.gameState.set("player fire bullet", to: self.getSceneNode().position)
     //let playerPosition = self.getSceneNode().position
     //let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: 2.0)
+    //bullet.applyDefaultImpulse()
     //self.level.addFriendlyProjectile(projectile: bullet)
   }
   

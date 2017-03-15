@@ -97,6 +97,14 @@ class GameScene: SKScene {
     return normalizedPosition
   }
   
+  // Given a normalized value (e.g. speed), returns the absolute speed by scaling it up with the size of the world (which is dictated by the screen size of the device).
+  func getScaledValue(_ normalizedSpeed: CGFloat) -> CGFloat {
+    if let worldSize = self.worldSize {
+      return normalizedSpeed * worldSize
+    }
+    return normalizedSpeed
+  }
+  
   // Returns the previous position on the screen that a user's touch occured.
   // The previous location is the one before the latest touch action. If no touch was previously recorded, returns (0, 0) which is the center of the screen.
   func getPreviousTouchPosition() -> CGPoint {
@@ -200,6 +208,16 @@ extension GameScene: EventCaller {
   func execute(action: EventAction) {
     action.setCaller(to: self)
     action.execute()
+  }
+  
+}
+
+
+// Every GameScene is also a GameStateListener, where it can subscribe to changes in the GameState set by other objects active in the game.
+extension GameScene: GameStateListener {
+  
+  func reportStateChange(key: String, value: Any) {
+    
   }
   
 }
