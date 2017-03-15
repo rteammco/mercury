@@ -10,7 +10,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Game units.
   var player: Player?
@@ -209,11 +209,9 @@ class GameScene: SKScene {
     for t in touches { self.touchUp(atPoint: t.location(in: self)) }
   }
   
-}
-
-
-// Extend the GameScene class to implement the EventProtocol, giving it the when() method and allowing events to be used.
-extension GameScene: EventCaller {
+  //------------------------------------------------------------------------------
+  // Methods for EventCaller protocol.
+  //------------------------------------------------------------------------------
   
   func when(_ event: Event) -> Event {
     event.setCaller(to: self)
@@ -226,11 +224,9 @@ extension GameScene: EventCaller {
     action.execute()
   }
   
-}
-
-
-// Every GameScene is also a GameStateListener, where it can subscribe to changes in the GameState set by other objects active in the game.
-extension GameScene: GameStateListener {
+  //------------------------------------------------------------------------------
+  // Methods for GameStateListener protocol.
+  //------------------------------------------------------------------------------
   
   // Subscribe this GameScene to all relevant game state changes that it needs to handle. Extend as needed with custom subscriptions for a given level.
   func subscribeToStateChanges() {
