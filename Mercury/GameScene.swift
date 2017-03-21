@@ -12,10 +12,8 @@ import GameplayKit
 
 class GameScene: SKScene, EventCaller, GameStateListener {
   
-  // Game units.
-  var player: Player?
-  var enemies: [Enemy]?
-  var friendlyProjectiles: [GameObject]?
+  // The contact delegate needs to be a local variable or else it disappears.
+  private let contactDelegate = ContactDelegate()
   
   // The size of the world used for scaling all displayed scene nodes.
   private var worldSize: CGFloat?
@@ -40,9 +38,6 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   override func didMove(to view: SKView) {
     // Set the size of the world based on the scene's size.
     self.worldSize = min(self.size.width, self.size.height)
-    
-    self.enemies = [Enemy]()
-    self.friendlyProjectiles = [GameObject]()
     self.gameState = GameState()
     
     initializePhysics()
@@ -51,7 +46,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Set the contact delegate and disable gravity.
   private func initializePhysics() {
-    self.physicsWorld.contactDelegate = ContactDelegate()
+    self.physicsWorld.contactDelegate = self.contactDelegate
     self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
   }
   
@@ -66,7 +61,6 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   func createPlayer(atPosition position: CGPoint) {
     let player = Player(position: getScaledPosition(position), gameState: getGameState())
     addGameObject(player)
-    self.player = player
   }
   
   //------------------------------------------------------------------------------

@@ -27,11 +27,25 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
   
   var physicsIsDynamic: Bool = true  // true = this object is simulated by the physics subsystem; false = only acts on other objects (e.g. user-controlled objects).
   
+  var collisionCategoryBitMask: UInt32 = PhysicsCollisionBitMask.none  // The collision category of this object. Set appropriately so the object collides with the appropriate objects.
+  
+  var collisionContactTestBitMask: UInt32 = PhysicsCollisionBitMask.none  // The bitmask of all collision categories that this can collide with. Use binary AND to set multiple collision categories that this object can collide with.
+  
   // Adjust the mass of the object to fit the world's scale, or whatever scale is given.
   // This is just like GameObject's scaleMovementSpeed method specifically for objects with physical mass that use this mass to interact with the simulated physics.
   // Objects should define their mass on a normalized scale (e.g. 0 to 1, or more than 1 for very heavy objects). Then before the object is added to the game, scale its mass by the scale of the world.
   func scaleMass(by scaleAmount: CGFloat) {
     self.physicsMass *= scaleAmount
+  }
+  
+  // Sets the physics collision category bitmask of this object (e.g. friendly or enemy). This determines whether other objects can detect collisions with this object.
+  func setCollisionCategory(_ bitMask: UInt32) {
+    self.collisionCategoryBitMask = bitMask
+  }
+  
+  // Adds a collision test category bitmask to this object (e.g. enemy or environment). This determines what other categories of objects this object can collide with.
+  func addCollisionTestCategory(_ bitMask: UInt32) {
+    self.collisionContactTestBitMask |= bitMask
   }
   
   // Returns a physics body that represents this object's shape. This is used to compute collisions and interaction with other physics-enabled objects.
@@ -56,6 +70,8 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
       gameSceneNode.physicsBody?.angularDamping = self.physicsAngularDamping
       gameSceneNode.physicsBody?.allowsRotation = self.physicsAllowsRotation
       gameSceneNode.physicsBody?.isDynamic = self.physicsIsDynamic
+      gameSceneNode.physicsBody?.categoryBitMask = self.collisionCategoryBitMask
+      gameSceneNode.physicsBody?.contactTestBitMask = self.collisionContactTestBitMask
     }
   }
   

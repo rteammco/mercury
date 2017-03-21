@@ -22,6 +22,11 @@ class Enemy: PhysicsEnabledGameObject {
     self.physicsRestitution = 0.5
     self.physicsFriction = 0.5
     self.physicsAllowsRotation = false
+    
+    // Physics collision properties: Enemies can collide with the player.
+    setCollisionCategory(PhysicsCollisionBitMask.enemy)
+    addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
+    // TODO: they should probably be able to collide with the environment as well?
   }
   
   // TODO: temporary color and shape.

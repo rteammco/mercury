@@ -13,10 +13,9 @@ import SpriteKit
 class ContactDelegate: NSObject, SKPhysicsContactDelegate {
   
   func didBegin(_ contact: SKPhysicsContact) {
-    print("in contact delegate")
     let nodeA = contact.bodyA.node
     let nodeB = contact.bodyB.node
-    if let objectA: GameObject = nodeA?.userData?.value(forKey: "GameObject") as? GameObject, let objectB: GameObject = nodeB?.userData?.value(forKey: "GameObject") as? GameObject {
+    if let objectA: GameObject = nodeA?.userData?.value(forKey: GameObject.nodeValueKey) as? GameObject, let objectB: GameObject = nodeB?.userData?.value(forKey: GameObject.nodeValueKey) as? GameObject {
       // TODO: actually handle the collision logic here.
       print(objectA.nodeName, "collided with", objectB.nodeName)
     }
