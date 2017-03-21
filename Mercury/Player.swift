@@ -17,12 +17,9 @@ class Player: UserInteractiveGameObject, GameStateListener {
   // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
   private var fireBulletTimer: Timer?
   
-  private let gameState: GameState
-  
-  init(position: CGPoint, gameState: GameState) {
+  override init(position: CGPoint, gameState: GameState) {
     self.fireBulletIntervalSeconds = 0.1
-    self.gameState = gameState
-    super.init(position: position)
+    super.init(position: position, gameState: gameState)
     self.nodeName = "player"
     self.gameState.subscribe(self, to: .screenTouchDown)
     self.gameState.subscribe(self, to: .screenTouchMoved)
@@ -92,7 +89,7 @@ class Player: UserInteractiveGameObject, GameStateListener {
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
   @objc func fireBullet() {
     let playerPosition = self.getSceneNode().position
-    let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: 2.0)
+    let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), gameState: self.gameState, speed: 2.0)
     bullet.setCollisionCategory(PhysicsCollisionBitMask.friendly)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.enemy)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.environment)

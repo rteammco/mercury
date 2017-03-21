@@ -13,9 +13,12 @@ class TestLevel: GameScene {
   override func initializeScene() {
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
     
+    // Need to call this to handle any state changes that are triggered by other objects.
+    self.subscribeToStateChanges()
+    
     when(TimerEvent(seconds: 5)).execute(action: DisplayText(message: "Hello, World"))
-    when(TimerEvent(seconds: 1)).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
-    //when(EnemyDies()).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
+    //when(TimerEvent(seconds: 1)).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
+    when(EnemyDies()).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
     execute(action: SpawnEnemy("test"))
     
   /*
@@ -33,9 +36,6 @@ class TestLevel: GameScene {
      
      countdown(5)
    */
-    
-    // Need to call this to handle any state changes that are triggered by other objects.
-    self.subscribeToStateChanges()
   }
   
   override func reportStateChange(key: GameStateKey, value: Any) {

@@ -16,6 +16,8 @@ enum GameStateKey: String {
   
   case spawnPlayerBullet, spawnEnemy
   
+  case enemyDies
+  
   case numSpawnedEnemies
   
 }

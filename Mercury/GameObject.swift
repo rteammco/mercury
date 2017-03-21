@@ -19,6 +19,9 @@ class GameObject {
   var gameSceneNode: SKNode?
   var position: CGPoint
   
+  // The global game state used to communicate with other GameObjects and the scene.
+  let gameState: GameState
+  
   // How fast the object moves in the world.
   // This is a relative value and is scaled by the GameScene depending on the screen size. It should only ever be modified with scaleMovementSpeed().
   var movementSpeed: CGFloat = 1.0
@@ -38,9 +41,10 @@ class GameObject {
   // Initialization methods and functionality.
   //------------------------------------------------------------------------------
   
-  // Create the object, and get the GameScene which is used to determine world size properties.
-  init(position: CGPoint) {
+  // Create the object, and get the global GameState to communicate with other GameObjects and modules in the scene.
+  init(position: CGPoint, gameState: GameState) {
     self.position = position
+    self.gameState = gameState
   }
   
   // Scale the movement speed by the given non-negative value.
@@ -116,11 +120,17 @@ class GameObject {
   // Methods for game mechanics and actions.
   //------------------------------------------------------------------------------
   
+  // Called to destroy or "kill" the object, typically when it dies (health reaches zero).
+  func destroyObject() {
+    print("Object is dead.")
+    removeSceneNodeFromGameScene()
+    gameState.inform(.enemyDies, value: self)
+  }
+  
   func reduceHeath(by amount: CGFloat) {
     self.health -= amount
     if self.health <= 0 {
-      print("Object is dead.")
-      removeSceneNodeFromGameScene()
+      destroyObject()
     }
   }
   

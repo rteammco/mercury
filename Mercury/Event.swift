@@ -24,7 +24,7 @@ protocol EventCaller {
 // An Event object triggers after some condition is satisfied. It can also take the form of an EventStopCriteria, allowing it to act as a stop condition for other events.
 // Example event call (in an object implemeting the EventCaller protocol):
 //   when(TimerEvent(seconds: 10)).execute(DisplayTextAction(message: "Hello, world"))
-class Event: EventStopCriteria {
+class Event: EventStopCriteria, GameStateListener {
   
   var eventActions: [EventAction]
   
@@ -127,11 +127,13 @@ class Event: EventStopCriteria {
     // Override as needed, e.g. start a clock timer, and once it's done, call self.trigger(). Initialize all variables for the event here.
   }
   
-}
-
-// This extension is used by Events that need to subscribe to certain game state changes to trigger. Note that the game state variables need to be actively updated by the GameScene or other objects in order to work effectively.
-extension Event: GameStateListener {
+  //------------------------------------------------------------------------------
+  // State change method for the GameStateListener protocol.
+  //------------------------------------------------------------------------------
+  
+  // This is used by Events that need to subscribe to certain game state changes to trigger. Note that the game state variables need to be actively updated by the GameScene or other objects in order to work effectively.
   func reportStateChange(key: GameStateKey, value: Any) {
     // Override as needed.
   }
+  
 }

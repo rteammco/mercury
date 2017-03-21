@@ -11,8 +11,8 @@ import SpriteKit
 
 class Enemy: PhysicsEnabledGameObject {
   
-  init(position: CGPoint, speed: CGFloat) {
-    super.init(position: position)
+  init(position: CGPoint, gameState: GameState, speed: CGFloat) {
+    super.init(position: position, gameState: gameState)
     self.nodeName = "enemy"
     self.scaleMovementSpeed(speed)
     self.setMovementDirection(dx: 0, dy: -1)  // Top to bottom of screen.
