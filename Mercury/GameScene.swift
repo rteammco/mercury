@@ -242,9 +242,9 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     if key == .spawnPlayerBullet || key == .spawnEnemy {
       if let gameObject = value as? PhysicsEnabledGameObject {
         gameObject.scaleMovementSpeed(getScaleValue())
+        gameObject.scaleMass(by: getScaleValue())
         addGameObject(gameObject)
         gameObject.setDefaultVelocity()
-        //gameObject.applyDefaultImpulse()
       }
     }
   }

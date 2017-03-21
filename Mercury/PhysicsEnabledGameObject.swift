@@ -27,6 +27,13 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
   
   var physicsIsDynamic: Bool = true  // true = this object is simulated by the physics subsystem; false = only acts on other objects (e.g. user-controlled objects).
   
+  // Adjust the mass of the object to fit the world's scale, or whatever scale is given.
+  // This is just like GameObject's scaleMovementSpeed method specifically for objects with physical mass that use this mass to interact with the simulated physics.
+  // Objects should define their mass on a normalized scale (e.g. 0 to 1, or more than 1 for very heavy objects). Then before the object is added to the game, scale its mass by the scale of the world.
+  func scaleMass(by scaleAmount: CGFloat) {
+    self.physicsMass *= scaleAmount
+  }
+  
   // Returns a physics body that represents this object's shape. This is used to compute collisions and interaction with other physics-enabled objects.
   // By default, the physics body is just a circle around the object. This can be defined as an arbitrary polygon for more realistic physical simulations.
   // If the gameSceneNode is not defined, it will just return a single pixel-size circle.
