@@ -122,9 +122,7 @@ class GameObject {
   
   // Called to destroy or "kill" the object, typically when it dies (health reaches zero).
   func destroyObject() {
-    print("Object is dead.")
     removeSceneNodeFromGameScene()
-    gameState.inform(.enemyDies, value: self)
   }
   
   func reduceHeath(by amount: CGFloat) {

@@ -16,9 +16,9 @@ class TestLevel: GameScene {
     // Need to call this to handle any state changes that are triggered by other objects.
     self.subscribeToStateChanges()
     
-    when(TimerEvent(seconds: 5)).execute(action: DisplayText(message: "Hello, World"))
+    //when(TimerEvent(seconds: 5)).execute(action: DisplayText(message: "Hello, World"))
     //when(TimerEvent(seconds: 1)).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
-    when(EnemyDies()).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
+    when(EnemyDies()).execute(actions: SpawnEnemy("test"), DisplayText(message: "Enemy Died!")).until(NumberOfEnemiesSpawned(equals: 10))
     execute(action: SpawnEnemy("test"))
     
   /*
