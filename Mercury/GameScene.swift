@@ -77,6 +77,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   func addGameObject(_ gameObject: GameObject) {
     if let worldSize = self.worldSize {
       let sceneNode = gameObject.createGameSceneNode(scale: worldSize)
+      gameObject.connectToSceneNode(sceneNode)
       sceneNode.name = gameObject.nodeName
       addChild(sceneNode)
     }

@@ -11,6 +11,10 @@ import SpriteKit
 
 class GameObject {
   
+  // This key is used to look up the GameObject reference from a game scene node (SKNode).
+  // GameObject handles more complex game mechanics, so each node is set to track its own GameObject through its userData dictionary.
+  static let nodeValueKey: String = "gameSceneNodeToGameObjectKey"
+  
   // The scene node for animation and rendering.
   var gameSceneNode: SKNode?
   var position: CGPoint
@@ -54,6 +58,15 @@ class GameObject {
     node.fillColor = SKColor.blue
     self.gameSceneNode = node
     return node
+  }
+  
+  // Connects this GameObject to an SKNode (ideally its own) through the node's userData dictionary. This will allow the game to keep track of the GameObject (which likely has functionality for more advanced game mechanics).
+  // Call this AFTER calling createGameSceneNode, and BEFORE adding it to the game scene. This should be handled automatically by GameScene's addGameObject method.
+  func connectToSceneNode(_ gameSceneNode: SKNode) {
+    if gameSceneNode.userData == nil {
+      gameSceneNode.userData = NSMutableDictionary()
+    }
+    gameSceneNode.userData?.setValue(self, forKey: GameObject.nodeValueKey)
   }
   
   // Set the movement direction. This will automatically normalize the given vector (must be non-zero).
