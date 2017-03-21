@@ -18,7 +18,7 @@ class Enemy: PhysicsEnabledGameObject {
     self.setMovementDirection(dx: 0, dy: -1)  // Top to bottom of screen.
     
     // Customize physics properties:
-    self.physicsMass = 10.0
+    self.physicsMass = 100.0
     self.physicsRestitution = 0.5
     self.physicsFriction = 0.5
     self.physicsAllowsRotation = true

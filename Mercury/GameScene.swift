@@ -243,7 +243,8 @@ class GameScene: SKScene, EventCaller, GameStateListener {
       if let gameObject = value as? PhysicsEnabledGameObject {
         gameObject.scaleMovementSpeed(getScaleValue())
         addGameObject(gameObject)
-        gameObject.applyDefaultImpulse()
+        gameObject.setDefaultVelocity()
+        //gameObject.applyDefaultImpulse()
       }
     }
   }

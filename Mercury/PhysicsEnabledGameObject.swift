@@ -61,11 +61,20 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
     }
   }
   
-  // Applies an impulse based on the movement speed and direction of the GameObject.
-  func applyDefaultImpulse() {
+  // Sets the velocity of the object to the given value, regardless of the object's current physical properties.
+  func setVelocity(xVelocity: CGFloat, yVelocity: CGFloat) {
+    if let gameSceneNode = self.gameSceneNode {
+      gameSceneNode.physicsBody?.velocity = CGVector(dx: xVelocity, dy: yVelocity)
+    } else {
+      print("WARNING: gameSceneNode has not been initialized. Velocity cannot be set.")
+    }
+  }
+  
+  // Sets the current velocity to the movement speed and direction of the GameObject.
+  func setDefaultVelocity() {
     let dx = self.movementDirection.dx * self.movementSpeed
     let dy = self.movementDirection.dy * self.movementSpeed
-    self.applyImpulse(dx: dx, dy: dy)
+    setVelocity(xVelocity: dx, yVelocity: dy)
   }
   
 }
