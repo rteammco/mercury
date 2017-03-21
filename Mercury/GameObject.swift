@@ -31,8 +31,12 @@ class GameObject {
   // identifier for detecting those nodes in the scene.
   var nodeName = "object"
   
-  // This flag is used to trigger cleanup of objects at each frame. If isAlive is set to false, this object will be removed from the game during the next frame update.
-  var isAlive: Bool = true
+  // Health of this GameObject. Typically, when health reaches zero, the object "dies". This behavior is determined for each GameObject individually.
+  var health: CGFloat = 100
+  
+  //------------------------------------------------------------------------------
+  // Initialization methods and functionality.
+  //------------------------------------------------------------------------------
   
   // Create the object, and get the GameScene which is used to determine world size properties.
   init(position: CGPoint) {
@@ -69,21 +73,13 @@ class GameObject {
     gameSceneNode.userData?.setValue(self, forKey: GameObject.nodeValueKey)
   }
   
-  // Set the movement direction. This will automatically normalize the given vector (must be non-zero).
-  func setMovementDirection(dx: CGFloat, dy: CGFloat) {
-    let norm = sqrt(dx * dx + dy * dy)
-    // Cannot have a zero norm (divide by 0 error).
-    if norm > 0 {
-      self.movementDirection.dx = dx / norm
-      self.movementDirection.dy = dy / norm
-    }
-  }
+  //------------------------------------------------------------------------------
+  // Node operations (after node is added to the scene).
+  //------------------------------------------------------------------------------
   
   // Returns the scene node for this object. If it was not initialized, the returned object will be an empty SKShapeNode.
   func getSceneNode() -> SKNode {
     if let gameSceneNode = self.gameSceneNode {
-      gameSceneNode.name = self.nodeName
-      gameSceneNode.userData?.setValue(self, forKey: "GameObject")
       return gameSceneNode
     } else {
       return SKShapeNode()
@@ -95,27 +91,19 @@ class GameObject {
     self.gameSceneNode?.removeFromParent()
   }
   
-// TODO: put this function back if it is needed again.
-//  // Returns the distance of this object (its node) to to given point. Returns 0 if the node is not
-//  // defined.
-//  func distanceTo(loc: CGPoint) -> Double {
-//    if let gameSceneNode = self.gameSceneNode {
-//      let xDist = loc.x - gameSceneNode.position.x
-//      let yDist = loc.y - gameSceneNode.position.y
-//      return Double(sqrt(xDist * xDist + yDist * yDist))
-//    }
-//    return 0.0
-//  }
-
-// TODO: put this function back if it is needed again.
-//  // Moves the scene node to the given location. Removes any previous move actions.
-//  func moveTo(to loc: CGPoint, duration: Double) {
-//    if let gameSceneNode = self.gameSceneNode {
-//      let time = duration / self.movementSpeed
-//      gameSceneNode.removeAction(forKey: "moveAction")
-//      gameSceneNode.run(SKAction.move(to: loc, duration: time), withKey: "moveAction")
-//    }
-//  }
+  //------------------------------------------------------------------------------
+  // Movement methods.
+  //------------------------------------------------------------------------------
+  
+  // Set the movement direction. This will automatically normalize the given vector (must be non-zero).
+  func setMovementDirection(dx: CGFloat, dy: CGFloat) {
+    let norm = sqrt(dx * dx + dy * dy)
+    // Cannot have a zero norm (divide by 0 error).
+    if norm > 0 {
+      self.movementDirection.dx = dx / norm
+      self.movementDirection.dy = dy / norm
+    }
+  }
   
   // Moves the scene node by the given dx and dy instantly.
   func moveBy(dx: CGFloat, dy: CGFloat) {
@@ -124,21 +112,16 @@ class GameObject {
     }
   }
   
-//  // Updates the movement of this object in the given direction, scaled by the object's movement speed and the elapsed time interval.
-//  func moveUpdate(dx: CGFloat, dy: CGFloat, elapsedTime: TimeInterval) {
-//    let dxScaled = dx * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
-//    let dyScaled = dy * CGFloat(self.movementSpeed) * CGFloat(elapsedTime)
-//    self.moveBy(dx: dxScaled, dy: dyScaled)
-//  }
-//  
-//  // Updates the movement of this object using the movementDirection vector.
-//  func moveUpdate(elapsedTime: TimeInterval) {
-//    self.moveUpdate(dx: self.movementDirection.dx, dy: self.movementDirection.dy, elapsedTime: elapsedTime)
-//  }
+  //------------------------------------------------------------------------------
+  // Methods for game mechanics and actions.
+  //------------------------------------------------------------------------------
   
-  // Updates the GameObject given the elapsed time (in seconds) since the last frame. This can be used for cosmetic things like animations or garbage collections (i.e. removing nodes from the game if they've gone too far off screen). For timers, use timer events. For collisions, movement, and physics, use the physics subsystem whenever possible.
-//  func update(_ elapsedTime: TimeInterval) {
-//    
-//  }
+  func reduceHeath(by amount: CGFloat) {
+    self.health -= amount
+    if self.health <= 0 {
+      print("Object is dead.")
+      removeSceneNodeFromGameScene()
+    }
+  }
   
 }

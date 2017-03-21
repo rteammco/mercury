@@ -11,14 +11,29 @@ import SpriteKit
 
 // Have to use NSObject base class because SKPhysicsContactDelegate requires conforming to NSObjectProtocol (Objective-C object).
 class ContactDelegate: NSObject, SKPhysicsContactDelegate {
-  
+
+  // This method gets called by the physics engine whenever a collision starts.
   func didBegin(_ contact: SKPhysicsContact) {
     let nodeA = contact.bodyA.node
     let nodeB = contact.bodyB.node
     if let objectA: GameObject = nodeA?.userData?.value(forKey: GameObject.nodeValueKey) as? GameObject, let objectB: GameObject = nodeB?.userData?.value(forKey: GameObject.nodeValueKey) as? GameObject {
-      // TODO: actually handle the collision logic here.
-      print(objectA.nodeName, "collided with", objectB.nodeName)
+      processCollisionEvent(objectA: objectA, objectB: objectB)
     }
+  }
+  
+  // Given two objects that collide, this method figures out how the collision should be handled.
+  private func processCollisionEvent(objectA: GameObject, objectB: GameObject) {
+    if objectA is Bullet {
+      handleBulletCollision(bullet: objectA as! Bullet, target: objectB)
+    } else if objectB is Bullet {
+      handleBulletCollision(bullet: objectB as! Bullet, target: objectA)
+    }
+  }
+  
+  // Handles the scenario where a bullet hit another object in the scene.
+  private func handleBulletCollision(bullet: Bullet, target: GameObject) {
+    target.reduceHeath(by: 10)
+    bullet.removeSceneNodeFromGameScene()
   }
   
 }
