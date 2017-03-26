@@ -33,7 +33,6 @@ class Player: UserInteractiveGameObject, GameStateListener {
     let size = 0.15 * scale
     let node = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
     node.position = self.position
-    print(node.position)
     node.fillColor = SKColor.blue
     self.gameSceneNode = node
     return node
