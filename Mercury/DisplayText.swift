@@ -11,9 +11,9 @@ import Foundation
 
 class DisplayText: EventAction {
   
-  let message: NSString
+  let message: String
   
-  init(message: NSString) {
+  init(message: String) {
     self.message = message
   }
   

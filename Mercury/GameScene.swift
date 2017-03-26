@@ -77,10 +77,19 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     }
   }
   
-  // Displays text on the screen that disappears after a few seconds.
-  func displayTextOnScreen(message: NSString) {
-    // TODO: actually display this text, not just print it.
-    print("In displayTextOnScreen. Message is:", message)
+  // Displays text on the screen that disappears after a few seconds. Optionally set the forDuration and withFadeOutDuration values (both in seconds) to change how long the text is displayed or how long it can fade out over. These values can be 0.
+  func displayTextOnScreen(message: String, forDuration textOnScreenDuration: TimeInterval = 1, withFadeOutDuration textFadeOutDuration: TimeInterval = 1) {
+    let labelNode = SKLabelNode(fontNamed: "Papyrus")
+    labelNode.text = message as String
+    labelNode.fontSize = 60
+    labelNode.fontColor = SKColor.yellow
+    labelNode.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+    addChild(labelNode)
+    
+    let waitAction = SKAction.wait(forDuration: textOnScreenDuration)
+    let fadeAction = SKAction.fadeOut(withDuration: textFadeOutDuration)
+    let textFadeOut = SKAction.run({() in labelNode.run(fadeAction)})
+    run(SKAction.sequence([waitAction, textFadeOut]))
   }
   
   // Returns a scaled version of the given normalized position. Position (0, 0) is in the center. If the X coordinate is -1, that's the left-most side of the screen; +1 is the right-most side. Since the screen is taller than it is wide, +/-1 in the Y axis is not going to be completely at the bottom or top.
