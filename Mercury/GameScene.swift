@@ -79,10 +79,10 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Displays text on the screen that disappears after a few seconds. Optionally set the forDuration and withFadeOutDuration values (both in seconds) to change how long the text is displayed or how long it can fade out over. These values can be 0.
   func displayTextOnScreen(message: String, forDuration textOnScreenDuration: TimeInterval = 1, withFadeOutDuration textFadeOutDuration: TimeInterval = 1) {
-    let labelNode = SKLabelNode(fontNamed: "Papyrus")
-    labelNode.text = message as String
-    labelNode.fontSize = 60
-    labelNode.fontColor = SKColor.yellow
+    let labelNode = SKLabelNode(text: message)
+    labelNode.fontName = GameConfiguration.mainFont
+    labelNode.fontSize = GameConfiguration.mainFontSize
+    labelNode.fontColor = GameConfiguration.primaryColor
     labelNode.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
     addChild(labelNode)
     

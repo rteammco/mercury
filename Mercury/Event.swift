@@ -23,19 +23,23 @@ protocol EventCaller {
 
 // An Event object triggers after some condition is satisfied. It can also take the form of an EventStopCriteria, allowing it to act as a stop condition for other events.
 // Example event call (in an object implemeting the EventCaller protocol):
-//   when(TimerEvent(seconds: 10)).execute(DisplayTextAction(message: "Hello, world"))
+//   when(TimerEvent(seconds: 10)).execute(DisplayText(message: "Hello, world"))
 class Event: EventStopCriteria, GameStateListener {
   
+  // Actions to be executed any time the event triggers.
   var eventActions: [EventAction]
+  
+  // Actions to be executed when event is completely done, and stops repeating.
+  var finalActions: [EventAction]
   
   var caller: EventCaller?
   var stopCriteria: EventStopCriteria?
-  var nextEvent: Event?
   
   var wasTriggered: Bool
   
   init() {
     self.eventActions = [EventAction]()
+    self.finalActions = [EventAction]()
     self.wasTriggered = false
   }
   
@@ -70,12 +74,16 @@ class Event: EventStopCriteria, GameStateListener {
     return self
   }
   
-  // After this event is complete (that is, all criteria are satisfied and the event is not repeating), the given event will be started next.
-  @discardableResult func then(_ nextEvent: Event) -> Event {
-    if let caller = self.caller {
-      nextEvent.setCaller(to: caller)
+  // After this event is complete (that is, all criteria are satisfied and the event is not repeating), the given action(s) will be executed.
+  // This will only work if there is a stopping criteria, meaning that this is a repeating event, and the event can be triggered even after the stopping criteria is met. For example:
+  // when(EnemyDies()).execute(SpawnEnemy()).until(NumberOfEnemiesSpawned(equals: 10)).then(DisplayText("You Win!"))
+  @discardableResult func then(_ nextActions: EventAction...) {
+    for action in nextActions {
+      if let caller = self.caller {
+        action.setCaller(to: caller)
+      }
+      self.finalActions.append(action)
     }
-    return nextEvent
   }
   
   // Executes all the actions to be performed when the event occurs.
@@ -102,8 +110,11 @@ class Event: EventStopCriteria, GameStateListener {
     }
     if willEventRepeat {
       reset()
-    } else if let nextEvent = self.nextEvent {
-      nextEvent.start()
+    } else if !canExecuteActions {
+      // If event is not repeating, finish off any final actions set with the "then" method.
+      for action in self.finalActions {
+        action.execute()
+      }
     }
   }
   

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		790B0B351E79E32100122B7B /* GameStateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790B0B341E79E32100122B7B /* GameStateKeys.swift */; };
+		7913A34B1E884B180070DF8E /* GameConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7913A34A1E884B180070DF8E /* GameConfiguration.swift */; };
 		79154F661E413ED300D9B71A /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79154F651E413ED300D9B71A /* GameState.swift */; };
 		79154F681E41431600D9B71A /* GameStateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79154F671E41431600D9B71A /* GameStateListener.swift */; };
 		79154F6A1E41469100D9B71A /* SpawnEnemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79154F691E41469100D9B71A /* SpawnEnemy.swift */; };
@@ -62,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		790B0B341E79E32100122B7B /* GameStateKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStateKeys.swift; sourceTree = "<group>"; };
+		7913A34A1E884B180070DF8E /* GameConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameConfiguration.swift; sourceTree = "<group>"; };
 		79154F651E413ED300D9B71A /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		79154F671E41431600D9B71A /* GameStateListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStateListener.swift; sourceTree = "<group>"; };
 		79154F691E41469100D9B71A /* SpawnEnemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpawnEnemy.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				79DFF9CA1E37EF3B00F50514 /* Events */,
 				796014391DD8EAFD004640E9 /* Game */,
 				79DEC4771DD7BBF000A5BF16 /* GameScene.swift */,
+				7913A34A1E884B180070DF8E /* GameConfiguration.swift */,
 				79DEC4711DD7BBF000A5BF16 /* AppDelegate.swift */,
 				79DEC4791DD7BBF000A5BF16 /* GameViewController.swift */,
 				79DEC4731DD7BBF000A5BF16 /* GameScene.sks */,
@@ -430,6 +433,7 @@
 				79DEC47A1DD7BBF000A5BF16 /* GameViewController.swift in Sources */,
 				793377D51E405BE100D4701C /* TimerEvent.swift in Sources */,
 				79DFF9CC1E37EFB400F50514 /* Event.swift in Sources */,
+				7913A34B1E884B180070DF8E /* GameConfiguration.swift in Sources */,
 				79154F681E41431600D9B71A /* GameStateListener.swift in Sources */,
 				7960143F1DD904B1004640E9 /* UserInteractive.swift in Sources */,
 				799424BA1E8194D900C2BD88 /* CollisionBitMasks.swift in Sources */,

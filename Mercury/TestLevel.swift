@@ -18,7 +18,7 @@ class TestLevel: GameScene {
     
     //when(TimerEvent(seconds: 5)).execute(action: DisplayText(message: "Hello, World"))
     //when(TimerEvent(seconds: 1)).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
-    when(EnemyDies()).execute(actions: SpawnEnemy("test"), DisplayText(message: "Enemy Died!")).until(NumberOfEnemiesSpawned(equals: 10))
+    when(EnemyDies()).execute(actions: SpawnEnemy("test"), DisplayText(message: "Enemy Died!")).until(NumberOfEnemiesSpawned(equals: 10)).then(DisplayText(message: "You Did It!!"))
     execute(action: SpawnEnemy("test"))
     
   /*
