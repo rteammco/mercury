@@ -18,8 +18,18 @@ class TestLevel: GameScene {
     
     //when(TimerEvent(seconds: 5)).execute(action: DisplayText(message: "Hello, World"))
     //when(TimerEvent(seconds: 1)).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
-    when(EnemyDies()).execute(actions: SpawnEnemy("test"), DisplayText(message: "Enemy Died!")).until(NumberOfEnemiesSpawned(equals: 10)).then(DisplayText(message: "You Did It!!"))
-    execute(action: SpawnEnemy("test"))
+    
+    let phase1 = EventPhase(parent: self)
+    phase1.when(EnemyDies()).execute(actions: SpawnEnemy("test"), DisplayText(message: "Enemy Died!")).until(NumberOfEnemiesSpawned(equals: 10)).then(DisplayText(message: "You Did It!!"))
+    phase1.execute(action: SpawnEnemy("test"))
+    phase1.start()
+    
+    //let phase1 = createPhase()
+    //phase1.when(...)
+    //phase1.execute(...)
+    //let phase2 = GamePhase()
+    //...
+    //run(phase1, phase2)
     
   /*
      // TODO: use events to build the level, e.g. like this:
