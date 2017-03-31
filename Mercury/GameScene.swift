@@ -15,6 +15,9 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // The contact delegate needs to be a local variable or else it disappears.
   private let contactDelegate = ContactDelegate()
   
+  // The phase sequence that will be executed when this GameScene is started.
+  private var eventPhaseSequence = [EventPhase]()
+  
   // The size of the world used for scaling all displayed scene nodes.
   private var worldSize: CGFloat?
   
@@ -157,11 +160,16 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Adds a sequence of phases to the level, starting the first phase.
   func setPhaseSequence(_ phaseSequence: EventPhase...) {
-    for i in 1 ... phaseSequence.count - 1 {
-      phaseSequence[i - 1].setNextPhase(to: phaseSequence[i])
+    self.eventPhaseSequence = phaseSequence
+    for i in 1 ... self.eventPhaseSequence.count - 1 {
+      self.eventPhaseSequence[i - 1].setNextPhase(to: self.eventPhaseSequence[i])
     }
-    if phaseSequence.count > 0 {
-      phaseSequence[0].start()
+  }
+  
+  // Starts the level, triggering the first phase.
+  func start(withCountdown countdownTime: Int = 0) {
+    if self.eventPhaseSequence.count > 0 {
+      self.eventPhaseSequence[0].start()
     }
   }
   
