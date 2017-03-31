@@ -41,7 +41,7 @@ class EventPhase: EventAction, EventCaller {
   // Start the phase. This will begin all events in this phase and execute all initial actions.
   func start() {
     for event in self.events {
-      event.then(self)
+      event.finally(self)
       event.start()
     }
     for action in self.actions {

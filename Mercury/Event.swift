@@ -30,8 +30,11 @@ class Event: EventStopCriteria, GameStateListener {
   var eventActions: [EventAction]
   
   // Actions and event (both optional) to be executed and started when event is completely done, and stops repeating.
-  var finalActions: [EventAction]
+  var eventFinishedActions: [EventAction]
   var nextEvent: Event?
+  
+  // Actions that are executed when the event chain is completed. These are not necessarily executed when this particular event is finished, since they can be passed down to the next event in the chain.
+  var eventChainFinalActions: [EventAction]
   
   var caller: EventCaller?
   var stopCriteria: EventStopCriteria?
@@ -40,7 +43,8 @@ class Event: EventStopCriteria, GameStateListener {
   
   init() {
     self.eventActions = [EventAction]()
-    self.finalActions = [EventAction]()
+    self.eventFinishedActions = [EventAction]()
+    self.eventChainFinalActions = [EventAction]()
     self.wasTriggered = false
   }
   
@@ -82,7 +86,7 @@ class Event: EventStopCriteria, GameStateListener {
       if let caller = self.caller {
         action.setCaller(to: caller)
       }
-      self.finalActions.append(action)
+      self.eventFinishedActions.append(action)
     }
     return self
   }
@@ -95,6 +99,12 @@ class Event: EventStopCriteria, GameStateListener {
     }
     self.nextEvent = nextEvent
     return nextEvent
+  }
+  
+  // Set actions that will be executed at the end of the event chain. If this is the last Event in a sequence of events, these actions will be executed when this event triggers. Otherwise, they will be executed when the last event in the sequence is triggered.
+  // Event chains are constructed using the "then(when: NextEvent())..." method.
+  func finally(_ eventChainFinalActions: EventAction...) {
+    self.eventChainFinalActions = eventChainFinalActions
   }
   
   // Executes all the actions to be performed when the event occurs.
@@ -123,11 +133,17 @@ class Event: EventStopCriteria, GameStateListener {
       reset()
     } else if self.stopCriteria == nil || !canExecuteActions {
       // If event is not repeating or has no stop criteria (thus cannot repeat at all), finish off any final actions set with the "then" method, and start the next event if it was set.
-      for action in self.finalActions {
+      for action in self.eventFinishedActions {
         action.execute()
       }
       if let nextEvent = self.nextEvent {
+        nextEvent.eventChainFinalActions.append(contentsOf: self.eventChainFinalActions)
         nextEvent.start()
+      } else {
+        // If this is the last event in a chain, execute any remaining actions that carried over from the start of the event chain.
+        for action in self.eventChainFinalActions {
+          action.execute()
+        }
       }
     }
   }

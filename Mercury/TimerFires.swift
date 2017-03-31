@@ -31,4 +31,5 @@ class TimerFires: Event {
     self.timer?.invalidate()
     trigger()
   }
+  
 }
