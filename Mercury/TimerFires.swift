@@ -10,13 +10,13 @@
 import Foundation
 import SpriteKit
 
-class TimerEvent: Event {
+class TimerFires: Event {
   
   let timeInSeconds: CGFloat
   var timer: Timer?
   
   // Set the time in seconds.
-  init(seconds: CGFloat) {
+  init(afterSeconds seconds: CGFloat) {
     self.timeInSeconds = seconds
     super.init()
   }

@@ -24,7 +24,7 @@ class TestLevel: GameScene {
     phase1.execute(action: SpawnEnemy("test"))
     
     let phase2 = createEventPhase()
-    phase2.when(TimerEvent(seconds: 3)).execute(action: DisplayText(message: "PHASE 2")).then(when: TimerEvent(seconds: 3)).then(DisplayText(message: "DONE"))
+    phase2.when(TimerFires(afterSeconds: 3)).execute(action: DisplayText(message: "PHASE 2")).then(when: TimerFires(afterSeconds: 3)).then(DisplayText(message: "DONE"))
     
     setPhaseSequence(phase1, phase2)
     
