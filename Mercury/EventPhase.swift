@@ -19,6 +19,9 @@ class EventPhase: EventAction, EventCaller {
   // The number of completed events. When all events are finished, this phase is done.
   var numCompletedEvents: Int
   
+  // The next phase. If this is set (with setNextPhase), it will be started after this phase is finished.
+  var nextPhase: EventPhase?
+  
   init(parent: EventCaller) {
     self.parent = parent
     self.events = [Event]()
@@ -30,6 +33,12 @@ class EventPhase: EventAction, EventCaller {
   // Methods for chaining event phases.
   //------------------------------------------------------------------------------
   
+  // Set the next phase. This next EventPhase will be started once this EventPhase is finished.
+  func setNextPhase(to nextPhase: EventPhase) {
+    self.nextPhase = nextPhase
+  }
+  
+  // Start the phase. This will begin all events in this phase and execute all initial actions.
   func start() {
     for event in self.events {
       event.then(self)
@@ -44,7 +53,14 @@ class EventPhase: EventAction, EventCaller {
   override func execute() {
     self.numCompletedEvents += 1
     if self.numCompletedEvents >= self.events.count {
-      print("PHASE FINISHED")
+      finishPhase()
+    }
+  }
+  
+  // If the nextPhase is set, it gets started.
+  private func finishPhase() {
+    if let nextPhase = self.nextPhase {
+      nextPhase.start()
     }
   }
   

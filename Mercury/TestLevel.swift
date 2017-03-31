@@ -19,10 +19,14 @@ class TestLevel: GameScene {
     //when(TimerEvent(seconds: 5)).execute(action: DisplayText(message: "Hello, World"))
     //when(TimerEvent(seconds: 1)).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10))
     
-    let phase1 = EventPhase(parent: self)
+    let phase1 = createEventPhase()
     phase1.when(EnemyDies()).execute(actions: SpawnEnemy("test"), DisplayText(message: "Enemy Died!")).until(NumberOfEnemiesSpawned(equals: 10)).then(DisplayText(message: "You Did It!!"))
     phase1.execute(action: SpawnEnemy("test"))
-    phase1.start()
+    
+    let phase2 = createEventPhase()
+    phase2.when(TimerEvent(seconds: 3)).execute(action: DisplayText(message: "PHASE 2"))
+    
+    setPhaseSequence(phase1, phase2)
     
     //let phase1 = createPhase()
     //phase1.when(...)

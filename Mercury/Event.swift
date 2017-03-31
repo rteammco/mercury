@@ -77,7 +77,7 @@ class Event: EventStopCriteria, GameStateListener {
   // After this event is complete (that is, all criteria are satisfied and the event is not repeating), the given action(s) will be executed.
   // This will only work if there is a stopping criteria, meaning that this is a repeating event, and the event can be triggered even after the stopping criteria is met. For example:
   // when(EnemyDies()).execute(SpawnEnemy()).until(NumberOfEnemiesSpawned(equals: 10)).then(DisplayText("You Win!"))
-  @discardableResult func then(_ nextActions: EventAction...) {
+  func then(_ nextActions: EventAction...) {
     for action in nextActions {
       if let caller = self.caller {
         action.setCaller(to: caller)

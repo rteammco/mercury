@@ -141,6 +141,26 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   }
   
   //------------------------------------------------------------------------------
+  // Events and phasing methods.
+  //------------------------------------------------------------------------------
+  
+  // Creates a new EventPhase with this GameScene as the parent.
+  func createEventPhase() -> EventPhase {
+    let phase = EventPhase(parent: self)
+    return phase
+  }
+  
+  // Adds a sequence of phases to the level, starting the first phase.
+  func setPhaseSequence(_ phaseSequence: EventPhase...) {
+    for i in 1 ... phaseSequence.count - 1 {
+      phaseSequence[i - 1].setNextPhase(to: phaseSequence[i])
+    }
+    if phaseSequence.count > 0 {
+      phaseSequence[0].start()
+    }
+  }
+  
+  //------------------------------------------------------------------------------
   // Touch event methods.
   //------------------------------------------------------------------------------
   
