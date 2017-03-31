@@ -11,15 +11,19 @@ import Foundation
 
 class DisplayText: EventAction {
   
-  let message: String
+  private let message: String
+  private let duration: TimeInterval
+  private let fadeOutTime: TimeInterval
   
-  init(message: String) {
+  init(_ message: String, forDuration duration: TimeInterval = 1, withFadeOutDuration fadeOutTime: TimeInterval = 1) {
     self.message = message
+    self.duration = duration
+    self.fadeOutTime = fadeOutTime
   }
   
   override func execute() {
     if let gameScene = self.caller as? GameScene {
-      gameScene.displayTextOnScreen(message: self.message)
+      gameScene.displayTextOnScreen(message: self.message, forDuration: self.duration, withFadeOutDuration: self.fadeOutTime)
     }
   }
 }

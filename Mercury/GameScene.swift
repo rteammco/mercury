@@ -161,8 +161,10 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Adds a sequence of phases to the level, starting the first phase.
   func setPhaseSequence(_ phaseSequence: EventPhase...) {
     self.eventPhaseSequence = phaseSequence
-    for i in 1 ... self.eventPhaseSequence.count - 1 {
-      self.eventPhaseSequence[i - 1].setNextPhase(to: self.eventPhaseSequence[i])
+    if self.eventPhaseSequence.count > 1 {
+      for i in 1 ..< self.eventPhaseSequence.count {
+        self.eventPhaseSequence[i - 1].setNextPhase(to: self.eventPhaseSequence[i])
+      }
     }
   }
   
