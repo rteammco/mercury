@@ -170,26 +170,15 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Starts the level, triggering the first phase.
   func start(withCountdown countdownTime: Int = 0) {
-    // TODO: sloppy code, and this will crash when countdownTimer = 1. Fix! Ideally, put this in a separate class or something as a special EventPhase instance.
-    // TODO: there is a 1 second delay for the first number being displayed. Fix this by using a direct "execute" for the first counter value instead of a timer event.
     if countdownTime > 0 {
-      let countdownPhase = createEventPhase()
-      var counterString = String(countdownTime)
-      var event = countdownPhase.when(TimerFires(afterSeconds: 1)).execute(action: DisplayText(counterString, forDuration: 0, withFadeOutDuration: 1))
-      for counter in (1 ... countdownTime - 1).reversed() {
-        counterString = String(counter)
-        event = event.then(when: TimerFires(afterSeconds: 1)).execute(action: DisplayText(counterString, forDuration: 0, withFadeOutDuration: 1))
-      }
-      event.then(when: TimerFires(afterSeconds: 1))
-      if self.eventPhaseSequence.count > 0 {
-        countdownPhase.setNextPhase(to: self.eventPhaseSequence[0])
+      let countdownPhase = CountdownPhase(withDuration: countdownTime, parent: self)
+      if !self.eventPhaseSequence.isEmpty {
+        countdownPhase.setNextPhase(to: self.eventPhaseSequence.first!)
       }
       self.eventPhaseSequence.insert(countdownPhase, at: 0)
     }
     // TODO: add another phase to the end that handles when a level is finished.
-    if self.eventPhaseSequence.count > 0 {
-      self.eventPhaseSequence[0].start()
-    }
+    self.eventPhaseSequence.first?.start()
   }
   
   //------------------------------------------------------------------------------

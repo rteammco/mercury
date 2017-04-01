@@ -69,6 +69,12 @@ class Event: EventStopCriteria, GameStateListener {
     return self
   }
   
+  // This is just for readability, so you can execute an event that does nothing when it triggers. This can be useful for event chaining. For example, you could set up a timer that just waits for a few seconds before the next event kicks in:
+  // when(TimerFires(afterSeconds: 5)).doNothing().then(when: EnemyDies()).execute(action: ...)
+  @discardableResult func doNothing() -> Event {
+    return self
+  }
+  
   // After triggering, this event will reset and restart repeatedly until the given criteria is met.
   // TODO: allow mutliple stop criteria under AND or OR combinations, or create a special EventStopCriteria objects to handle these more advanced conditions.
   @discardableResult func until(_ stopCriteria: EventStopCriteria) -> Event {
