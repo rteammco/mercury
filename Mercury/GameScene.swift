@@ -177,7 +177,14 @@ class GameScene: SKScene, EventCaller, GameStateListener {
       }
       self.eventPhaseSequence.insert(countdownPhase, at: 0)
     }
-    // TODO: add another phase to the end that handles when a level is finished.
+    
+    // Add the finish phase, which handles moving on to the next GameScene.
+    // TODO: This should allow chaining levels, instead of always going to the main menu.
+    let finishLevelPhase = createEventPhase()
+    finishLevelPhase.execute(action: SetGameScene(to: "main menu"))
+    self.eventPhaseSequence.last?.setNextPhase(to: finishLevelPhase)
+    self.eventPhaseSequence.append(finishLevelPhase)
+    
     self.eventPhaseSequence.first?.start()
   }
   
