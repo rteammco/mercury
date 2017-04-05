@@ -31,7 +31,7 @@ class Enemy: PhysicsEnabledGameObject {
   
   // TODO: temporary color and shape.
   override func createGameSceneNode(scale: CGFloat) -> SKNode {
-    let size = 0.2 * scale
+    let size = 0.1 * scale
     let node = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
     node.position = self.position
     node.fillColor = SKColor.cyan

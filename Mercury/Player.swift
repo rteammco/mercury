@@ -9,7 +9,7 @@
 
 import SpriteKit
 
-class Player: UserInteractiveGameObject, GameStateListener {
+class Player: GameObject, GameStateListener {
   
   // How often the player fires a bullet (in seconds) when firing.
   private let fireBulletIntervalSeconds: Double
@@ -17,14 +17,17 @@ class Player: UserInteractiveGameObject, GameStateListener {
   // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
   private var fireBulletTimer: Timer?
   
+  // Tracking if the user has been touched or not.
+  private var isTouched: Bool
+  
   override init(position: CGPoint, gameState: GameState) {
     self.fireBulletIntervalSeconds = 0.1
+    self.isTouched = false
     super.init(position: position, gameState: gameState)
     self.nodeName = "player"
     self.gameState.subscribe(self, to: .screenTouchDown)
     self.gameState.subscribe(self, to: .screenTouchMoved)
     self.gameState.subscribe(self, to: .screenTouchUp)
-    
     // when(ScreenTouchStarts()).execute(FireBullet().then(Wait(seconds: 0.1))).until(ScreenTouchEnds())
   }
   
@@ -95,16 +98,16 @@ class Player: UserInteractiveGameObject, GameStateListener {
     self.gameState.inform(.spawnPlayerBullet, value: bullet)
   }
   
-  override func touchDown() {
-    super.touchDown()
+  func touchDown() {
+    self.isTouched = true
     if let gameSceneNode = self.gameSceneNode as? SKShapeNode {
       gameSceneNode.fillColor = SKColor.red
     }
     startFireBulletTimer()
   }
   
-  override func touchUp() {
-    super.touchUp()
+  func touchUp() {
+    self.isTouched = false
     if let gameSceneNode = self.gameSceneNode as? SKShapeNode {
       gameSceneNode.fillColor = SKColor.blue
     }

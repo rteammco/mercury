@@ -23,7 +23,7 @@ class TestLevel: GameScene {
     phase2.when(TimerFires(afterSeconds: 3)).execute(action: DisplayText("PHASE 2")).then(when: TimerFires(afterSeconds: 3)).execute(action: DisplayText("DONE"))
     
     setPhaseSequence(phase1, phase2)
-    start(withCountdown: 5)
+    start(withCountdown: 3)
   }
   
   override func reportStateChange(key: GameStateKey, value: Any) {
