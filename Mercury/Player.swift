@@ -9,7 +9,7 @@
 
 import SpriteKit
 
-class Player: GameObject, GameStateListener {
+class Player: GameObject {
   
   // How often the player fires a bullet (in seconds) when firing.
   private let fireBulletIntervalSeconds: Double
@@ -17,17 +17,12 @@ class Player: GameObject, GameStateListener {
   // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
   private var fireBulletTimer: Timer?
   
-  // Tracking if the user has been touched or not.
-  private var isTouched: Bool
-  
   override init(position: CGPoint, gameState: GameState) {
     self.fireBulletIntervalSeconds = 0.1
-    self.isTouched = false
     super.init(position: position, gameState: gameState)
     self.nodeName = "player"
-    self.gameState.subscribe(self, to: .screenTouchDown)
-    self.gameState.subscribe(self, to: .screenTouchMoved)
-    self.gameState.subscribe(self, to: .screenTouchUp)
+    
+    subscribeToUserInteractionStateChanges()
     // when(ScreenTouchStarts()).execute(FireBullet().then(Wait(seconds: 0.1))).until(ScreenTouchEnds())
   }
   
@@ -39,37 +34,6 @@ class Player: GameObject, GameStateListener {
     node.fillColor = SKColor.blue
     self.gameSceneNode = node
     return node
-  }
-  
-  // Required by GameStateListener protocol. The Player subscribes to touch events for moving based on user touch input.
-  func reportStateChange(key: GameStateKey, value: Any) {
-    if key.rawValue.hasPrefix("screenTouch") {
-      let touchInfo = value as! ScreenTouchInfo
-      switch key {
-      case .screenTouchDown:
-        if touchInfo.touchedNode.name == self.nodeName {
-          touchDown()
-        }
-        break
-      case .screenTouchMoved:
-        movePlayerIfTouched(towards: touchInfo.touchPosition)
-        break
-      case .screenTouchUp:
-        touchUp()
-        break
-      default: break
-      }
-    }
-  }
-  
-  // Moves the player towards the user's touch position if the player is currently touched down.
-  func movePlayerIfTouched(towards: CGPoint) {
-    if self.isTouched {
-      let playerPosition = self.getSceneNode().position
-      let dx = towards.x - playerPosition.x
-      let dy = towards.y - playerPosition.y
-      self.moveBy(dx: dx, dy: dy)
-    }
   }
   
   // Start firing bullets at the firing rate (fireBulletIntervalSeconds). This will continue to fire bullets at each of the intervals until stopFireBulletTimer() is called.
@@ -98,16 +62,24 @@ class Player: GameObject, GameStateListener {
     self.gameState.inform(.spawnPlayerBullet, value: bullet)
   }
   
-  func touchDown() {
-    self.isTouched = true
+  // Moves the player towards the user's touch position if the player is currently touched down.
+  override func touchMoved(to: CGPoint) {
+    let playerPosition = self.getSceneNode().position
+    let dx = to.x - playerPosition.x
+    let dy = to.y - playerPosition.y
+    self.moveBy(dx: dx, dy: dy)
+  }
+  
+  // If this node is touched, start the bullet fire timer.
+  override func touchDown(at: CGPoint) {
     if let gameSceneNode = self.gameSceneNode as? SKShapeNode {
       gameSceneNode.fillColor = SKColor.red
     }
     startFireBulletTimer()
   }
   
-  func touchUp() {
-    self.isTouched = false
+  // If this node is touched up, stop the bullet timer.
+  override func touchUp(at: CGPoint) {
     if let gameSceneNode = self.gameSceneNode as? SKShapeNode {
       gameSceneNode.fillColor = SKColor.blue
     }

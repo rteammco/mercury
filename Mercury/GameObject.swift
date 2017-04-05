@@ -9,7 +9,7 @@
 
 import SpriteKit
 
-class GameObject {
+class GameObject: EventCaller, GameStateListener {
   
   // This key is used to look up the GameObject reference from a game scene node (SKNode).
   // GameObject handles more complex game mechanics, so each node is set to track its own GameObject through its userData dictionary.
@@ -21,6 +21,9 @@ class GameObject {
   
   // The global game state used to communicate with other GameObjects and the scene.
   let gameState: GameState
+  
+  // User interaction variable tracks if this object is currently being touched by the user or not.
+  private var isTouched: Bool
   
   // How fast the object moves in the world.
   // This is a relative value and is scaled by the GameScene depending on the screen size. It should only ever be modified with scaleMovementSpeed().
@@ -45,6 +48,7 @@ class GameObject {
   init(position: CGPoint, gameState: GameState) {
     self.position = position
     self.gameState = gameState
+    self.isTouched = false
   }
   
   // Scale the movement speed by the given non-negative value.
@@ -132,4 +136,56 @@ class GameObject {
     }
   }
   
+  //------------------------------------------------------------------------------
+  // Methods for EventCaller protocol.
+  //------------------------------------------------------------------------------
+  
+  func when(_ event: Event) -> Event {
+    event.setCaller(to: self)
+    event.start()
+    return event
+  }
+  
+  func execute(action: EventAction) {
+    action.setCaller(to: self)
+    action.execute()
+  }
+  
+  //------------------------------------------------------------------------------
+  // Methods for GameStateListener protocol.
+  //------------------------------------------------------------------------------
+  
+  // This will subscribe the GameObject to the default set of user interaction global state changes, namely touch events. Only call this if your object needs access to most of these events. Otherwise, it is recommended to subscribe it explicity to the ones it needs.
+  func subscribeToUserInteractionStateChanges() {
+    self.gameState.subscribe(self, to: .screenTouchDown)
+    self.gameState.subscribe(self, to: .screenTouchMoved)
+    self.gameState.subscribe(self, to: .screenTouchUp)
+  }
+  
+  // Default handlers for the touch methods. Override to implement functionality.
+  func touchDown(at: CGPoint) {}
+  func touchMoved(to: CGPoint) {}
+  func touchUp(at: CGPoint) {}
+  
+  // Extend this as needed to handle custom events. Call the superclass (this) implementation to handle any of the default state changes.
+  func reportStateChange(key: GameStateKey, value: Any) {
+    switch key {
+    case .screenTouchDown:
+      let touchInfo = value as! ScreenTouchInfo
+      if touchInfo.touchedNode.name == self.nodeName {
+        self.isTouched = true
+        touchDown(at: touchInfo.touchPosition)
+      }
+    case .screenTouchMoved:
+      if self.isTouched {
+        let touchInfo = value as! ScreenTouchInfo
+        touchMoved(to: touchInfo.touchPosition)
+      }
+    case .screenTouchUp:
+      self.isTouched = false
+      let touchInfo = value as! ScreenTouchInfo
+      touchUp(at: touchInfo.touchPosition)
+    default: break
+    }
+  }
 }
