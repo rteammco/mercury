@@ -9,7 +9,7 @@
 
 import SpriteKit
 
-class GameObject: EventCaller, GameStateListener {
+class GameObject: GameStateListener {
   
   // This key is used to look up the GameObject reference from a game scene node (SKNode).
   // GameObject handles more complex game mechanics, so each node is set to track its own GameObject through its userData dictionary.
@@ -134,21 +134,6 @@ class GameObject: EventCaller, GameStateListener {
     if self.health <= 0 {
       destroyObject()
     }
-  }
-  
-  //------------------------------------------------------------------------------
-  // Methods for EventCaller protocol.
-  //------------------------------------------------------------------------------
-  
-  func when(_ event: Event) -> Event {
-    event.setCaller(to: self)
-    event.start()
-    return event
-  }
-  
-  func execute(action: EventAction) {
-    action.setCaller(to: self)
-    action.execute()
   }
   
   //------------------------------------------------------------------------------

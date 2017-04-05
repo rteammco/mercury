@@ -7,9 +7,12 @@
 //
 //  The Weaponized protocol enables implementing objects to fire bullets and other weapons.
 
-protocol Weaponized {
+import Foundation
+
+protocol ArmedWithProjectiles {
   
   // Bullet firing (standard weapon) actions.
+  var fireBulletTimer: Timer? {get set}
   func startFireBulletTimer()
   func stopFireBulletTimer()
   func fireBullet()

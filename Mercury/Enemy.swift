@@ -9,9 +9,16 @@
 
 import SpriteKit
 
-class Enemy: PhysicsEnabledGameObject {
+class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
+  
+  // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
+  var fireBulletTimer: Timer?
+  
+  // How often this enemy fires a bullet (in seconds) when firing.
+  private let fireBulletIntervalSeconds: Double
   
   init(position: CGPoint, gameState: GameState, speed: CGFloat) {
+    self.fireBulletIntervalSeconds = 0.5
     super.init(position: position, gameState: gameState)
     self.nodeName = "enemy"
     self.scaleMovementSpeed(speed)
@@ -44,6 +51,37 @@ class Enemy: PhysicsEnabledGameObject {
   override func destroyObject() {
     super.destroyObject()
     self.gameState.inform(.enemyDies, value: self)
+  }
+  
+  //------------------------------------------------------------------------------
+  // Methods for the ArmedWithProjectiles protocol.
+  //------------------------------------------------------------------------------
+  
+  // Start firing bullets at the firing rate (fireBulletIntervalSeconds). This will continue to fire bullets at each of the intervals until stopFireBulletTimer() is called.
+  // TODO: we may want to move this method into the GameObject super class.
+  func startFireBulletTimer() {
+    let fireBulletTimer = Timer.scheduledTimer(timeInterval: self.fireBulletIntervalSeconds, target: self, selector: #selector(self.fireBullet), userInfo: nil, repeats: true)
+    self.fireBulletTimer = fireBulletTimer
+    fireBullet()
+  }
+  
+  // Stops firing bullets by invalidating the fireBulletTimer.
+  // TODO: we may want to move this method into the GameObject super class.
+  func stopFireBulletTimer() {
+    if let fireBulletTimer = self.fireBulletTimer {
+      fireBulletTimer.invalidate()
+    }
+  }
+  
+  // Called by the fireBulletTimer at each fire interval to shoot a bullet.
+  @objc func fireBullet() {
+    let enemyPosition = self.getSceneNode().position
+    let bullet = Bullet(position: CGPoint(x: enemyPosition.x, y: enemyPosition.y), gameState: self.gameState, speed: 1.0)
+    bullet.setCollisionCategory(PhysicsCollisionBitMask.enemy)
+    bullet.addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
+    bullet.addCollisionTestCategory(PhysicsCollisionBitMask.environment)
+    //self.gameState.inform(.spawnEnemyBullet, value: bullet)
+    // TODO: Handle the bullet creation and add physics to player so it can interact with enemy objects.
   }
   
 }

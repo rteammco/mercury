@@ -9,13 +9,13 @@
 
 import SpriteKit
 
-class Player: GameObject {
+class Player: GameObject, ArmedWithProjectiles {
   
   // How often the player fires a bullet (in seconds) when firing.
   private let fireBulletIntervalSeconds: Double
   
   // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
-  private var fireBulletTimer: Timer?
+  var fireBulletTimer: Timer?
   
   override init(position: CGPoint, gameState: GameState) {
     self.fireBulletIntervalSeconds = 0.1
@@ -23,7 +23,6 @@ class Player: GameObject {
     self.nodeName = "player"
     
     subscribeToUserInteractionStateChanges()
-    // when(ScreenTouchStarts()).execute(FireBullet().then(Wait(seconds: 0.1))).until(ScreenTouchEnds())
   }
   
   // TODO: temporary color and shape.
@@ -36,9 +35,13 @@ class Player: GameObject {
     return node
   }
   
+  //------------------------------------------------------------------------------
+  // Methods for the ArmedWithProjectiles protocol.
+  //------------------------------------------------------------------------------
+  
   // Start firing bullets at the firing rate (fireBulletIntervalSeconds). This will continue to fire bullets at each of the intervals until stopFireBulletTimer() is called.
   // TODO: we may want to move this method into the GameObject super class.
-  private func startFireBulletTimer() {
+  func startFireBulletTimer() {
     let fireBulletTimer = Timer.scheduledTimer(timeInterval: self.fireBulletIntervalSeconds, target: self, selector: #selector(self.fireBullet), userInfo: nil, repeats: true)
     self.fireBulletTimer = fireBulletTimer
     fireBullet()  // Also fire at time 0 before the timer ticks.
@@ -46,7 +49,7 @@ class Player: GameObject {
   
   // Stops firing bullets by invalidating the fireBulletTimer.
   // TODO: we may want to move this method into the GameObject super class.
-  private func stopFireBulletTimer() {
+  func stopFireBulletTimer() {
     if let fireBulletTimer = self.fireBulletTimer {
       fireBulletTimer.invalidate()
     }
@@ -62,12 +65,16 @@ class Player: GameObject {
     self.gameState.inform(.spawnPlayerBullet, value: bullet)
   }
   
+  //------------------------------------------------------------------------------
+  // Methods for overriding the GameObject's touch handlers to trigger bullet firing.
+  //------------------------------------------------------------------------------
+  
   // Moves the player towards the user's touch position if the player is currently touched down.
   override func touchMoved(to: CGPoint) {
     let playerPosition = self.getSceneNode().position
     let dx = to.x - playerPosition.x
     let dy = to.y - playerPosition.y
-    self.moveBy(dx: dx, dy: dy)
+    moveBy(dx: dx, dy: dy)
   }
   
   // If this node is touched, start the bullet fire timer.
