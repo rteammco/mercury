@@ -56,8 +56,8 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Initialize the current level scene by setting up all GameObjects and events.
   func initializeScene() {
     // Override function as needed.
-    let testLevel = TestLevel()
-    setCurrentLevel(to: testLevel)
+    let mainMenu = MainMenu()
+    setCurrentLevel(to: mainMenu)
   }
   
   // Add the player object to the scene (optional).
@@ -107,8 +107,8 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   }
   
   // Given a normalized value (e.g. speed), returns the absolute speed by scaling it up with the size of the world (which is dictated by the screen size of the device).
-  func getScaledValue(_ normalizedSpeed: CGFloat) -> CGFloat {
-    return normalizedSpeed * getScaleValue()
+  func getScaledValue(_ normalizedValue: CGFloat) -> CGFloat {
+    return normalizedValue * getScaleValue()
   }
   
   // Returns the scale value (not a scaled value, but rather the scaling factor itself).
@@ -275,8 +275,8 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Subscribe this GameScene to all relevant game state changes that it needs to handle. Extend as needed with custom subscriptions for a given level.
   func subscribeToStateChanges() {
-    self.getGameState().subscribe(self, to: .spawnPlayerBullet)
-    self.getGameState().subscribe(self, to: .spawnEnemy)
+    getGameState().subscribe(self, to: .spawnPlayerBullet)
+    getGameState().subscribe(self, to: .spawnEnemy)
   }
   
   // When a game state change is reported, handle it here. Extend as needed with custom handlers for a given level.

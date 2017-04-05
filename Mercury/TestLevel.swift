@@ -5,6 +5,7 @@
 //  Created by Richard Teammco on 1/13/17.
 //  Copyright © 2017 Richard Teammco. All rights reserved.
 //
+//  A GameScene level used for testing new features adding to the game.
 
 import SpriteKit
 
