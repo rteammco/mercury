@@ -25,4 +25,15 @@ struct Util {
     return Util.getNormalizedVector(CGVector(dx: pointB.x - pointA.x, dy: pointB.y - pointA.y))
   }
   
+  // Returns the rotation value given a direction vector.
+  static func getOrientation(of vector: CGVector) -> CGFloat {
+    let normalizedVector = Util.getNormalizedVector(vector)
+    let orientation = acos(normalizedVector.dx * normalizedVector.dx)
+    if vector.dy >= 0 {
+      return orientation
+    } else {
+      return -orientation
+    }
+  }
+  
 }

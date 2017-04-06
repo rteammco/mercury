@@ -18,10 +18,10 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   private let fireBulletIntervalSeconds: Double
   
   init(position: CGPoint, gameState: GameState, speed: CGFloat) {
-    self.fireBulletIntervalSeconds = 0.5
+    self.fireBulletIntervalSeconds = 0.1
     super.init(position: position, gameState: gameState)
     self.nodeName = "enemy"
-    self.scaleMovementSpeed(speed)
+    self.scaleMovementSpeed(speed / 5)
     self.setMovementDirection(to: CGVector(dx: 0, dy: -1))  // Top to bottom of screen.
     
     self.health = 200
@@ -44,7 +44,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   override func createGameSceneNode(scale: CGFloat) -> SKNode {
     let size = 0.1 * scale
     let node = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
-    node.position = self.position
+    node.position = getPosition()
     node.fillColor = SKColor.cyan
     self.gameSceneNode = node
     self.initializePhysics()
@@ -75,7 +75,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
   @objc func fireBullet() {
-    let enemyPosition = self.getSceneNode().position
+    let enemyPosition = getPosition()
     let bullet = Bullet(position: CGPoint(x: enemyPosition.x, y: enemyPosition.y), gameState: self.gameState, speed: 1.0)
     bullet.setColor(to: GameConfiguration.enemyColor)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
@@ -83,7 +83,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
     
     // Set the direction of the bullet based on the player's current position.
     let playerPosition = self.gameState.getPoint(forKey: .playerPosition)
-    bullet.setMovementDirection(to: Util.getDirectionVector(from: self.position, to: playerPosition))
+    bullet.setMovementDirection(to: Util.getDirectionVector(from: enemyPosition, to: playerPosition))
     
     self.gameState.inform(.spawnEnemyBullet, value: bullet)
   }

@@ -29,7 +29,7 @@ class Player: GameObject, ArmedWithProjectiles {
   override func createGameSceneNode(scale: CGFloat) -> SKNode {
     let size = 0.15 * scale
     let node = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
-    node.position = self.position
+    node.position = getPosition()
     node.fillColor = SKColor.blue
     self.gameSceneNode = node
     return node
@@ -51,7 +51,7 @@ class Player: GameObject, ArmedWithProjectiles {
   
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
   @objc func fireBullet() {
-    let playerPosition = self.getSceneNode().position
+    let playerPosition = getPosition()
     let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), gameState: self.gameState, speed: 2.0)
     bullet.setColor(to: GameConfiguration.friendlyColor)
     bullet.setMovementDirection(to: CGVector(dx: 0.0, dy: 1.0))
@@ -66,11 +66,11 @@ class Player: GameObject, ArmedWithProjectiles {
   
   // Moves the player towards the user's touch position if the player is currently touched down.
   override func touchMoved(to: CGPoint) {
-    let playerPosition = self.getSceneNode().position
+    let playerPosition = getPosition()
     let dx = to.x - playerPosition.x
     let dy = to.y - playerPosition.y
     move(by: CGVector(dx: dx, dy: dy))
-    self.gameState.set(.playerPosition, to: self.position)
+    self.gameState.set(.playerPosition, to: getPosition())
   }
   
   // If this node is touched, start the bullet fire timer.

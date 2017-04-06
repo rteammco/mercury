@@ -23,7 +23,7 @@ class GameObject: GameStateListener {
   
   // The scene node for animation and rendering.
   var gameSceneNode: SKNode?
-  var position: CGPoint
+  private var position: CGPoint
   
   // The global game state used to communicate with other GameObjects and the scene.
   let gameState: GameState
@@ -89,15 +89,6 @@ class GameObject: GameStateListener {
   // Node operations (after node is added to the scene).
   //------------------------------------------------------------------------------
   
-  // Returns the scene node for this object. If it was not initialized, the returned object will be an empty SKShapeNode.
-  func getSceneNode() -> SKNode {
-    if let gameSceneNode = self.gameSceneNode {
-      return gameSceneNode
-    } else {
-      return SKShapeNode()
-    }
-  }
-  
   // Removes this object's scene node from the game scene.
   func removeSceneNodeFromGameScene() {
     self.gameSceneNode?.removeFromParent()
@@ -110,6 +101,14 @@ class GameObject: GameStateListener {
   // Set the movement direction. This will automatically normalize the given vector (must be non-zero).
   func setMovementDirection(to directionVector: CGVector) {
     self.movementDirection = Util.getNormalizedVector(directionVector)
+  }
+  
+  // Returns the position of this object. Also updates the interal position of this object if it hasn't been updated to the node's latest position (if the node exists).
+  func getPosition() -> CGPoint {
+    if let node = self.gameSceneNode {
+      self.position = node.position
+    }
+    return self.position
   }
   
   // Moves the scene node by the given dx and dy instantly.
