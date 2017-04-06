@@ -121,6 +121,22 @@ class GameObject: GameStateListener {
   }
   
   //------------------------------------------------------------------------------
+  // Utility methods for generic GameObject functionality.
+  //------------------------------------------------------------------------------
+  
+  // Starts a looped timer that calls the given function (wrapped in a Selector) - use #selector(objcFunction) - after every interval given passes. The given function must have no parameters and should have no return type.
+  // Set fireImmediately to true if you would like the timer to call the method at time 0 as well.
+  // The Timer is returned. Used the returned value to invalidate it when you're done.
+  func startLoopedTimer(every intervalSeconds: TimeInterval, callbackFunctionSelector: Selector, fireImmediately: Bool = false) -> Timer {
+    let timer = Timer.scheduledTimer(timeInterval: intervalSeconds, target: self, selector: callbackFunctionSelector, userInfo: nil, repeats: true)
+    if fireImmediately {
+      // TODO: Hacky, but can't find another way of executing a selector immediately....
+      Timer.scheduledTimer(timeInterval: 0, target: self, selector: callbackFunctionSelector, userInfo: nil, repeats: false)
+    }
+    return timer
+  }
+  
+  //------------------------------------------------------------------------------
   // Methods for game mechanics and actions.
   //------------------------------------------------------------------------------
   

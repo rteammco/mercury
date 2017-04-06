@@ -40,19 +40,13 @@ class Player: GameObject, ArmedWithProjectiles {
   //------------------------------------------------------------------------------
   
   // Start firing bullets at the firing rate (fireBulletIntervalSeconds). This will continue to fire bullets at each of the intervals until stopFireBulletTimer() is called.
-  // TODO: we may want to move this method into the GameObject super class.
   func startFireBulletTimer() {
-    let fireBulletTimer = Timer.scheduledTimer(timeInterval: self.fireBulletIntervalSeconds, target: self, selector: #selector(self.fireBullet), userInfo: nil, repeats: true)
-    self.fireBulletTimer = fireBulletTimer
-    fireBullet()  // Also fire at time 0 before the timer ticks.
+    self.fireBulletTimer = startLoopedTimer(every: self.fireBulletIntervalSeconds, callbackFunctionSelector: #selector(self.fireBullet), fireImmediately: true)
   }
   
   // Stops firing bullets by invalidating the fireBulletTimer.
-  // TODO: we may want to move this method into the GameObject super class.
   func stopFireBulletTimer() {
-    if let fireBulletTimer = self.fireBulletTimer {
-      fireBulletTimer.invalidate()
-    }
+    self.fireBulletTimer?.invalidate()
   }
   
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
