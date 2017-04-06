@@ -21,7 +21,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
     self.fireBulletIntervalSeconds = 0.1
     super.init(position: position, gameState: gameState)
     self.nodeName = "enemy"
-    self.scaleMovementSpeed(speed / 5)
+    self.scaleMovementSpeed(speed)
     self.setMovementDirection(to: CGVector(dx: 0, dy: -1))  // Top to bottom of screen.
     
     self.health = 200
@@ -83,7 +83,10 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
     
     // Set the direction of the bullet based on the player's current position.
     let playerPosition = self.gameState.getPoint(forKey: .playerPosition)
-    bullet.setMovementDirection(to: Util.getDirectionVector(from: enemyPosition, to: playerPosition))
+    var bulletDirection = Util.getDirectionVector(from: enemyPosition, to: playerPosition)
+    bulletDirection.dx += Util.getUniformRandomValue(between: -0.1, and: 0.1)
+    bulletDirection.dy += Util.getUniformRandomValue(between: -0.1, and: 0.1)
+    bullet.setMovementDirection(to: bulletDirection)
     
     self.gameState.inform(.spawnEnemyBullet, value: bullet)
   }

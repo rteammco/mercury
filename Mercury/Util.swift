@@ -30,4 +30,10 @@ struct Util {
     return atan2(vector.dy, vector.dx)
   }
   
+  // Returns a uniform random value (as a CGFloat) between the values in the given range (which is between 0 and 1 by default).
+  static func getUniformRandomValue(between lowerBound: CGFloat = 0.0, and upperBound: CGFloat = 1.0) -> CGFloat {
+    let range = abs(upperBound - lowerBound)
+    return lowerBound + range * CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+  }
+  
 }
