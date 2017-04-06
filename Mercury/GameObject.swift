@@ -15,15 +15,18 @@ class GameObject: GameStateListener {
   // GameObject handles more complex game mechanics, so each node is set to track its own GameObject through its userData dictionary.
   static let nodeValueKey: String = "gameSceneNodeToGameObjectKey"
   
+  // User interaction variable tracks if this object is currently being touched by the user or not.
+  private var isTouched: Bool
+  
+  // Tracks any timers associated with this object that need to be cleaned up when the object is destroyed.
+  private var timers: [Timer]
+  
   // The scene node for animation and rendering.
   var gameSceneNode: SKNode?
   var position: CGPoint
   
   // The global game state used to communicate with other GameObjects and the scene.
   let gameState: GameState
-  
-  // User interaction variable tracks if this object is currently being touched by the user or not.
-  private var isTouched: Bool
   
   // How fast the object moves in the world.
   // This is a relative value and is scaled by the GameScene depending on the screen size. It should only ever be modified with scaleMovementSpeed().
@@ -46,9 +49,10 @@ class GameObject: GameStateListener {
   
   // Create the object, and get the global GameState to communicate with other GameObjects and modules in the scene.
   init(position: CGPoint, gameState: GameState) {
+    self.isTouched = false
+    self.timers = [Timer]()
     self.position = position
     self.gameState = gameState
-    self.isTouched = false
   }
   
   // Scale the movement speed by the given non-negative value.
@@ -130,9 +134,9 @@ class GameObject: GameStateListener {
   func startLoopedTimer(every intervalSeconds: TimeInterval, callbackFunctionSelector: Selector, fireImmediately: Bool = false) -> Timer {
     let timer = Timer.scheduledTimer(timeInterval: intervalSeconds, target: self, selector: callbackFunctionSelector, userInfo: nil, repeats: true)
     if fireImmediately {
-      // TODO: Hacky, but can't find another way of executing a selector immediately....
-      Timer.scheduledTimer(timeInterval: 0, target: self, selector: callbackFunctionSelector, userInfo: nil, repeats: false)
+      timer.fire()
     }
+    timers.append(timer)
     return timer
   }
   
@@ -142,6 +146,9 @@ class GameObject: GameStateListener {
   
   // Called to destroy or "kill" the object, typically when it dies (health reaches zero).
   func destroyObject() {
+    for timer in self.timers {
+      timer.invalidate()
+    }
     removeSceneNodeFromGameScene()
   }
   

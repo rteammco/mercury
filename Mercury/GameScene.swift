@@ -217,6 +217,9 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   private func removeOffscreenNodes() {
     enumerateChildNodes(withName: "*", using: { (node, stop) -> Void in
       if !self.intersects(node) {
+        if let gameObject = node.userData?.value(forKey: GameObject.nodeValueKey) as? GameObject {
+          gameObject.destroyObject()
+        }
         node.removeFromParent()
       }
     })
@@ -284,6 +287,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   func subscribeToStateChanges() {
     getGameState().subscribe(self, to: .spawnPlayerBullet)
     getGameState().subscribe(self, to: .spawnEnemy)
+    getGameState().subscribe(self, to: .spawnEnemyBullet)
   }
   
   // When a game state change is reported, handle it here. Extend as needed with custom handlers for a given level.
@@ -291,7 +295,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // TODO: Some of these might work better as separate functions, specific EventActions that handle all the mechanics, or even factory objects to make the code cleaner.
   func reportStateChange(key: GameStateKey, value: Any) {
     // Add spawned physics-enabled objects to the game.
-    if key == .spawnPlayerBullet || key == .spawnEnemy {
+    if key == .spawnPlayerBullet || key == .spawnEnemy || key == .spawnEnemyBullet {
       if let gameObject = value as? PhysicsEnabledGameObject {
         gameObject.scaleMovementSpeed(getScaleValue())
         gameObject.scaleMass(by: getScaleValue())

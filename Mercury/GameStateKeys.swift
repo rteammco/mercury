@@ -14,7 +14,7 @@ enum GameStateKey: String {
   
   case screenTouchDown, screenTouchMoved, screenTouchUp
   
-  case spawnPlayerBullet, spawnEnemy
+  case spawnPlayerBullet, spawnEnemy, spawnEnemyBullet
   
   case enemyDies
   
