@@ -18,11 +18,13 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   private let fireBulletIntervalSeconds: Double
   
   init(position: CGPoint, gameState: GameState, speed: CGFloat) {
-    self.fireBulletIntervalSeconds = 1.0
+    self.fireBulletIntervalSeconds = 0.5
     super.init(position: position, gameState: gameState)
     self.nodeName = "enemy"
     self.scaleMovementSpeed(speed)
     self.setMovementDirection(dx: 0, dy: -1)  // Top to bottom of screen.
+    
+    self.health = 200
     
     // Customize physics properties:
     self.physicsMass = 1.0
@@ -76,7 +78,6 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
     let enemyPosition = self.getSceneNode().position
     let bullet = Bullet(position: CGPoint(x: enemyPosition.x, y: enemyPosition.y), gameState: self.gameState, speed: 1.0)
     bullet.setMovementDirection(dx: 0.0, dy: -1.0)
-    bullet.setCollisionCategory(PhysicsCollisionBitMask.enemy)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.environment)
     self.gameState.inform(.spawnEnemyBullet, value: bullet)

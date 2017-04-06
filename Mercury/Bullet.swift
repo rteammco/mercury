@@ -22,6 +22,7 @@ class Bullet: PhysicsEnabledGameObject {
     self.physicsRestitution = 0.15
     self.physicsFriction = 0.15
     self.physicsAllowsRotation = true
+    setCollisionCategory(PhysicsCollisionBitMask.projectile)
   }
   
   // TODO: temporary color and shape.

@@ -54,7 +54,6 @@ class Player: GameObject, ArmedWithProjectiles {
     let playerPosition = self.getSceneNode().position
     let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), gameState: self.gameState, speed: 2.0)
     bullet.setMovementDirection(dx: 0.0, dy: 1.0)
-    bullet.setCollisionCategory(PhysicsCollisionBitMask.friendly)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.enemy)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.environment)
     self.gameState.inform(.spawnPlayerBullet, value: bullet)

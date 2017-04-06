@@ -72,6 +72,7 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
       gameSceneNode.physicsBody?.isDynamic = self.physicsIsDynamic
       gameSceneNode.physicsBody?.categoryBitMask = self.collisionCategoryBitMask
       gameSceneNode.physicsBody?.contactTestBitMask = self.collisionContactTestBitMask
+      gameSceneNode.physicsBody?.collisionBitMask = self.collisionContactTestBitMask
     }
   }
   

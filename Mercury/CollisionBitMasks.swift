@@ -18,6 +18,9 @@ struct PhysicsCollisionBitMask {
   static let enemy: UInt32          = 0x1 << 2
   static let environment: UInt32    = 0x1 << 3
   
-  static let anyObject: UInt32      = 0x1 << 4
+  // Projectiles are special case objects that can interact with other types, but not with each other. For example, bullets cannot collide with other bullets.
+  static let projectile: UInt32     = 0x1 << 4
+  
+  static let anyObject: UInt32      = 0x1 << 5
   
 }
