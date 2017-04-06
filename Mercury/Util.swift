@@ -27,13 +27,7 @@ struct Util {
   
   // Returns the rotation value given a direction vector.
   static func getOrientation(of vector: CGVector) -> CGFloat {
-    let normalizedVector = Util.getNormalizedVector(vector)
-    let orientation = acos(normalizedVector.dx * normalizedVector.dx)
-    if vector.dy >= 0 {
-      return orientation
-    } else {
-      return -orientation
-    }
+    return atan2(vector.dy, vector.dx)
   }
   
 }
