@@ -22,7 +22,7 @@ struct Util {
   
   // Returns a normalized direction vector that points from pointA to pointB. If pointA = pointB, this will be the zero vector.
   static func getDirectionVector(from pointA: CGPoint, to pointB: CGPoint) -> CGVector {
-    return Util.getNormalizedVector(CGVector(dx: pointA.x - pointB.x, dy: pointA.y - pointB.y))
+    return Util.getNormalizedVector(CGVector(dx: pointB.x - pointA.x, dy: pointB.y - pointA.y))
   }
   
 }
