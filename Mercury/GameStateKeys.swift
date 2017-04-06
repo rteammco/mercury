@@ -12,12 +12,19 @@
 
 enum GameStateKey: String {
   
+  // Screen interaction events:
   case screenTouchDown, screenTouchMoved, screenTouchUp
   
+  // Object spawning events:
   case spawnPlayerBullet, spawnEnemy, spawnEnemyBullet
   
+  // Object dying events:
   case enemyDies
   
+  // Tracked player variables:
+  case playerPosition
+  
+  // Tracked enemy variables:
   case numSpawnedEnemies
   
 }

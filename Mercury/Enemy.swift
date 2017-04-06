@@ -22,7 +22,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
     super.init(position: position, gameState: gameState)
     self.nodeName = "enemy"
     self.scaleMovementSpeed(speed)
-    self.setMovementDirection(dx: 0, dy: -1)  // Top to bottom of screen.
+    self.setMovementDirection(to: CGVector(dx: 0, dy: -1))  // Top to bottom of screen.
     
     self.health = 200
     
@@ -77,9 +77,14 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   @objc func fireBullet() {
     let enemyPosition = self.getSceneNode().position
     let bullet = Bullet(position: CGPoint(x: enemyPosition.x, y: enemyPosition.y), gameState: self.gameState, speed: 1.0)
-    bullet.setMovementDirection(dx: 0.0, dy: -1.0)
+    bullet.setColor(to: GameConfiguration.enemyColor)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.environment)
+    
+    // Set the direction of the bullet based on the player's current position.
+    let playerPosition = self.gameState.getPoint(forKey: .playerPosition)
+    bullet.setMovementDirection(to: Util.getDirectionVector(from: self.position, to: playerPosition))
+    
     self.gameState.inform(.spawnEnemyBullet, value: bullet)
   }
   

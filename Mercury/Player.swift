@@ -53,7 +53,8 @@ class Player: GameObject, ArmedWithProjectiles {
   @objc func fireBullet() {
     let playerPosition = self.getSceneNode().position
     let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), gameState: self.gameState, speed: 2.0)
-    bullet.setMovementDirection(dx: 0.0, dy: 1.0)
+    bullet.setColor(to: GameConfiguration.friendlyColor)
+    bullet.setMovementDirection(to: CGVector(dx: 0.0, dy: 1.0))
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.enemy)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.environment)
     self.gameState.inform(.spawnPlayerBullet, value: bullet)
@@ -68,7 +69,8 @@ class Player: GameObject, ArmedWithProjectiles {
     let playerPosition = self.getSceneNode().position
     let dx = to.x - playerPosition.x
     let dy = to.y - playerPosition.y
-    moveBy(dx: dx, dy: dy)
+    move(by: CGVector(dx: dx, dy: dy))
+    self.gameState.set(.playerPosition, to: self.position)
   }
   
   // If this node is touched, start the bullet fire timer.

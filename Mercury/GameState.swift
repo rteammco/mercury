@@ -7,6 +7,8 @@
 //
 //  The GameState object acts as an in-memory database that can track all variables about the game's state. Objects such as the GameScene or GameObjects can utilize this to keep all game state variables (such as player health, number of enemies, score, and literally any other information) in one global place. This can be useful for quickly saving and restoring the game state. It's primary purpose, however, is to allow Events and other GameStateListener objects to subscribe themselves as listeners to specific variables. Whenever these variables are updated, all listeners subscribed to that variable will be notified of the change.
 
+import SpriteKit
+
 class GameState {
   
   // Maps GameState variables (identified by a String key) to whatever value they are given.
@@ -49,6 +51,14 @@ class GameState {
   // Returns the GameState value for the given key interpreted as an Int. If the value has not been set or its current type is not Int, the default value will be returned.
   func getInt(forKey key: GameStateKey, defaultValue: Int = 0) -> Int {
     if let value = self.gameStateValues[key] as? Int {
+      return value
+    }
+    return defaultValue
+  }
+  
+  // Returns the value interpreted as a 2D CGPoint. Default value is (0, 0) unless otherwise specified.
+  func getPoint(forKey key: GameStateKey, defaultValue: CGPoint = CGPoint(x: 0, y: 0)) -> CGPoint {
+    if let value = self.gameStateValues[key] as? CGPoint {
       return value
     }
     return defaultValue

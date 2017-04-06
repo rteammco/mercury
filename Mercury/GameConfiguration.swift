@@ -27,5 +27,7 @@ struct GameConfiguration {
   
   static let primaryColor: SKColor = SKColor.yellow
   static let secondaryColor: SKColor = SKColor.cyan
+  static let friendlyColor: SKColor = SKColor.green
+  static let enemyColor: SKColor = SKColor.red
   
 }

@@ -108,19 +108,15 @@ class GameObject: GameStateListener {
   //------------------------------------------------------------------------------
   
   // Set the movement direction. This will automatically normalize the given vector (must be non-zero).
-  func setMovementDirection(dx: CGFloat, dy: CGFloat) {
-    let norm = sqrt(dx * dx + dy * dy)
-    // Cannot have a zero norm (divide by 0 error).
-    if norm > 0 {
-      self.movementDirection.dx = dx / norm
-      self.movementDirection.dy = dy / norm
-    }
+  func setMovementDirection(to directionVector: CGVector) {
+    self.movementDirection = Util.getNormalizedVector(directionVector)
   }
   
   // Moves the scene node by the given dx and dy instantly.
-  func moveBy(dx: CGFloat, dy: CGFloat) {
+  func move(by amount: CGVector) {
     if let gameSceneNode = self.gameSceneNode {
-      gameSceneNode.position = CGPoint(x: gameSceneNode.position.x + dx, y: gameSceneNode.position.y + dy)
+      self.position = CGPoint(x: self.position.x + amount.dx, y: self.position.y + amount.dy)
+      gameSceneNode.position = self.position
     }
   }
   
