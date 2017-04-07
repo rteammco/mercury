@@ -15,13 +15,13 @@ class EnemyDies: Event {
   override func start() {
     if let gameScene = self.caller as? GameScene {
       let gameState = gameScene.getGameState()
-      gameState.subscribe(self, to: .enemyDies)
+      gameState.subscribe(self, to: .enemyDied)
     }
   }
   
   // When the "enemy dies" game state event occurs, trigger this event.
   override func reportStateChange(key: GameStateKey, value: Any) {
-    if key == .enemyDies {
+    if key == .enemyDied {
       trigger()
     }
   }

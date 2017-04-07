@@ -64,6 +64,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   func createPlayer(atPosition position: CGPoint) {
     let player = Player(position: getScaledPosition(position), gameState: getGameState())
     addGameObject(player)
+    when(PlayerDies()).execute(action: DisplayText("Player Died"))  // TODO: Add an action that will handle this.
   }
   
   //------------------------------------------------------------------------------
@@ -71,11 +72,18 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   //------------------------------------------------------------------------------
   
   // Adds the given GameObject type to the scene by appending its node. The object is automatically scaled according to the screen size.
-  func addGameObject(_ gameObject: GameObject) {
+  // Set withPhysicsScaling to true if the object is a PhysicsEnabledGameObject and its physical properties should be scaled to reflect the world size.
+  func addGameObject(_ gameObject: GameObject, withPhysicsScaling: Bool = false) {
     if let worldSize = self.worldSize {
       let sceneNode = gameObject.createGameSceneNode(scale: worldSize)
       gameObject.connectToSceneNode(sceneNode)
       sceneNode.name = gameObject.nodeName
+      if withPhysicsScaling {
+        gameObject.scaleMovementSpeed(getScaleValue())
+        if let physicsEnabledGameObject = gameObject as? PhysicsEnabledGameObject {
+          physicsEnabledGameObject.scaleMass(by: getScaleValue())
+        }
+      }
       addChild(sceneNode)
     }
   }
@@ -286,7 +294,6 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Subscribe this GameScene to all relevant game state changes that it needs to handle. Extend as needed with custom subscriptions for a given level.
   func subscribeToStateChanges() {
     getGameState().subscribe(self, to: .spawnPlayerBullet)
-    getGameState().subscribe(self, to: .spawnEnemy)
     getGameState().subscribe(self, to: .spawnEnemyBullet)
   }
   
@@ -295,11 +302,9 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // TODO: Some of these might work better as separate functions, specific EventActions that handle all the mechanics, or even factory objects to make the code cleaner.
   func reportStateChange(key: GameStateKey, value: Any) {
     // Add spawned physics-enabled objects to the game.
-    if key == .spawnPlayerBullet || key == .spawnEnemy || key == .spawnEnemyBullet {
+    if key == .spawnPlayerBullet || key == .spawnEnemyBullet {
       if let gameObject = value as? PhysicsEnabledGameObject {
-        gameObject.scaleMovementSpeed(getScaleValue())
-        gameObject.scaleMass(by: getScaleValue())
-        addGameObject(gameObject)
+        addGameObject(gameObject, withPhysicsScaling: true)
         gameObject.setDefaultVelocity()
       }
     }

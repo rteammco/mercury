@@ -19,12 +19,18 @@ class SpawnEnemy: EventAction {
   override func execute() {
     if let gameScene = self.caller as? GameScene {
       let gameState = gameScene.getGameState()
+      
+      // Create the enemy.
       let xSpawnPoint: CGFloat = Util.getUniformRandomValue(between: -0.75, and: 0.75)
       let ySpawnPoint: CGFloat = 1.0
       let enemy = Enemy(position: gameScene.getScaledPosition(CGPoint(x: xSpawnPoint, y: ySpawnPoint)), gameState: gameState, speed: 0.05)
-      gameState.inform(.spawnEnemy, value: enemy)
       
-      // Update the global game state by incrementing the enemy spawn count value.
+      // Spawn it using the GameScene.
+      gameScene.addGameObject(enemy, withPhysicsScaling: true)
+      enemy.setDefaultVelocity()
+      
+      // Inform the GameState of the change and update the global game state by incrementing the enemy spawn count value.
+      gameState.inform(.spawnEnemy, value: enemy)
       let numEnemiesSpawned = gameState.getInt(forKey: .numSpawnedEnemies)
       gameState.set(.numSpawnedEnemies, to: numEnemiesSpawned + 1)
     }

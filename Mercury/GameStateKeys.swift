@@ -19,7 +19,7 @@ enum GameStateKey: String {
   case spawnPlayerBullet, spawnEnemy, spawnEnemyBullet
   
   // Object dying events:
-  case enemyDies
+  case enemyDied, playerDied
   
   // Tracked player variables:
   case playerPosition

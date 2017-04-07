@@ -54,7 +54,7 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
   override func destroyObject() {
     super.destroyObject()
-    //self.gameState.inform(.playerDies, value: self)
+    self.gameState.inform(.playerDied, value: self)
   }
   
   //------------------------------------------------------------------------------

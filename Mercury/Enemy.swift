@@ -55,7 +55,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // When an enemy dies, inform the global GameState of the specific event.
   override func destroyObject() {
     super.destroyObject()
-    self.gameState.inform(.enemyDies, value: self)
+    self.gameState.inform(.enemyDied, value: self)
   }
   
   //------------------------------------------------------------------------------
