@@ -59,7 +59,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // Start firing bullets at the firing rate (fireBulletIntervalSeconds). This will continue to fire bullets at each of the intervals until stopFireBulletTimer() is called.
   // TODO: we may want to move this method into the GameObject super class.
   func startFireBulletTimer() {
-    let bulletFireIntervalSeconds = TimeInterval(self.gameState.getCGFloat(forKey: .enemyBulletFireInterval))
+    let bulletFireIntervalSeconds = self.gameState.getTimeInterval(forKey: .enemyBulletFireInterval)
     self.fireBulletTimer = startLoopedTimer(every: bulletFireIntervalSeconds, callbackFunctionSelector: #selector(self.fireBullet))
   }
   

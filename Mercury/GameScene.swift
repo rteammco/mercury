@@ -57,20 +57,13 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Initializes values in the GameState. Eventually, this will load data from saved state values in the database.
   private func initializeGameState() {
     let gameState = getGameState()
-    // ---- TODO: These values should be adjusted from a database or some configuration file.
-    let playerHealth: CGFloat = 10000
-    let playerBulletDamage: CGFloat = 10
-    let playerBulletFireInterval: CGFloat = 0.1
-    let enemyHealthBase: CGFloat = 250
-    let enemyBulletDamage: CGFloat = 10
-    let enemyBulletFireInterval: CGFloat = 0.1
-    // ----
-    gameState.set(.playerHealth, to: playerHealth)
-    gameState.set(.playerBulletDamage, to: playerBulletDamage)
-    gameState.set(.playerBulletFireInterval, to: playerBulletFireInterval)
-    gameState.set(.enemyHealthBase, to: enemyHealthBase)
-    gameState.set(.enemyBulletDamage, to: enemyBulletDamage)
-    gameState.set(.enemyBulletFireInterval, to: enemyBulletFireInterval)
+    // TODO: These values should be adjusted from a database or some configuration file.
+    gameState.setCGFloat(.playerHealth, to: 10000)
+    gameState.setCGFloat(.playerBulletDamage, to: 10)
+    gameState.setTimeInterval(.playerBulletFireInterval, to: 0.1)
+    gameState.setCGFloat(.enemyHealthBase, to: 250)
+    gameState.setCGFloat(.enemyBulletDamage, to: 10)
+    gameState.setTimeInterval(.enemyBulletFireInterval, to: 0.1)
   }
   
   // Initialize the current level scene by setting up all GameObjects and events.

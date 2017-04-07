@@ -29,6 +29,14 @@ class GameState {
     inform(key, value: value)
   }
   
+  // The following methods are the same as above, but are intended to set numerical values as a specific type to avoid ambiguity.
+  func setCGFloat(_ key: GameStateKey, to value: CGFloat) {
+    set(key, to: value)
+  }
+  func setTimeInterval(_ key: GameStateKey, to value: TimeInterval) {
+    set(key, to: value)
+  }
+  
   // This informs all GameStateListeners subscribed to a variable of a change, but does not change the variable's value. The variable does not need to be set at all to call this method.
   // Default value is set to "true" so this method can be called just to inform of an arbitrary change in a parameter.
   // Example 1: gameState.inform("screen touched")
@@ -59,6 +67,14 @@ class GameState {
   // Returns the value as a CGFloat. Default value is 0 unelss otherwise specified.
   func getCGFloat(forKey key: GameStateKey, defaultValue: CGFloat = 0.0) -> CGFloat {
     if let value = self.gameStateValues[key] as? CGFloat {
+      return value
+    }
+    return defaultValue
+  }
+  
+  // Returns the value as a TimeInterval. Default value is 0 unelss otherwise specified.
+  func getTimeInterval(forKey key: GameStateKey, defaultValue: TimeInterval = 0.0) -> TimeInterval {
+    if let value = self.gameStateValues[key] as? TimeInterval {
       return value
     }
     return defaultValue
