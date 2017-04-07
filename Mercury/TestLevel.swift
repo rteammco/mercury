@@ -14,6 +14,7 @@ class TestLevel: GameScene {
   override func initializeScene() {
     subscribeToStateChanges()
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
+    createGUI()
     
     let phase1 = createEventPhase()
     phase1.execute(action: SpawnEnemy("test"))

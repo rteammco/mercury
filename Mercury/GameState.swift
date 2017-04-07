@@ -56,6 +56,14 @@ class GameState {
     return defaultValue
   }
   
+  // Returns the value as a CGFloat. Default value is 0 unelss otherwise specified.
+  func getCGFloat(forKey key: GameStateKey, defaultValue: CGFloat = 0.0) -> CGFloat {
+    if let value = self.gameStateValues[key] as? CGFloat {
+      return value
+    }
+    return defaultValue
+  }
+  
   // Returns the value interpreted as a 2D CGPoint. Default value is (0, 0) unless otherwise specified.
   func getPoint(forKey key: GameStateKey, defaultValue: CGPoint = CGPoint(x: 0, y: 0)) -> CGPoint {
     if let value = self.gameStateValues[key] as? CGPoint {

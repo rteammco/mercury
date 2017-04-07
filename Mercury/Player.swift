@@ -24,6 +24,7 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
     
     // TODO: Set health correctly.
     self.health = 1000
+    self.gameState.set(.playerHealth, to: self.health)
     
     // Customize physics properties:
     self.physicsIsDynamic = false
@@ -51,6 +52,11 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   //------------------------------------------------------------------------------
   // Methods handling game events.
   //------------------------------------------------------------------------------
+  
+  override func reduceHeath(by amount: CGFloat) {
+    super.reduceHeath(by: amount)
+    self.gameState.set(.playerHealth, to: self.health)
+  }
   
   override func destroyObject() {
     super.destroyObject()

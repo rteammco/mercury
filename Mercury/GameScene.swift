@@ -67,6 +67,12 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     when(PlayerDies()).execute(action: DisplayText("Player Died"))  // TODO: Add an action that will handle this.
   }
   
+  // Add the standard GUI to the scene (optional).
+  func createGUI() {
+    let hud = LevelHud(gameState: getGameState())
+    addGameObject(hud)
+  }
+  
   //------------------------------------------------------------------------------
   // General level methods.
   //------------------------------------------------------------------------------

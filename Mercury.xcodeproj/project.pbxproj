@@ -15,6 +15,7 @@
 		79154F6A1E41469100D9B71A /* SpawnEnemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79154F691E41469100D9B71A /* SpawnEnemy.swift */; };
 		79154F6D1E4147ED00D9B71A /* NumberOfEnemiesSpawned.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79154F6C1E4147ED00D9B71A /* NumberOfEnemiesSpawned.swift */; };
 		792D7FF91E9812AD00273684 /* PlayerDies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792D7FF81E9812AD00273684 /* PlayerDies.swift */; };
+		792D7FFC1E98181000273684 /* LevelHud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792D7FFB1E98181000273684 /* LevelHud.swift */; };
 		792DDE5A1E29649A00AED88E /* TestLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792DDE591E29649A00AED88E /* TestLevel.swift */; };
 		793377D51E405BE100D4701C /* TimerFires.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793377D41E405BE100D4701C /* TimerFires.swift */; };
 		793377D81E40633200D4701C /* DisplayText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793377D71E40633200D4701C /* DisplayText.swift */; };
@@ -75,6 +76,7 @@
 		79154F691E41469100D9B71A /* SpawnEnemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpawnEnemy.swift; sourceTree = "<group>"; };
 		79154F6C1E4147ED00D9B71A /* NumberOfEnemiesSpawned.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberOfEnemiesSpawned.swift; sourceTree = "<group>"; };
 		792D7FF81E9812AD00273684 /* PlayerDies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerDies.swift; sourceTree = "<group>"; };
+		792D7FFB1E98181000273684 /* LevelHud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelHud.swift; sourceTree = "<group>"; };
 		792DDE591E29649A00AED88E /* TestLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLevel.swift; sourceTree = "<group>"; };
 		793377D41E405BE100D4701C /* TimerFires.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerFires.swift; sourceTree = "<group>"; };
 		793377D71E40633200D4701C /* DisplayText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayText.swift; sourceTree = "<group>"; };
@@ -150,6 +152,14 @@
 				7984856F1E902E4700DFE310 /* Level Phases */,
 			);
 			name = Levels;
+			sourceTree = "<group>";
+		};
+		792D7FFA1E9817F900273684 /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				792D7FFB1E98181000273684 /* LevelHud.swift */,
+			);
+			name = GUI;
 			sourceTree = "<group>";
 		};
 		793377D31E405BA800D4701C /* Level Events */ = {
@@ -266,6 +276,7 @@
 				79DFF9C71E37EBCC00F50514 /* Animations */,
 				7906C4621DDD142000187846 /* Levels */,
 				79CCAB191E95506C0015E9A1 /* Menus */,
+				792D7FFA1E9817F900273684 /* GUI */,
 				79DFF9CA1E37EF3B00F50514 /* Events */,
 				796014391DD8EAFD004640E9 /* Game */,
 				79DEC4771DD7BBF000A5BF16 /* GameScene.swift */,
@@ -468,6 +479,7 @@
 				79DFF9CC1E37EFB400F50514 /* Event.swift in Sources */,
 				7913A34B1E884B180070DF8E /* GameConfiguration.swift in Sources */,
 				79154F681E41431600D9B71A /* GameStateListener.swift in Sources */,
+				792D7FFC1E98181000273684 /* LevelHud.swift in Sources */,
 				799424BA1E8194D900C2BD88 /* CollisionBitMasks.swift in Sources */,
 				79154F6A1E41469100D9B71A /* SpawnEnemy.swift in Sources */,
 				79C4ABC01DFDEF1B006DDCAF /* ContactDelegate.swift in Sources */,
