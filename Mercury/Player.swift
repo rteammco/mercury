@@ -9,7 +9,7 @@
 
 import SpriteKit
 
-class Player: GameObject, ArmedWithProjectiles {
+class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
   // How often the player fires a bullet (in seconds) when firing.
   private let fireBulletIntervalSeconds: Double
@@ -22,6 +22,18 @@ class Player: GameObject, ArmedWithProjectiles {
     super.init(position: position, gameState: gameState)
     self.nodeName = "player"
     
+    // TODO: Set health correctly.
+    self.health = 1000
+    
+    // Customize physics properties:
+    self.physicsIsDynamic = false
+    self.physicsMass = 1.0
+    self.physicsRestitution = 0.5
+    self.physicsFriction = 0.5
+    self.physicsAllowsRotation = false
+    setCollisionCategory(PhysicsCollisionBitMask.friendly)
+    addCollisionTestCategory(PhysicsCollisionBitMask.enemy)
+    
     subscribeToUserInteractionStateChanges()
   }
   
@@ -32,7 +44,17 @@ class Player: GameObject, ArmedWithProjectiles {
     node.position = getPosition()
     node.fillColor = SKColor.blue
     self.gameSceneNode = node
+    self.initializePhysics()
     return node
+  }
+  
+  //------------------------------------------------------------------------------
+  // Methods handling game events.
+  //------------------------------------------------------------------------------
+  
+  override func destroyObject() {
+    super.destroyObject()
+    //self.gameState.inform(.playerDies, value: self)
   }
   
   //------------------------------------------------------------------------------

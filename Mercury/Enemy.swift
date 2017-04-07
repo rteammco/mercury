@@ -24,6 +24,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
     self.scaleMovementSpeed(speed)
     self.setMovementDirection(to: CGVector(dx: 0, dy: -1))  // Top to bottom of screen.
     
+    // TODO: Set health correctly.
     self.health = 200
     
     // Customize physics properties:
