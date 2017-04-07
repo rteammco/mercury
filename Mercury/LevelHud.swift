@@ -12,6 +12,8 @@ import SpriteKit
 class LevelHud: GameObject {
   
   let initialHealth: CGFloat
+  var healthBarNode: SKShapeNode?
+  var healthBarText: SKLabelNode?
   
   init(gameState: GameState) {
     self.initialHealth = gameState.getCGFloat(forKey: .playerHealth)
@@ -25,7 +27,10 @@ class LevelHud: GameObject {
       if self.initialHealth > 0 {
         let currentHealth = self.gameState.getCGFloat(forKey: .playerHealth)
         let ratio = currentHealth / self.initialHealth
-        self.gameSceneNode?.xScale = ratio
+        self.healthBarNode?.xScale = ratio
+        let percent = Int(round(100 * ratio))
+        let percentString = String(percent) + "%"
+        self.healthBarText?.text = percentString
       }
     }
     if key == .playerDied {
@@ -34,14 +39,31 @@ class LevelHud: GameObject {
   }
   
   override func createGameSceneNode(scale: CGFloat) -> SKNode {
-    // Override as needed.
     let width = 0.8 * scale
     let height = 0.05 * scale
-    let node = SKShapeNode.init(rectOf: CGSize.init(width: width, height: height))
-    node.position = CGPoint(x: 0, y: scale * 0.8)
-    node.fillColor = SKColor.red
-    self.gameSceneNode = node
-    return node
+    let hudNode = SKShapeNode(rectOf: CGSize(width: width, height: height))
+    hudNode.position = CGPoint(x: 0, y: scale * 0.8)
+    hudNode.lineWidth = 3.0
+    hudNode.strokeColor = SKColor.red
+    
+    // Create the health bar part of the HUD.
+    let healthBarNode = SKShapeNode(rectOf: CGSize(width: width, height: height))
+    healthBarNode.fillColor = SKColor.red
+    self.healthBarNode = healthBarNode
+    hudNode.addChild(healthBarNode)
+    
+    // Create the text (health %) in the node.
+    let healthBarText = SKLabelNode(text: "100%")
+    healthBarText.color = SKColor.white
+    // TODO: Colors and font should be defined in GameConfiguration.
+    healthBarText.fontName = "Arial-BoldMT"
+    healthBarText.fontSize = 34
+    // TODO: Center font in the parent node.
+    self.healthBarText = healthBarText
+    hudNode.addChild(healthBarText)
+    
+    self.gameSceneNode = hudNode
+    return hudNode
   }
   
 }
