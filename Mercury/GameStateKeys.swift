@@ -27,4 +27,8 @@ enum GameStateKey: String {
   // Tracked enemy variables:
   case numSpawnedEnemies
   
+  // Game balance and damage exchange methods.
+  case playerBulletDamage
+  case enemyBulletDamage
+  
 }

@@ -13,10 +13,14 @@ import SpriteKit
 class Bullet: PhysicsEnabledGameObject {
   
   // The color of the bullet.
-  var color: SKColor
+  private var color: SKColor
   
-  init(position: CGPoint, gameState: GameState, speed: CGFloat) {
+  // The amount of damage this bullet does on impact.
+  private let damage: CGFloat
+  
+  init(position: CGPoint, gameState: GameState, speed: CGFloat, damage: CGFloat) {
     self.color = SKColor.yellow
+    self.damage = damage
     super.init(position: position, gameState: gameState)
     self.nodeName = "bullet"
     self.scaleMovementSpeed(speed)
@@ -45,6 +49,10 @@ class Bullet: PhysicsEnabledGameObject {
     self.gameSceneNode = node
     self.initializePhysics()
     return node
+  }
+  
+  func getHitDamage() -> CGFloat {
+    return self.damage
   }
   
 }

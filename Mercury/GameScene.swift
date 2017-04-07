@@ -57,8 +57,14 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Initializes values in the GameState. Eventually, this will load data from saved state values in the database.
   private func initializeGameState() {
     let gameState = getGameState()
+    // ---- TODO: These values should be adjusted from a database or some configuration file.
     let playerHealth: CGFloat = 1000
+    let playerBulletDamage: CGFloat = 10
+    let enemyBulletDamage: CGFloat = 5
+    // ----
     gameState.set(.playerHealth, to: playerHealth)
+    gameState.set(.playerBulletDamage, to: playerBulletDamage)
+    gameState.set(.enemyBulletDamage, to: enemyBulletDamage)
   }
   
   // Initialize the current level scene by setting up all GameObjects and events.

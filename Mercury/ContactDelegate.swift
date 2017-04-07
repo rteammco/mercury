@@ -32,7 +32,7 @@ class ContactDelegate: NSObject, SKPhysicsContactDelegate {
   
   // Handles the scenario where a bullet hit another object in the scene.
   private func handleBulletCollision(bullet: Bullet, target: GameObject) {
-    target.reduceHeath(by: 10)
+    target.reduceHeath(by: bullet.getHitDamage())
     bullet.removeSceneNodeFromGameScene()
   }
   

@@ -77,7 +77,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
   @objc func fireBullet() {
     let enemyPosition = getPosition()
-    let bullet = Bullet(position: CGPoint(x: enemyPosition.x, y: enemyPosition.y), gameState: self.gameState, speed: 1.0)
+    let bullet = Bullet(position: CGPoint(x: enemyPosition.x, y: enemyPosition.y), gameState: self.gameState, speed: 1.0, damage: self.gameState.getCGFloat(forKey: .enemyBulletDamage))
     bullet.setColor(to: GameConfiguration.enemyColor)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.environment)
