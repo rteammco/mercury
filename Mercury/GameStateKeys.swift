@@ -28,7 +28,7 @@ enum GameStateKey: String {
   case numSpawnedEnemies
   
   // Game balance and damage exchange methods.
-  case playerBulletDamage
-  case enemyBulletDamage
+  case playerBulletDamage, playerBulletFireInterval
+  case enemyHealthBase, enemyBulletDamage, enemyBulletFireInterval
   
 }

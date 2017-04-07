@@ -11,14 +11,10 @@ import SpriteKit
 
 class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
-  // How often the player fires a bullet (in seconds) when firing.
-  private let fireBulletIntervalSeconds: Double
-  
   // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
   var fireBulletTimer: Timer?
   
   override init(position: CGPoint, gameState: GameState) {
-    self.fireBulletIntervalSeconds = 0.1
     super.init(position: position, gameState: gameState)
     self.gameState.set(.playerPosition, to: getPosition())
     self.nodeName = "player"
@@ -67,7 +63,8 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
   // Start firing bullets at the firing rate (fireBulletIntervalSeconds). This will continue to fire bullets at each of the intervals until stopFireBulletTimer() is called.
   func startFireBulletTimer() {
-    self.fireBulletTimer = startLoopedTimer(every: self.fireBulletIntervalSeconds, callbackFunctionSelector: #selector(self.fireBullet), fireImmediately: true)
+    let bulletFireIntervalSeconds = TimeInterval(self.gameState.getCGFloat(forKey: .playerBulletFireInterval))
+    self.fireBulletTimer = startLoopedTimer(every: bulletFireIntervalSeconds, callbackFunctionSelector: #selector(self.fireBullet), fireImmediately: true)
   }
   
   // Stops firing bullets by invalidating the fireBulletTimer.

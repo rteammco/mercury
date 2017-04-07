@@ -14,18 +14,12 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
   var fireBulletTimer: Timer?
   
-  // How often this enemy fires a bullet (in seconds) when firing.
-  private let fireBulletIntervalSeconds: Double
-  
   init(position: CGPoint, gameState: GameState, speed: CGFloat) {
-    self.fireBulletIntervalSeconds = 0.1
     super.init(position: position, gameState: gameState)
     self.nodeName = "enemy"
     self.scaleMovementSpeed(speed)
     self.setMovementDirection(to: CGVector(dx: 0, dy: -1))  // Top to bottom of screen.
-    
-    // TODO: Set health correctly.
-    self.health = 200
+    self.health = self.gameState.getCGFloat(forKey: .enemyHealthBase)
     
     // Customize physics properties:
     self.physicsMass = 1.0
@@ -65,7 +59,8 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // Start firing bullets at the firing rate (fireBulletIntervalSeconds). This will continue to fire bullets at each of the intervals until stopFireBulletTimer() is called.
   // TODO: we may want to move this method into the GameObject super class.
   func startFireBulletTimer() {
-    self.fireBulletTimer = startLoopedTimer(every: self.fireBulletIntervalSeconds, callbackFunctionSelector: #selector(self.fireBullet))
+    let bulletFireIntervalSeconds = TimeInterval(self.gameState.getCGFloat(forKey: .enemyBulletFireInterval))
+    self.fireBulletTimer = startLoopedTimer(every: bulletFireIntervalSeconds, callbackFunctionSelector: #selector(self.fireBullet))
   }
   
   // Stops firing bullets by invalidating the fireBulletTimer.
