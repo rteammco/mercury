@@ -41,11 +41,15 @@ class Event: EventStopCriteria, GameStateListener {
   
   var wasTriggered: Bool
   
+  // Once this event is subscribed to GameState changes, this flag is flipped to true. This way, if the event is reset, it will not re-subscribe itself to those state changes again.
+  var isSubscribedToGameStateChanges: Bool
+  
   init() {
     self.eventActions = [EventAction]()
     self.eventFinishedActions = [EventAction]()
     self.eventChainFinalActions = [EventAction]()
     self.wasTriggered = false
+    self.isSubscribedToGameStateChanges = false
   }
   
   func setCaller(to caller: EventCaller) {
@@ -163,6 +167,16 @@ class Event: EventStopCriteria, GameStateListener {
   private func reset() {
     self.wasTriggered = false
     start()
+  }
+  
+  // Subscribes this event to the given set of keys. This will only work the first time it is called. Use this method in the start() method instead of directly subscribing to GameState changes for optimal results.
+  func subscribeTo(stateChanges keys: GameStateKey..., from gameState: GameState) {
+    if !self.isSubscribedToGameStateChanges {
+      for key in keys {
+        gameState.subscribe(self, to: key)
+      }
+      self.isSubscribedToGameStateChanges = true
+    }
   }
   
   //------------------------------------------------------------------------------
