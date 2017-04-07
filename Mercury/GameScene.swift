@@ -44,6 +44,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     self.gameState = GameState()
     
     initializePhysics()
+    initializeGameState()
     initializeScene()
   }
   
@@ -51,6 +52,13 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   private func initializePhysics() {
     self.physicsWorld.contactDelegate = self.contactDelegate
     self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+  }
+  
+  // Initializes values in the GameState. Eventually, this will load data from saved state values in the database.
+  private func initializeGameState() {
+    let gameState = getGameState()
+    let playerHealth: CGFloat = 1000
+    gameState.set(.playerHealth, to: playerHealth)
   }
   
   // Initialize the current level scene by setting up all GameObjects and events.

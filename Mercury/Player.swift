@@ -20,11 +20,9 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   override init(position: CGPoint, gameState: GameState) {
     self.fireBulletIntervalSeconds = 0.1
     super.init(position: position, gameState: gameState)
+    self.gameState.set(.playerPosition, to: getPosition())
     self.nodeName = "player"
-    
-    // TODO: Set health correctly.
-    self.health = 1000
-    self.gameState.set(.playerHealth, to: self.health)
+    self.health = self.gameState.getCGFloat(forKey: .playerHealth)
     
     // Customize physics properties:
     self.physicsIsDynamic = false
