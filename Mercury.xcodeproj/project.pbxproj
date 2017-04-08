@@ -48,6 +48,7 @@
 		79DFF9CC1E37EFB400F50514 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9CB1E37EFB400F50514 /* Event.swift */; };
 		79DFF9D01E37F5EA00F50514 /* EventAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9CF1E37F5EA00F50514 /* EventAction.swift */; };
 		79DFF9D21E37F74400F50514 /* EventStopCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9D11E37F74400F50514 /* EventStopCriteria.swift */; };
+		79F539501E9965EC00BC9389 /* ImpactSpark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 79F5394F1E9965EC00BC9389 /* ImpactSpark.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +116,7 @@
 		79DFF9CB1E37EFB400F50514 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		79DFF9CF1E37F5EA00F50514 /* EventAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAction.swift; sourceTree = "<group>"; };
 		79DFF9D11E37F74400F50514 /* EventStopCriteria.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventStopCriteria.swift; sourceTree = "<group>"; };
+		79F5394F1E9965EC00BC9389 /* ImpactSpark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ImpactSpark.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,8 +220,8 @@
 			isa = PBXGroup;
 			children = (
 				79C4ABC11DFDF536006DDCAF /* PhysicsEnabledGameObject.swift */,
-				79C4ABBF1DFDEF1B006DDCAF /* ContactDelegate.swift */,
 				799424B91E8194D900C2BD88 /* CollisionBitMasks.swift */,
+				79C4ABBF1DFDEF1B006DDCAF /* ContactDelegate.swift */,
 			);
 			name = Physics;
 			sourceTree = "<group>";
@@ -316,6 +318,7 @@
 			isa = PBXGroup;
 			children = (
 				79DFF9C81E37EBE600F50514 /* SwipePathAnimation.swift */,
+				79F5394F1E9965EC00BC9389 /* ImpactSpark.sks */,
 			);
 			name = Animations;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				79DEC47F1DD7BBF000A5BF16 /* Assets.xcassets in Resources */,
 				79DEC4821DD7BBF000A5BF16 /* LaunchScreen.storyboard in Resources */,
 				79DEC4761DD7BBF000A5BF16 /* Actions.sks in Resources */,
+				79F539501E9965EC00BC9389 /* ImpactSpark.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

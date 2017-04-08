@@ -13,7 +13,7 @@ import GameplayKit
 class GameScene: SKScene, EventCaller, GameStateListener {
   
   // The contact delegate needs to be a local variable or else it disappears.
-  private let contactDelegate = ContactDelegate()
+  private var contactDelegate: ContactDelegate?
   
   // The phase sequence that will be executed when this GameScene is started.
   private var eventPhaseSequence = [EventPhase]()
@@ -50,7 +50,8 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Set the contact delegate and disable gravity.
   private func initializePhysics() {
-    self.physicsWorld.contactDelegate = self.contactDelegate
+    self.contactDelegate = ContactDelegate()
+    self.physicsWorld.contactDelegate = self.contactDelegate!
     self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
   }
   
@@ -160,8 +161,11 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   func getGameState() -> GameState {
     if let gameState = self.gameState {
       return gameState
+    } else {
+      let gameState = GameState()
+      self.gameState = gameState
+      return gameState
     }
-    return GameState()
   }
   
   // Sets the current GameScene to the object defined in the given GameScene file. This GameScene will be presented to the view.
@@ -315,7 +319,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     getGameState().subscribe(self, to: .spawnPlayerBullet)
     getGameState().subscribe(self, to: .spawnEnemyBullet)
   }
-  
+
   // When a game state change is reported, handle it here. Extend as needed with custom handlers for a given level.
   //
   // TODO: Some of these might work better as separate functions, specific EventActions that handle all the mechanics, or even factory objects to make the code cleaner.
