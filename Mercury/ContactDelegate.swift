@@ -23,17 +23,27 @@ class ContactDelegate: NSObject, SKPhysicsContactDelegate {
   
   // Given two objects that collide, this method figures out how the collision should be handled.
   private func processCollisionEvent(objectA: GameObject, objectB: GameObject) {
+    // If either object is a bullet, handle bullet-object collision.
     if objectA is Bullet {
       handleBulletCollision(bullet: objectA as! Bullet, target: objectB)
     } else if objectB is Bullet {
       handleBulletCollision(bullet: objectB as! Bullet, target: objectA)
+    } else if objectA is Player {
+      handlePlayerCollision(player: objectA as! Player, collidedWith: objectB)
+    } else if objectB is Player {
+      handlePlayerCollision(player: objectB as! Player, collidedWith: objectA)
     }
   }
   
   // Handles the scenario where a bullet hit another object in the scene.
   private func handleBulletCollision(bullet: Bullet, target: GameObject) {
-    target.reduceHeath(by: bullet.getHitDamage())
+    target.changeHitPoints(by: -bullet.getHitDamage())
     bullet.removeSceneNodeFromGameScene()
+  }
+  
+  private func handlePlayerCollision(player: Player, collidedWith otherObject: GameObject) {
+    player.changeHitPoints(by: -otherObject.getMaxHitPoints())
+    otherObject.destroyObject()
   }
   
 }

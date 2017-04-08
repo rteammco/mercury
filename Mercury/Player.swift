@@ -18,7 +18,7 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
     super.init(position: position, gameState: gameState)
     self.gameState.set(.playerPosition, to: getPosition())
     self.nodeName = "player"
-    self.health = self.gameState.getCGFloat(forKey: .playerHealth)
+    initializeHitPoints(self.gameState.getCGFloat(forKey: .playerHealth))
     
     // Customize physics properties:
     self.physicsIsDynamic = false
@@ -47,9 +47,9 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // Methods handling game events.
   //------------------------------------------------------------------------------
   
-  override func reduceHeath(by amount: CGFloat) {
-    super.reduceHeath(by: amount)
-    self.gameState.set(.playerHealth, to: self.health)
+  override func changeHitPoints(by amount: CGFloat) {
+    super.changeHitPoints(by: amount)
+    self.gameState.set(.playerHealth, to: getHitPoints())
   }
   
   override func destroyObject() {

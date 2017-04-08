@@ -40,8 +40,10 @@ class GameObject: GameStateListener {
   // identifier for detecting those nodes in the scene.
   var nodeName = "object"
   
-  // Health of this GameObject. Typically, when health reaches zero, the object "dies". This behavior is determined for each GameObject individually.
-  var health: CGFloat = 100
+  // The "health", or number of hit points (HP), of this GameObject. Typically, when HP reaches zero, the object "dies". This behavior is determined for each GameObject individually.
+  // The maxHitPoints value is used to track the current percentage or ratio of health, and to track its maximum health amount. An object's hitPoints typically cannot exceed maxHitPoints or go below 0.
+  private var hitPoints: CGFloat = 100
+  private var maxHitPoints: CGFloat = 100
   
   //------------------------------------------------------------------------------
   // Initialization methods and functionality.
@@ -139,19 +141,40 @@ class GameObject: GameStateListener {
   // Methods for game mechanics and actions.
   //------------------------------------------------------------------------------
   
+  // Initialize the hit points of this object (and its max HP) to the given value. This should be called once to initialize the amount of hit points this object has.
+  func initializeHitPoints(_ amount: CGFloat) {
+    self.hitPoints = amount
+    self.maxHitPoints = amount
+  }
+  
+  // Update the health amount of this object. If health reaches 0, this object will automatically be destroyed. Health will not exceed maxHitPoints.
+  // To reduce HP, pass in a negative value (e.g. obj.changeHitPoints(by: -10)).
+  func changeHitPoints(by amount: CGFloat) {
+    self.hitPoints += amount
+    if self.hitPoints <= 0 {
+      self.hitPoints = 0
+      destroyObject()
+    } else if self.hitPoints > self.maxHitPoints {
+      self.hitPoints = self.maxHitPoints
+    }
+  }
+  
+  // Returns the number of HP this object currently has.
+  func getHitPoints() -> CGFloat {
+    return self.hitPoints
+  }
+  
+  // Returns the max HP of this object.
+  func getMaxHitPoints() -> CGFloat {
+    return self.maxHitPoints
+  }
+  
   // Called to destroy or "kill" the object, typically when it dies (health reaches zero).
   func destroyObject() {
     for timer in self.timers {
       timer.invalidate()
     }
     removeSceneNodeFromGameScene()
-  }
-  
-  func reduceHeath(by amount: CGFloat) {
-    self.health -= amount
-    if self.health <= 0 {
-      destroyObject()
-    }
   }
   
   //------------------------------------------------------------------------------

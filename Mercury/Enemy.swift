@@ -19,7 +19,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
     self.nodeName = "enemy"
     self.scaleMovementSpeed(speed)
     self.setMovementDirection(to: CGVector(dx: 0, dy: -1))  // Top to bottom of screen.
-    self.health = self.gameState.getCGFloat(forKey: .enemyHealthBase)
+    initializeHitPoints(self.gameState.getCGFloat(forKey: .enemyHealthBase))
     
     // Customize physics properties:
     self.physicsMass = 1.0
