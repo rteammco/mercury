@@ -15,9 +15,9 @@ protocol PhysicsEnabled {
   func initializePhysics()
   
   // Applies an impulse force to the body. The magnitude of the given vector [dx, dy] determines the strength of the force and projects it in the direction of the vector.
-  func applyImpulse(dx: CGFloat, dy: CGFloat)
+  func applyImpulse(_ impulseVector: CGVector)
   
   // Sets the object's velocity to the given value. The magnitued of the given velocity vector determines the speed, regardless of the object's mass and other physical properties.
-  func setVelocity(xVelocity: CGFloat, yVelocity: CGFloat)
+  func setVelocity(_ velocityVector: CGVector)
   
 }

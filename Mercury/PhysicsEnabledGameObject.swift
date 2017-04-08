@@ -77,18 +77,18 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
   }
   
   // Applies a one-time physical impulse to the object. The strength of the "bump" is determined by the given vector, and the reaction depends on the object's physical properties.
-  func applyImpulse(dx: CGFloat, dy: CGFloat) {
+  func applyImpulse(_ impulseVector: CGVector) {
     if let gameSceneNode = self.gameSceneNode {
-      gameSceneNode.physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
+      gameSceneNode.physicsBody?.applyImpulse(impulseVector)
     } else {
       print("WARNING: gameSceneNode has not been initialized. No impulse can be applied.")
     }
   }
   
   // Sets the velocity of the object to the given value, regardless of the object's current physical properties.
-  func setVelocity(xVelocity: CGFloat, yVelocity: CGFloat) {
+  func setVelocity(_ velocityVector: CGVector) {
     if let gameSceneNode = self.gameSceneNode {
-      gameSceneNode.physicsBody?.velocity = CGVector(dx: xVelocity, dy: yVelocity)
+      gameSceneNode.physicsBody?.velocity = velocityVector
     } else {
       print("WARNING: gameSceneNode has not been initialized. Velocity cannot be set.")
     }
@@ -96,9 +96,8 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
   
   // Sets the current velocity to the movement speed and direction of the GameObject.
   func setDefaultVelocity() {
-    let dx = self.movementDirection.dx * self.movementSpeed
-    let dy = self.movementDirection.dy * self.movementSpeed
-    setVelocity(xVelocity: dx, yVelocity: dy)
+    let velocityVector = CGVector(dx: self.movementDirection.dx * self.movementSpeed, dy: self.movementDirection.dy * self.movementSpeed)
+    setVelocity(velocityVector)
   }
   
 }
