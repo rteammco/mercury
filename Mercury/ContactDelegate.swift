@@ -37,22 +37,7 @@ class ContactDelegate: NSObject, SKPhysicsContactDelegate {
   
   // Handles the scenario where a bullet hit another object in the scene.
   private func handleBulletCollision(bullet: Bullet, target: GameObject) {
-    // ---- TODO: Move this effect into a separate function, preferably elsewhere. Also it needs to be fixed up so that the angle, duration, and number of particles to emit is correct.
-    if let emitter = SKEmitterNode(fileNamed: "ImpactSpark.sks") {
-      let effectNode = SKEffectNode()
-      effectNode.addChild(emitter)
-      effectNode.zPosition = 0
-      let addEffect = SKAction.run({
-        () in target.gameSceneNode?.addChild(effectNode)
-      })
-      let emitterDurationSeconds: TimeInterval = 0.1
-      let wait = SKAction.wait(forDuration: emitterDurationSeconds)
-      let removeEffect = SKAction.run({
-        () in effectNode.removeFromParent()
-      })
-      target.gameSceneNode?.run(SKAction.sequence([addEffect, wait, removeEffect]))
-    }
-    // ----
+    ParticleSystems.runBulletImpactEffect(bullet: bullet, target: target)
     target.changeHitPoints(by: -bullet.getHitDamage())
     bullet.removeSceneNodeFromGameScene()
   }

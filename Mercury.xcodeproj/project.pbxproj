@@ -49,6 +49,7 @@
 		79DFF9D01E37F5EA00F50514 /* EventAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9CF1E37F5EA00F50514 /* EventAction.swift */; };
 		79DFF9D21E37F74400F50514 /* EventStopCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9D11E37F74400F50514 /* EventStopCriteria.swift */; };
 		79F539501E9965EC00BC9389 /* ImpactSpark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 79F5394F1E9965EC00BC9389 /* ImpactSpark.sks */; };
+		79F539521E997C3400BC9389 /* ParticleSystems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F539511E997C3400BC9389 /* ParticleSystems.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,7 @@
 		79DFF9CF1E37F5EA00F50514 /* EventAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAction.swift; sourceTree = "<group>"; };
 		79DFF9D11E37F74400F50514 /* EventStopCriteria.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventStopCriteria.swift; sourceTree = "<group>"; };
 		79F5394F1E9965EC00BC9389 /* ImpactSpark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ImpactSpark.sks; sourceTree = "<group>"; };
+		79F539511E997C3400BC9389 /* ParticleSystems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleSystems.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -319,6 +321,7 @@
 			children = (
 				79DFF9C81E37EBE600F50514 /* SwipePathAnimation.swift */,
 				79F5394F1E9965EC00BC9389 /* ImpactSpark.sks */,
+				79F539511E997C3400BC9389 /* ParticleSystems.swift */,
 			);
 			name = Animations;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				79CCAB1D1E9557CA0015E9A1 /* SetGameScene.swift in Sources */,
 				7960143B1DD8EB23004640E9 /* Player.swift in Sources */,
 				796FA7B41E96C3D7006255BF /* Util.swift in Sources */,
+				79F539521E997C3400BC9389 /* ParticleSystems.swift in Sources */,
 				79DFF9C91E37EBE600F50514 /* SwipePathAnimation.swift in Sources */,
 				793377D81E40633200D4701C /* DisplayText.swift in Sources */,
 				79DEC4781DD7BBF000A5BF16 /* GameScene.swift in Sources */,
