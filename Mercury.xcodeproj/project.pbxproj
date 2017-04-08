@@ -50,6 +50,8 @@
 		79DFF9D21E37F74400F50514 /* EventStopCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9D11E37F74400F50514 /* EventStopCriteria.swift */; };
 		79F539501E9965EC00BC9389 /* ImpactSpark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 79F5394F1E9965EC00BC9389 /* ImpactSpark.sks */; };
 		79F539521E997C3400BC9389 /* ParticleSystems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F539511E997C3400BC9389 /* ParticleSystems.swift */; };
+		79F539561E9981F800BC9389 /* Fireball.sks in Resources */ = {isa = PBXBuildFile; fileRef = 79F539551E9981F800BC9389 /* Fireball.sks */; };
+		79F5395C1E99833000BC9389 /* ImpactExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 79F5395B1E99833000BC9389 /* ImpactExplosion.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +121,8 @@
 		79DFF9D11E37F74400F50514 /* EventStopCriteria.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventStopCriteria.swift; sourceTree = "<group>"; };
 		79F5394F1E9965EC00BC9389 /* ImpactSpark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ImpactSpark.sks; sourceTree = "<group>"; };
 		79F539511E997C3400BC9389 /* ParticleSystems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleSystems.swift; sourceTree = "<group>"; };
+		79F539551E9981F800BC9389 /* Fireball.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fireball.sks; sourceTree = "<group>"; };
+		79F5395B1E99833000BC9389 /* ImpactExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ImpactExplosion.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,6 +325,8 @@
 			children = (
 				79DFF9C81E37EBE600F50514 /* SwipePathAnimation.swift */,
 				79F5394F1E9965EC00BC9389 /* ImpactSpark.sks */,
+				79F5395B1E99833000BC9389 /* ImpactExplosion.sks */,
+				79F539551E9981F800BC9389 /* Fireball.sks */,
 				79F539511E997C3400BC9389 /* ParticleSystems.swift */,
 			);
 			name = Animations;
@@ -445,9 +451,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				79DEC47D1DD7BBF000A5BF16 /* Main.storyboard in Resources */,
+				79F5395C1E99833000BC9389 /* ImpactExplosion.sks in Resources */,
 				79DEC4741DD7BBF000A5BF16 /* GameScene.sks in Resources */,
 				79DEC47F1DD7BBF000A5BF16 /* Assets.xcassets in Resources */,
 				79DEC4821DD7BBF000A5BF16 /* LaunchScreen.storyboard in Resources */,
+				79F539561E9981F800BC9389 /* Fireball.sks in Resources */,
 				79DEC4761DD7BBF000A5BF16 /* Actions.sks in Resources */,
 				79F539501E9965EC00BC9389 /* ImpactSpark.sks in Resources */,
 			);
