@@ -193,12 +193,22 @@ class GameObject: GameStateListener {
   func touchMoved(to: CGPoint) {}
   func touchUp(at: CGPoint) {}
   
+  // Returns true if one of the nodes shares the same name as this node.
+  private func isObjectOneOf(nodes: [SKNode]) -> Bool {
+    for node in nodes {
+      if node.name == self.nodeName {
+        return true
+      }
+    }
+    return false
+  }
+  
   // Extend this as needed to handle custom events. Call the superclass (this) implementation to handle any of the default state changes.
   func reportStateChange(key: GameStateKey, value: Any) {
     switch key {
     case .screenTouchDown:
       let touchInfo = value as! ScreenTouchInfo
-      if touchInfo.touchedNode.name == self.nodeName {
+      if isObjectOneOf(nodes: touchInfo.touchedNodes) {
         self.isTouched = true
         touchDown(at: touchInfo.touchPosition)
       }

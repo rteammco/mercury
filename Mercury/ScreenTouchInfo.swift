@@ -14,11 +14,11 @@ struct ScreenTouchInfo {
   // The (absolute) pixel position on the screen that was touched.
   let touchPosition: CGPoint
   
-  // The node (if any) that was touched.
-  let touchedNode: SKNode
+  // The nodes (if any) that were touched.
+  let touchedNodes: [SKNode]
   
-  init(_ touchPosition: CGPoint, _ touchedNode: SKNode) {
+  init(_ touchPosition: CGPoint, _ touchedNodes: [SKNode]) {
     self.touchPosition = touchPosition
-    self.touchedNode = touchedNode
+    self.touchedNodes = touchedNodes
   }
 }

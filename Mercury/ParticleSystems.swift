@@ -40,4 +40,43 @@ struct ParticleSystems {
     }
   }
   
+  static func runExplosionEffect(on gameObject: GameObject) {
+    
+//    // TODO REMOVE AND FIX
+//    let node = SKShapeNode(rectOf: CGSize.init(width: 50, height: 50))
+//    node.position = CGPoint(x: 0, y: 0)
+//    //node.alpha = 0.0
+//    if let emitter = SKEmitterNode(fileNamed: "ImpactExplosion.sks") {
+//      emitter.position = CGPoint(x: 0, y: 0)
+//      emitter.name = "explosion"
+//      //emitter.alpha = 1.0
+//      //emitter.isHidden = false
+//      //emitter.targetNode = self
+//      node.addChild(emitter)
+//    }
+//    addChild(node)
+//    if let emitter = SKEmitterNode(fileNamed: "ImpactExplosion.sks") {
+//      if let scene = gameObject.gameSceneNode?.scene {
+//      emitter.position = gameObject.getPosition()
+//      emitter.name = "explosion"
+//      emitter.targetNode = scene
+//      emitter.zPosition = 2
+//      //let effectNode = SKEffectNode()
+//      //effectNode.addChild(emitter)
+//      //effectNode.zPosition = 0
+//      scene.addChild(emitter)
+//      /*
+//       emitter.position = CGPointMake(posX,posy);
+//       emitter.name = @"explosion";
+//       emitter.targetNode = self.scene;
+//       emitter.numParticlesToEmit = 1000;
+//       emitter.zPosition=2.0;
+// */
+//        print("NODE ADDED")
+//        
+//      }
+      //ParticleSystems.runEffect(emitter, on: gameObject, atOffset: CGPoint(x: 0, y: 0), forDuration: 0.1)
+    }
+  }
+  
 }

@@ -224,20 +224,20 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   //------------------------------------------------------------------------------
   
   private func touchDown(atPoint pos: CGPoint) {
-    let node: SKNode = atPoint(pos)
-    self.gameState?.inform(.screenTouchDown, value: ScreenTouchInfo(pos, node))
+    let touchedNodes: [SKNode] = nodes(at: pos)
+    self.gameState?.inform(.screenTouchDown, value: ScreenTouchInfo(pos, touchedNodes))
     self.lastTouchPosition = pos
   }
   
   private func touchMoved(toPoint pos: CGPoint) {
-    let node: SKNode = atPoint(pos)
-    self.gameState?.inform(.screenTouchMoved, value: ScreenTouchInfo(pos, node))
+    let touchedNodes: [SKNode] = nodes(at: pos)
+    self.gameState?.inform(.screenTouchMoved, value: ScreenTouchInfo(pos, touchedNodes))
     self.lastTouchPosition = pos
   }
   
   private func touchUp(atPoint pos: CGPoint) {
-    let node: SKNode = atPoint(pos)
-    self.gameState?.inform(.screenTouchUp, value: ScreenTouchInfo(pos, node))
+    let touchedNodes: [SKNode] = nodes(at: pos)
+    self.gameState?.inform(.screenTouchUp, value: ScreenTouchInfo(pos, touchedNodes))
   }
   
   //------------------------------------------------------------------------------

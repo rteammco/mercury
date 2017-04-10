@@ -31,10 +31,13 @@ class MainMenu: GameScene {
   override func reportStateChange(key: GameStateKey, value: Any) {
     if key == .screenTouchDown {
       if let screenTouchInfo = value as? ScreenTouchInfo {
-        let node = screenTouchInfo.touchedNode
-        if node.name == self.testLevelButtonName {
-          let testLevel = TestLevel()
-          setCurrentLevel(to: testLevel)
+        let nodes = screenTouchInfo.touchedNodes
+        for node in nodes {
+          if node.name == self.testLevelButtonName {
+            let testLevel = TestLevel()
+            setCurrentLevel(to: testLevel)
+            break
+          }
         }
       }
     }
