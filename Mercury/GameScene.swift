@@ -67,11 +67,10 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     gameState.setTimeInterval(.enemyBulletFireInterval, to: 0.1)
   }
   
-  // Initialize the current level scene by setting up all GameObjects and events.
+  // Initialize the current level scene by setting up all GameObjects and events. By default, initializes the background node and subscribes to state changes. Extend as needed.
   func initializeScene() {
-    // Override function as needed.
-    let mainMenu = MainMenu()
-    setCurrentLevel(to: mainMenu)
+    // TODO: Create a good background node.
+    subscribeToStateChanges()
   }
   
   // Add the player object to the scene (optional).
@@ -246,12 +245,18 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Removes all nodes that are no longer on the screen. For example, if a bullet flies off the screen, there is no reason to track or update it anymore. It's gone.
   private func removeOffscreenNodes() {
-    enumerateChildNodes(withName: "*", using: { (node, stop) -> Void in
-      if !self.intersects(node) {
+    removeOffscreenNodes(from: self)
+  }
+  // Helper method for removeOffscreenNodes() above.
+  private func removeOffscreenNodes(from parentNode: SKNode) {
+    parentNode.enumerateChildNodes(withName: "*", using: { (node, stop) -> Void in
+      if !parentNode.intersects(node) {
         if let gameObject = node.userData?.value(forKey: GameObject.nodeValueKey) as? GameObject {
           gameObject.destroyObject()
+        } else if !(node is SKEmitterNode) && !(node is SKEffectNode) {
+          // Just in case, remove the node if it is not an effect node, if it does not have a GameObject that handles its removal.
+          node.removeFromParent()
         }
-        node.removeFromParent()
       }
     })
   }
@@ -316,8 +321,10 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Subscribe this GameScene to all relevant game state changes that it needs to handle. Extend as needed with custom subscriptions for a given level.
   func subscribeToStateChanges() {
-    getGameState().subscribe(self, to: .spawnPlayerBullet)
-    getGameState().subscribe(self, to: .spawnEnemyBullet)
+    let gameState = getGameState()
+    gameState.subscribe(self, to: .spawnPlayerBullet)
+    gameState.subscribe(self, to: .spawnEnemyBullet)
+    gameState.subscribe(self, to: .createParticleEffect)
   }
 
   // When a game state change is reported, handle it here. Extend as needed with custom handlers for a given level.
@@ -329,6 +336,13 @@ class GameScene: SKScene, EventCaller, GameStateListener {
       if let gameObject = value as? PhysicsEnabledGameObject {
         addGameObject(gameObject, withPhysicsScaling: true)
         gameObject.setDefaultVelocity()
+      }
+    }
+    
+    if key == .createParticleEffect {
+      if let emitter = value as? SKEmitterNode {
+        emitter.targetNode = self
+        addChild(emitter)
       }
     }
   }

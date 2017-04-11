@@ -15,11 +15,12 @@ class MainMenu: GameScene {
   
   // Add all buttons to the menu.
   override func initializeScene() {
+    super.initializeScene()
     let testLevelButton = SKLabelNode(fontNamed: GameConfiguration.mainFont)
     testLevelButton.text = "Start Test Level"
     testLevelButton.fontSize = GameConfiguration.mainFontSize
     testLevelButton.fontColor = GameConfiguration.primaryColor
-    testLevelButton.position = CGPoint(x: frame.midX, y: frame.midY)
+    testLevelButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
     testLevelButton.name = self.testLevelButtonName
     addChild(testLevelButton)
     

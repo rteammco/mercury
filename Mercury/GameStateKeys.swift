@@ -16,7 +16,7 @@ enum GameStateKey: String {
   case screenTouchDown, screenTouchMoved, screenTouchUp
   
   // Object spawning events:
-  case spawnPlayerBullet, spawnEnemy, spawnEnemyBullet
+  case spawnPlayerBullet, spawnEnemy, spawnEnemyBullet, createParticleEffect
   
   // Object dying events:
   case enemyDied, playerDied

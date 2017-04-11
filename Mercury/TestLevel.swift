@@ -12,7 +12,7 @@ import SpriteKit
 class TestLevel: GameScene {
     
   override func initializeScene() {
-    subscribeToStateChanges()
+    super.initializeScene()
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
     createGUI()
     

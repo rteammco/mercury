@@ -21,6 +21,10 @@ class GameViewController: UIViewController {
         scene.scaleMode = .aspectFill
         // Present the scene
         view.presentScene(scene)
+        // Set the level to main menu.
+        if let gameScene = scene as? GameScene {
+          gameScene.setCurrentLevel(to: MainMenu())
+        }
       }
       view.ignoresSiblingOrder = true
       view.showsFPS = true

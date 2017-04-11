@@ -42,12 +42,10 @@ struct ParticleSystems {
   
   static func runExplosionEffect(on gameObject: GameObject) {
     if let emitter = SKEmitterNode(fileNamed: "ImpactExplosion.sks") {
-      let effectNode = SKEffectNode()
-      effectNode.position = gameObject.getPosition()
-      effectNode.addChild(emitter)
-      effectNode.zPosition = 0
-      effectNode.name = "explosion"
-      // TODO: gameObject.gameState.inform(.createEffectsNode, node)
+      emitter.numParticlesToEmit = 1000
+      // TODO: Remove the node after it's done.
+      emitter.position = gameObject.getPosition()
+      gameObject.gameState.inform(.createParticleEffect, value: emitter)
     }
   }
   
