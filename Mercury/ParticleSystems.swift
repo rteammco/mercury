@@ -11,6 +11,9 @@ import SpriteKit
 
 struct ParticleSystems {
   
+  // The duration to hold an explosion effect. This should be enough time for the effect to finish emitting all of its particles before being removed from the its parent scene or node.
+  private static let EXPLOSION_EFFECT_DURATION = 2.0
+  
   // Starts running the given effect for the given duration. After the duration runs out, the effect will automatically remove itself from its parent node or scene.
   // A negative duration is invalid and will do nothing (i.e. the effect will run forever).
   private static func runEffect(_ emitter: SKEmitterNode, forDuration duration: TimeInterval) {
@@ -40,7 +43,7 @@ struct ParticleSystems {
       let bulletPosition = bullet.getPosition()
       let targetPosition = target.getPosition()
       let positionOffset = CGPoint(x: bulletPosition.x - targetPosition.x, y: bulletPosition.y - targetPosition.y)
-      runEffect(emitter, on: parentNode, atOffset: positionOffset, forDuration: 0.1)
+      runEffect(emitter, on: parentNode, atOffset: positionOffset, forDuration: EXPLOSION_EFFECT_DURATION)
     }
   }
   
@@ -48,8 +51,7 @@ struct ParticleSystems {
   static func runExplosionEffect(on gameObject: GameObject) {
     if let emitter = SKEmitterNode(fileNamed: "ImpactExplosion.sks") {
       emitter.position = gameObject.getPosition()
-      emitter.numParticlesToEmit = 1000
-      runEffect(emitter, forDuration: 2.0)
+      runEffect(emitter, forDuration: EXPLOSION_EFFECT_DURATION)
       gameObject.gameState.inform(.createParticleEffect, value: emitter)
     }
   }
