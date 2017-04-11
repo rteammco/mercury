@@ -338,7 +338,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
         gameObject.setDefaultVelocity()
       }
     }
-    
+    // Add particle effects nodes.
     if key == .createParticleEffect {
       if let emitter = value as? SKEmitterNode {
         emitter.targetNode = self

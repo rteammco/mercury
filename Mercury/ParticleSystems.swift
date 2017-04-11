@@ -12,17 +12,14 @@ import SpriteKit
 struct ParticleSystems {
   
   // Runs the given particle effects emitter on the given object. The offset position will be the location on the object's node where the effect will be positioned. The given duration will be how long the effect will last.
-  static func runEffect(_ emitter: SKEmitterNode, on parentNode: SKNode, atOffset relativePosition: CGPoint, forDuration duration: TimeInterval) {
-    let effectNode = SKEffectNode()
-    effectNode.position = relativePosition
-    effectNode.addChild(emitter)
-    effectNode.zPosition = 0
+  private static func runEffect(_ emitter: SKEmitterNode, on parentNode: SKNode, atOffset relativePosition: CGPoint, forDuration duration: TimeInterval) {
+    emitter.position = relativePosition
     let addEffect = SKAction.run({
-      () in parentNode.addChild(effectNode)
+      () in parentNode.addChild(emitter)
     })
     let wait = SKAction.wait(forDuration: duration)
     let removeEffect = SKAction.run({
-      () in effectNode.removeFromParent()
+      () in emitter.removeFromParent()
     })
     parentNode.run(SKAction.sequence([addEffect, wait, removeEffect]))
   }
@@ -42,9 +39,13 @@ struct ParticleSystems {
   
   static func runExplosionEffect(on gameObject: GameObject) {
     if let emitter = SKEmitterNode(fileNamed: "ImpactExplosion.sks") {
-      emitter.numParticlesToEmit = 1000
-      // TODO: Remove the node after it's done.
       emitter.position = gameObject.getPosition()
+      emitter.numParticlesToEmit = 1000
+      let wait = SKAction.wait(forDuration: 2)
+      let removeEffect = SKAction.run({
+        () in emitter.removeFromParent()
+      })
+      emitter.run(SKAction.sequence([wait, removeEffect]))
       gameObject.gameState.inform(.createParticleEffect, value: emitter)
     }
   }
