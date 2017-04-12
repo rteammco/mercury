@@ -27,7 +27,7 @@ class SpawnEnemy: EventAction {
       
       // Spawn it using the GameScene.
       gameScene.addGameObject(enemy, withPhysicsScaling: true)
-      enemy.setDefaultVelocity()
+      enemy.startMovement()
       
       // Inform the GameState of the change and update the global game state by incrementing the enemy spawn count value.
       gameState.inform(.spawnEnemy, value: enemy)
