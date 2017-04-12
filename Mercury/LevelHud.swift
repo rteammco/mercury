@@ -78,6 +78,7 @@ class LevelHud: GameObject {
     self.healthBarText = healthBarText
     hudNode.addChild(healthBarText)
     
+    hudNode.zPosition = GameConfiguration.hudZPosition
     self.gameSceneNode = hudNode
     return hudNode
   }

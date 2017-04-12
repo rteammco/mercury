@@ -41,4 +41,11 @@ struct GameConfiguration {
   static let hudHealthTextFont: String = "Arial-BoldMT"
   static let hudHealthTextFontSize: CGFloat = 34
   
+  //------------------------------------------------------------------------------
+  // UI Layers:
+  // By default, everything in the game is at z-position 0. Set z-position values greater than zero to objects that should be prioritized above the game objects.
+  //------------------------------------------------------------------------------
+  
+  static let hudZPosition: CGFloat = 1
+  
 }
