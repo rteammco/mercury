@@ -13,7 +13,7 @@ class PlayerDies: Event {
   
   // Subscribe to the "player dies" game state event.
   override func start() {
-    if let gameScene = self.caller as? GameScene {
+    if let gameScene = self.caller {
       let gameState = gameScene.getGameState()
       subscribeTo(stateChanges: .playerDied, from: gameState)
     }

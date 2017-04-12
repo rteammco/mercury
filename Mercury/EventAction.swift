@@ -9,10 +9,10 @@
 
 class EventAction {
   
-  var caller: EventCaller?
+  var caller: GameScene?
   
   // Set the caller to the call of the event. The Event object should do this automatically. The user should have access the the EventProtocol object which initialized the Event.
-  func setCaller(to caller: EventCaller) {
+  func setCaller(to caller: GameScene) {
     self.caller = caller
   }
   

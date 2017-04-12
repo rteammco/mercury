@@ -22,7 +22,7 @@ class DisplayText: EventAction {
   }
   
   override func execute() {
-    if let gameScene = self.caller as? GameScene {
+    if let gameScene = self.caller {
       gameScene.displayTextOnScreen(message: self.message, forDuration: self.duration, withFadeOutDuration: self.fadeOutTime)
     }
   }

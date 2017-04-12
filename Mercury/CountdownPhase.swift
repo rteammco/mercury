@@ -9,8 +9,8 @@
 
 class CountdownPhase: EventPhase {
   
-  init(withDuration seconds: Int, parent: EventCaller) {
-    super.init(parent: parent)
+  init(withDuration seconds: Int, gameScene: GameScene) {
+    super.init(gameScene: gameScene)
     if seconds > 0 {
       setupCountdown(countdownTime: seconds)
     }

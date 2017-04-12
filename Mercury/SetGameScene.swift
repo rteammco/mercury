@@ -18,7 +18,7 @@ class SetGameScene: EventAction {
   }
   
   override func execute() {
-    if let gameScene = self.caller as? GameScene {
+    if let gameScene = self.caller {
       switch self.gameSceneName {
       case "main menu":
         gameScene.setCurrentLevel(to: MainMenu())

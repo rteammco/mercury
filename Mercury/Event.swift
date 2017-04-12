@@ -15,6 +15,10 @@
 //     event.start()
 //     return event
 //   }
+//   func execute(action: EventAction) {
+//     action.setCaller(to: self)
+//     action.execute()
+//   }
 protocol EventCaller {
   func when(_ event: Event) -> Event
   func execute(action: EventAction)
@@ -36,7 +40,7 @@ class Event: EventStopCriteria, GameStateListener {
   // Actions that are executed when the event chain is completed. These are not necessarily executed when this particular event is finished, since they can be passed down to the next event in the chain.
   var eventChainFinalActions: [EventAction]
   
-  var caller: EventCaller?
+  var caller: GameScene?
   var stopCriteria: EventStopCriteria?
   
   var wasTriggered: Bool
@@ -52,7 +56,7 @@ class Event: EventStopCriteria, GameStateListener {
     self.isSubscribedToGameStateChanges = false
   }
   
-  func setCaller(to caller: EventCaller) {
+  func setCaller(to caller: GameScene) {
     self.caller = caller
   }
   

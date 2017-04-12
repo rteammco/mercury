@@ -10,7 +10,7 @@
 
 class EventPhase: EventAction, EventCaller {
   
-  let parent: EventCaller
+  let gameScene: GameScene
   
   // All events and actions are stored and executed/started once the phase begins (in the order that they were added).
   var events: [Event]
@@ -22,8 +22,8 @@ class EventPhase: EventAction, EventCaller {
   // The next phase. If this is set (with setNextPhase), it will be started after this phase is finished.
   var nextPhase: EventPhase?
   
-  init(parent: EventCaller) {
-    self.parent = parent
+  init(gameScene: GameScene) {
+    self.gameScene = gameScene
     self.events = [Event]()
     self.actions = [EventAction]()
     self.numCompletedEvents = 0
@@ -69,13 +69,13 @@ class EventPhase: EventAction, EventCaller {
   //------------------------------------------------------------------------------
   
   func when(_ event: Event) -> Event {
-    event.setCaller(to: self.parent)
+    event.setCaller(to: self.gameScene)
     self.events.append(event)
     return event
   }
   
   func execute(action: EventAction) {
-    action.setCaller(to: self.parent)
+    action.setCaller(to: self.gameScene)
     self.actions.append(action)
   }
   

@@ -184,7 +184,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Creates a new EventPhase with this GameScene as the parent.
   func createEventPhase() -> EventPhase {
-    let phase = EventPhase(parent: self)
+    let phase = EventPhase(gameScene: self)
     return phase
   }
   
@@ -201,7 +201,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Starts the level, triggering the first phase.
   func start(withCountdown countdownTime: Int = 0) {
     if countdownTime > 0 {
-      let countdownPhase = CountdownPhase(withDuration: countdownTime, parent: self)
+      let countdownPhase = CountdownPhase(withDuration: countdownTime, gameScene: self)
       if !self.eventPhaseSequence.isEmpty {
         countdownPhase.setNextPhase(to: self.eventPhaseSequence.first!)
       }

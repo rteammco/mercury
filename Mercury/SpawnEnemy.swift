@@ -17,7 +17,7 @@ class SpawnEnemy: EventAction {
   }
 
   override func execute() {
-    if let gameScene = self.caller as? GameScene {
+    if let gameScene = self.caller {
       let gameState = gameScene.getGameState()
       
       // Create the enemy and spawn it using the GameScene.

@@ -13,7 +13,7 @@
 protocol EventStopCriteria {
   
   // Sets the caller, which is often involved in determining whether a condition is satisfied.
-  func setCaller(to caller: EventCaller)
+  func setCaller(to caller: GameScene)
   
   // Returns true if the condition to stop the Event is satisfied.
   func isSatisfied() -> Bool
@@ -24,9 +24,9 @@ protocol EventStopCriteria {
 // A basic trivial implementation. This allows an Event to set the caller. Override the isSatisfied method.
 class EventStopper: EventStopCriteria {
   
-  var caller: EventCaller?
+  var caller: GameScene?
   
-  func setCaller(to caller: EventCaller) {
+  func setCaller(to caller: GameScene) {
     self.caller = caller
   }
   
