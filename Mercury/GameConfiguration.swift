@@ -22,12 +22,23 @@ struct GameConfiguration {
   static let secondaryFontSize: CGFloat = 40
   
   //------------------------------------------------------------------------------
-  // Colors.
+  // General colors.
   //------------------------------------------------------------------------------
   
   static let primaryColor: SKColor = SKColor.yellow
   static let secondaryColor: SKColor = SKColor.cyan
   static let friendlyColor: SKColor = SKColor.green
   static let enemyColor: SKColor = SKColor.red
+  
+  //------------------------------------------------------------------------------
+  // HUD design and colors.
+  //------------------------------------------------------------------------------
+  
+  static let hudHealthBarColor: SKColor = SKColor.red
+  static let hudHealthBarAlpha: CGFloat = 0.75
+  
+  static let hudHealthTextColor: SKColor = SKColor.white
+  static let hudHealthTextFont: String = "Arial-BoldMT"
+  static let hudHealthTextFontSize: CGFloat = 34
   
 }

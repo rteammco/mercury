@@ -59,11 +59,11 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   private func initializeGameState() {
     let gameState = getGameState()
     // TODO: These values should be adjusted from a database or some configuration file.
-    gameState.setCGFloat(.playerHealth, to: 10000)
+    gameState.setCGFloat(.playerHealth, to: 1000)
     gameState.setCGFloat(.playerBulletDamage, to: 10)
     gameState.setTimeInterval(.playerBulletFireInterval, to: 0.1)
     gameState.setCGFloat(.enemyHealthBase, to: 250)
-    gameState.setCGFloat(.enemyBulletDamage, to: 10)
+    gameState.setCGFloat(.enemyBulletDamage, to: 5)
     gameState.setTimeInterval(.enemyBulletFireInterval, to: 0.1)
   }
   
