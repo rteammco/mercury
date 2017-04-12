@@ -16,6 +16,7 @@ class LevelHud: GameObject {
   var healthBarNode: SKShapeNode?
   var healthBarText: SKLabelNode?
   var experienceBarNode: SKShapeNode?
+  var playerLevelTextNode: SKLabelNode?
   
   init(gameState: GameState) {
     self.initialHealth = gameState.getCGFloat(forKey: .playerHealth)
@@ -40,6 +41,7 @@ class LevelHud: GameObject {
       if let playerStatus = gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
         let ratio = CGFloat(playerStatus.getCurrentPlayerExperience()) / CGFloat(playerStatus.playerExperienceRequiredToNextLevel())
         updateExperienceBar(withExperienceRatio: ratio)
+        self.playerLevelTextNode?.text = String(playerStatus.getPlayerLevel())
       }
     default:
       break
@@ -117,6 +119,18 @@ class LevelHud: GameObject {
     self.experienceBarNode = experienceBar
     updateExperienceBar(withExperienceRatio: 0.0)  // TODO: Update to current XP value.
     hudNode.addChild(experienceBar)
+    
+    // Create the player level text indicator.
+    let playerLevelText = SKLabelNode(text: "1")  // TODO: Set the appropriate level.
+    playerLevelText.position = CGPoint(x: width / 1.8, y: 0)
+    // TODO: Set the right display values to this.
+    playerLevelText.color = GameConfiguration.hudPlayerLevelTextColor
+    playerLevelText.fontName = GameConfiguration.hudPlayerLevelTextFont
+    playerLevelText.fontSize = GameConfiguration.hudPlayerLevelTextFontSize
+    playerLevelText.verticalAlignmentMode = .center
+    playerLevelText.horizontalAlignmentMode = .left
+    self.playerLevelTextNode = playerLevelText
+    hudNode.addChild(playerLevelText)
     
     // Add the node to the scene.
     hudNode.zPosition = GameConfiguration.hudZPosition
