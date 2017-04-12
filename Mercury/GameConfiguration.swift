@@ -35,7 +35,8 @@ struct GameConfiguration {
   //------------------------------------------------------------------------------
   
   static let hudHealthBarColor: SKColor = SKColor.red
-  static let hudHealthBarAlpha: CGFloat = 0.75
+  static let hudExperienceBarColor: SKColor = SKColor.yellow
+  static let hudBarAlpha: CGFloat = 0.75
   
   static let hudHealthTextColor: SKColor = SKColor.white
   static let hudHealthTextFont: String = "Arial-BoldMT"
