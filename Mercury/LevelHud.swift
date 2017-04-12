@@ -22,7 +22,7 @@ class LevelHud: GameObject {
     super.init(position: CGPoint(x: 0, y: 0), gameState: gameState)
     self.gameState.subscribe(self, to: .playerHealth)
     self.gameState.subscribe(self, to: .playerDied)
-    self.gameState.subscribe(self, to: .totalPlayerExperience)
+    self.gameState.subscribe(self, to: .playerExperienceChange)
   }
   
   // Updates when player health changes or when player dies.
@@ -36,11 +36,9 @@ class LevelHud: GameObject {
       }
     case .playerDied:
       updateHealthBar(withHealthRatio: 0)
-    case .totalPlayerExperience:
-      // TODO: What's the current max XP value? Compute the ratio accurately!
-      if let totalExperience = value as? Int {
-        let maxExperience = 1000
-        let ratio = CGFloat(totalExperience) / CGFloat(maxExperience)
+    case .playerExperienceChange:
+      if let playerStatus = gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
+        let ratio = CGFloat(playerStatus.getCurrentPlayerExperience()) / CGFloat(playerStatus.playerExperienceRequiredToNextLevel())
         updateExperienceBar(withExperienceRatio: ratio)
       }
     default:

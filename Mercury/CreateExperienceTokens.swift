@@ -20,8 +20,10 @@ class CreateExperienceTokens: EventAction {
   override func execute(withOptionalValue enemy: Any? = nil) {
     if let gameScene = self.caller {
       let gameState = gameScene.getGameState()
-      let totalExperience = gameState.getInt(forKey: .totalPlayerExperience) + self.experienceAmount
-      gameState.setInt(.totalPlayerExperience, to: totalExperience)
+      if let playerStatus = gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
+        playerStatus.addPlayerExperience(self.experienceAmount)
+        gameState.inform(.playerExperienceChange)
+      }
       // TODO: Instead of setting the XP directly, create the actual tokens at the enemy's location, which will "carry" to XP to the player in an animated flashy way.
 //      print("Creating XP tokens")
 //      if let _ = enemy as? Enemy {
