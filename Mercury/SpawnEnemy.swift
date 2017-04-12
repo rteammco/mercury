@@ -20,14 +20,19 @@ class SpawnEnemy: EventAction {
     if let gameScene = self.caller as? GameScene {
       let gameState = gameScene.getGameState()
       
-      // Create the enemy.
-      let xSpawnPoint: CGFloat = Util.getUniformRandomValue(between: -0.75, and: 0.75)
-      let ySpawnPoint: CGFloat = 1.0
-      let enemy = Enemy(position: gameScene.getScaledPosition(CGPoint(x: xSpawnPoint, y: ySpawnPoint)), gameState: gameState, speed: 0.05)
-      
-      // Spawn it using the GameScene.
+      // Create the enemy and spawn it using the GameScene.
+      let xSpawnPos: CGFloat = Util.getUniformRandomValue(between: -1.0, and: 1.0)
+      let ySpawnPos: CGFloat = 2.0
+      let spawnPoint = gameScene.getScaledPosition(CGPoint(x: xSpawnPos, y: ySpawnPos))
+      let enemy = Enemy(position: spawnPoint, gameState: gameState, speed: 0.05)
       gameScene.addGameObject(enemy, withPhysicsScaling: true)
-      enemy.startMovement()
+      
+      // Create a path for it so that it moves to a random target position.
+      let xTargetPos: CGFloat = Util.getUniformRandomValue(between: -0.75, and: 0.75)
+      let yTargetPos: CGFloat = Util.getUniformRandomValue(between: 0.15, and: 0.5)
+      let targetPosition = gameScene.getScaledPosition(CGPoint(x: xTargetPos, y: yTargetPos))
+      let path = GameObjectPath(from: spawnPoint, to: targetPosition)
+      path.run(on: enemy, withSpeed: gameScene.getScaledValue(0.1))
       
       // Inform the GameState of the change and update the global game state by incrementing the enemy spawn count value.
       gameState.inform(.spawnEnemy, value: enemy)

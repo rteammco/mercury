@@ -249,13 +249,10 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   }
   // Helper method for removeOffscreenNodes() above.
   private func removeOffscreenNodes(from parentNode: SKNode) {
-    parentNode.enumerateChildNodes(withName: "*", using: { (node, stop) -> Void in
+    parentNode.enumerateChildNodes(withName: "bullet", using: { (node, stop) -> Void in
       if !parentNode.intersects(node) {
         if let gameObject = node.userData?.value(forKey: GameObject.nodeValueKey) as? GameObject {
           gameObject.destroyObject()
-        } else if !(node is SKEmitterNode) && !(node is SKEffectNode) {
-          // Just in case, remove the node if it is not an effect node, if it does not have a GameObject that handles its removal.
-          node.removeFromParent()
         }
       }
     })

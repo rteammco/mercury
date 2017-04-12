@@ -54,31 +54,6 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   }
   
   //------------------------------------------------------------------------------
-  // Methods for scripting movement.
-  //------------------------------------------------------------------------------
-  
-  // Creates a movement path for the enemy to follow. This once this is called, the enemy will follow this path instead of just going straight the whole time.
-  func startMovement() {
-    // TODO: fix, randomize, and use appropriate scaling variables.
-    let path = UIBezierPath()
-    let currentPosition = self.getPosition()
-    path.move(to: currentPosition)
-    
-    path.addCurve(to: CGPoint(x: 0, y: 0), controlPoint1: CGPoint(x: currentPosition.x, y: 200), controlPoint2: CGPoint(x: 100, y: 50))
-    //path.addLine(to: CGPoint(x: 0, y: 0))
-    
-    path.addLine(to: CGPoint(x: 300, y: 300))
-    path.addLine(to: CGPoint(x: 0, y: 300))
-    path.close()
-    
-//    let path = UIBezierPath(arcCenter: CGPoint(x: 0, y: 0), radius: 300, startAngle: 0, endAngle: CGFloat.pi * 4, clockwise: true)
-    
-    let movement = SKAction.follow(path.cgPath, asOffset: false, orientToPath: true, duration: 5)
-    self.gameSceneNode?.run(movement)
-    // TODO: repeat.
-  }
-  
-  //------------------------------------------------------------------------------
   // Methods for the ArmedWithProjectiles protocol.
   //------------------------------------------------------------------------------
   
