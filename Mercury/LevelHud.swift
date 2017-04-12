@@ -22,7 +22,30 @@ class LevelHud: GameObject {
     super.init(position: CGPoint(x: 0, y: 0), gameState: gameState)
     self.gameState.subscribe(self, to: .playerHealth)
     self.gameState.subscribe(self, to: .playerDied)
-    self.gameState.subscribe(self, to: .enemyDied)  // TODO: Change to XP value changes.
+    self.gameState.subscribe(self, to: .totalPlayerExperience)
+  }
+  
+  // Updates when player health changes or when player dies.
+  override func reportStateChange(key: GameStateKey, value: Any) {
+    switch key {
+    case .playerHealth:
+      if self.initialHealth > 0 {
+        let currentHealth = self.gameState.getCGFloat(forKey: .playerHealth)
+        let ratio = currentHealth / self.initialHealth
+        updateHealthBar(withHealthRatio: ratio)
+      }
+    case .playerDied:
+      updateHealthBar(withHealthRatio: 0)
+    case .totalPlayerExperience:
+      // TODO: What's the current max XP value? Compute the ratio accurately!
+      if let totalExperience = value as? Int {
+        let maxExperience = 1000
+        let ratio = CGFloat(totalExperience) / CGFloat(maxExperience)
+        updateExperienceBar(withExperienceRatio: ratio)
+      }
+    default:
+      break
+    }
   }
   
   // Updates the health bar and text given the ratio of health (ratio between max health and the current health). Ratio will always be normalized between 0 and 1.
@@ -55,24 +78,6 @@ class LevelHud: GameObject {
         let xOffset: CGFloat = (barWidth * (1.0 - ratio)) / 2.0
         experienceBar.position.x = -xOffset
       }
-    }
-  }
-  
-  // Updates when player health changes or when player dies.
-  override func reportStateChange(key: GameStateKey, value: Any) {
-    switch key {
-    case .playerHealth:
-      if self.initialHealth > 0 {
-        let currentHealth = self.gameState.getCGFloat(forKey: .playerHealth)
-        let ratio = currentHealth / self.initialHealth
-        updateHealthBar(withHealthRatio: ratio)
-      }
-    case .playerDied:
-      updateHealthBar(withHealthRatio: 0)
-    case .enemyDied:  // TODO: Change this to update the actual XP values.
-      updateExperienceBar(withExperienceRatio: Util.getUniformRandomValue())
-    default:
-      break
     }
   }
   

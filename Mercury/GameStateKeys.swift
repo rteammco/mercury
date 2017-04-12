@@ -23,6 +23,7 @@ enum GameStateKey: String {
   
   // Tracked player variables:
   case playerPosition, playerHealth
+  case totalPlayerExperience
   
   // Tracked enemy variables:
   case numSpawnedEnemies

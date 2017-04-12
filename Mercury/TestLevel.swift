@@ -16,7 +16,7 @@ class TestLevel: GameScene {
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
     createGUI()
     
-    when(EnemyDies()).execute(action: CreateExperienceTokens(withValue: 10))
+    when(EnemyDies()).execute(action: CreateExperienceTokens(withExperienceAmount: 50))  // TODO: The value should be aquired from the GameState or something.
     
     let phase1 = createEventPhase()
     phase1.execute(action: SpawnEnemy("test"))

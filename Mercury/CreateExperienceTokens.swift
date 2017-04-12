@@ -11,21 +11,23 @@ import SpriteKit
 
 class CreateExperienceTokens: EventAction {
   
-  let tokenValue: CGFloat
+  let experienceAmount: Int
   
-  init(withValue tokenValue: CGFloat) {
-    self.tokenValue = tokenValue
+  init(withExperienceAmount experienceAmount: Int) {
+    self.experienceAmount = experienceAmount
   }
   
-  override func execute(withOptionalValue optionalValue: Any? = nil) {
-    //if let gameScene = self.caller {
-      //let gameState = gameScene.getGameState()
-      
-      print("Creating XP tokens")
-      if let _ = optionalValue as? Enemy {
-        print("Got enemy as optional value")
-      }
-    //}
+  override func execute(withOptionalValue enemy: Any? = nil) {
+    if let gameScene = self.caller {
+      let gameState = gameScene.getGameState()
+      let totalExperience = gameState.getInt(forKey: .totalPlayerExperience) + self.experienceAmount
+      gameState.setInt(.totalPlayerExperience, to: totalExperience)
+      // TODO: Instead of setting the XP directly, create the actual tokens at the enemy's location, which will "carry" to XP to the player in an animated flashy way.
+//      print("Creating XP tokens")
+//      if let _ = enemy as? Enemy {
+//        print("Got enemy as optional value")
+//      }
+    }
   }
   
 }

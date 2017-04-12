@@ -30,6 +30,9 @@ class GameState {
   }
   
   // The following methods are the same as above, but are intended to set numerical values as a specific type to avoid ambiguity.
+  func setInt(_ key: GameStateKey, to value: Int) {
+    set(key, to: value)
+  }
   func setCGFloat(_ key: GameStateKey, to value: CGFloat) {
     set(key, to: value)
   }
