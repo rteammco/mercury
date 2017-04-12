@@ -5,7 +5,7 @@
 //  Created by Richard Teammco on 11/12/16.
 //  Copyright © 2016 Richard Teammco. All rights reserved.
 //
-//  The GameScene controlls all of the sprites, animations, and physics in the app. It also handles user touch inputs.
+//  The GameScene controlls all of the sprites, animations, and physics in the app. It also handles user touch inputs. This is the main base class for all Levels to be built on top of.
 
 import SpriteKit
 import GameplayKit
@@ -26,9 +26,6 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Animation variables.
   private var lastFrameTime: TimeInterval?
-  
-  // Animation display objects.
-  private var linePathNode: SKShapeNode?
   
   // GameState that keeps track of all of the game's state variables.
   private var gameState: GameState?

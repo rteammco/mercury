@@ -46,7 +46,6 @@
 		79DEC4821DD7BBF000A5BF16 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79DEC4801DD7BBF000A5BF16 /* LaunchScreen.storyboard */; };
 		79DEC48D1DD7BBF000A5BF16 /* MercuryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEC48C1DD7BBF000A5BF16 /* MercuryTests.swift */; };
 		79DEC4981DD7BBF000A5BF16 /* MercuryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEC4971DD7BBF000A5BF16 /* MercuryUITests.swift */; };
-		79DFF9C91E37EBE600F50514 /* SwipePathAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9C81E37EBE600F50514 /* SwipePathAnimation.swift */; };
 		79DFF9CC1E37EFB400F50514 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9CB1E37EFB400F50514 /* Event.swift */; };
 		79DFF9D01E37F5EA00F50514 /* EventAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9CF1E37F5EA00F50514 /* EventAction.swift */; };
 		79DFF9D21E37F74400F50514 /* EventStopCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFF9D11E37F74400F50514 /* EventStopCriteria.swift */; };
@@ -119,7 +118,6 @@
 		79DEC4931DD7BBF000A5BF16 /* MercuryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MercuryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		79DEC4971DD7BBF000A5BF16 /* MercuryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MercuryUITests.swift; sourceTree = "<group>"; };
 		79DEC4991DD7BBF000A5BF16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		79DFF9C81E37EBE600F50514 /* SwipePathAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipePathAnimation.swift; sourceTree = "<group>"; };
 		79DFF9CB1E37EFB400F50514 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		79DFF9CF1E37F5EA00F50514 /* EventAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAction.swift; sourceTree = "<group>"; };
 		79DFF9D11E37F74400F50514 /* EventStopCriteria.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventStopCriteria.swift; sourceTree = "<group>"; };
@@ -158,10 +156,6 @@
 			isa = PBXGroup;
 			children = (
 				792DDE591E29649A00AED88E /* TestLevel.swift */,
-				793377D31E405BA800D4701C /* Level Events */,
-				79B605EB1E74B5380090C791 /* Level EventStoppers */,
-				793377D61E40631B00D4701C /* Level EventActions */,
-				7984856F1E902E4700DFE310 /* Level Phases */,
 			);
 			name = Levels;
 			sourceTree = "<group>";
@@ -199,7 +193,6 @@
 			isa = PBXGroup;
 			children = (
 				79CCAB1E1E95657D0015E9A1 /* ArmedWithProjectiles.swift */,
-				79C4ABBD1DFDEE3A006DDCAF /* PhysicsEnabled.swift */,
 			);
 			name = "GameObject Protocols";
 			sourceTree = "<group>";
@@ -212,20 +205,19 @@
 			name = Pathing;
 			sourceTree = "<group>";
 		};
-		796014391DD8EAFD004640E9 /* Game */ = {
+		79434FF11E9ED720009A516F /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				79DEC4771DD7BBF000A5BF16 /* GameScene.swift */,
 				7960143C1DD8EB5A004640E9 /* GameObject.swift */,
 				79154F651E413ED300D9B71A /* GameState.swift */,
 				790B0B341E79E32100122B7B /* GameStateKeys.swift */,
 				79154F671E41431600D9B71A /* GameStateListener.swift */,
 				79B605E91E7499310090C791 /* ScreenTouchInfo.swift */,
-				79381B851E341A15006EC04C /* GameObject Protocols */,
-				799424B81E81949300C2BD88 /* Physics */,
-				79434FEC1E9EA044009A516F /* Pathing */,
-				79D2294F1DEF6369003F68F9 /* Game Objects */,
+				796FA7B31E96C3D7006255BF /* Util.swift */,
+				7913A34A1E884B180070DF8E /* GameConfiguration.swift */,
 			);
-			name = Game;
+			name = Core;
 			sourceTree = "<group>";
 		};
 		7984856F1E902E4700DFE310 /* Level Phases */ = {
@@ -239,6 +231,7 @@
 		799424B81E81949300C2BD88 /* Physics */ = {
 			isa = PBXGroup;
 			children = (
+				79C4ABBD1DFDEE3A006DDCAF /* PhysicsEnabled.swift */,
 				79C4ABC11DFDF536006DDCAF /* PhysicsEnabledGameObject.swift */,
 				799424B91E8194D900C2BD88 /* CollisionBitMasks.swift */,
 				79C4ABBF1DFDEF1B006DDCAF /* ContactDelegate.swift */,
@@ -265,6 +258,7 @@
 		79D2294F1DEF6369003F68F9 /* Game Objects */ = {
 			isa = PBXGroup;
 			children = (
+				79381B851E341A15006EC04C /* GameObject Protocols */,
 				7960143A1DD8EB23004640E9 /* Player.swift */,
 				79C4ABB91DF0BBBE006DDCAF /* Enemy.swift */,
 				79D2294D1DEF6339003F68F9 /* Bullet.swift */,
@@ -295,15 +289,15 @@
 		79DEC4701DD7BBF000A5BF16 /* Mercury */ = {
 			isa = PBXGroup;
 			children = (
+				79434FF11E9ED720009A516F /* Core */,
+				79DFF9CA1E37EF3B00F50514 /* Events */,
+				799424B81E81949300C2BD88 /* Physics */,
+				79434FEC1E9EA044009A516F /* Pathing */,
 				79DFF9C71E37EBCC00F50514 /* Animations */,
+				792D7FFA1E9817F900273684 /* GUI */,
+				79D2294F1DEF6369003F68F9 /* Game Objects */,
 				7906C4621DDD142000187846 /* Levels */,
 				79CCAB191E95506C0015E9A1 /* Menus */,
-				792D7FFA1E9817F900273684 /* GUI */,
-				79DFF9CA1E37EF3B00F50514 /* Events */,
-				796014391DD8EAFD004640E9 /* Game */,
-				79DEC4771DD7BBF000A5BF16 /* GameScene.swift */,
-				796FA7B31E96C3D7006255BF /* Util.swift */,
-				7913A34A1E884B180070DF8E /* GameConfiguration.swift */,
 				79DEC4791DD7BBF000A5BF16 /* GameViewController.swift */,
 				79DEC4711DD7BBF000A5BF16 /* AppDelegate.swift */,
 				79DEC4731DD7BBF000A5BF16 /* GameScene.sks */,
@@ -337,7 +331,6 @@
 		79DFF9C71E37EBCC00F50514 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
-				79DFF9C81E37EBE600F50514 /* SwipePathAnimation.swift */,
 				79F5394F1E9965EC00BC9389 /* ImpactSpark.sks */,
 				79F5395B1E99833000BC9389 /* ImpactExplosion.sks */,
 				79F539551E9981F800BC9389 /* Fireball.sks */,
@@ -353,6 +346,10 @@
 				79DFF9CF1E37F5EA00F50514 /* EventAction.swift */,
 				79DFF9D11E37F74400F50514 /* EventStopCriteria.swift */,
 				7913A34C1E89AEB30070DF8E /* EventPhase.swift */,
+				793377D31E405BA800D4701C /* Level Events */,
+				79B605EB1E74B5380090C791 /* Level EventStoppers */,
+				793377D61E40631B00D4701C /* Level EventActions */,
+				7984856F1E902E4700DFE310 /* Level Phases */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -501,7 +498,6 @@
 				7960143B1DD8EB23004640E9 /* Player.swift in Sources */,
 				796FA7B41E96C3D7006255BF /* Util.swift in Sources */,
 				79F539521E997C3400BC9389 /* ParticleSystems.swift in Sources */,
-				79DFF9C91E37EBE600F50514 /* SwipePathAnimation.swift in Sources */,
 				793377D81E40633200D4701C /* DisplayText.swift in Sources */,
 				79DEC4781DD7BBF000A5BF16 /* GameScene.swift in Sources */,
 				79DEC47A1DD7BBF000A5BF16 /* GameViewController.swift in Sources */,
