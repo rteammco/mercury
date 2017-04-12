@@ -21,7 +21,7 @@ class DisplayText: EventAction {
     self.fadeOutTime = fadeOutTime
   }
   
-  override func execute() {
+  override func execute(withOptionalValue optionalValue: Any? = nil) {
     if let gameScene = self.caller {
       gameScene.displayTextOnScreen(message: self.message, forDuration: self.duration, withFadeOutDuration: self.fadeOutTime)
     }

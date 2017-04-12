@@ -16,6 +16,8 @@ class TestLevel: GameScene {
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
     createGUI()
     
+    when(EnemyDies()).execute(action: CreateExperienceTokens(withValue: 10))
+    
     let phase1 = createEventPhase()
     phase1.execute(action: SpawnEnemy("test"))
     phase1.when(EnemyDies()).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10)).then(DisplayText("You Did It!!"))

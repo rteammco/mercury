@@ -122,7 +122,7 @@ class Event: EventStopCriteria, GameStateListener {
   }
   
   // Executes all the actions to be performed when the event occurs.
-  func trigger() {
+  func trigger(withOptionalValue optionalValue: Any? = nil) {
     self.wasTriggered = true
     // Run the actions, but verify that a stop criteria wasn't satisfied already.
     var canExecuteActions = true
@@ -133,7 +133,7 @@ class Event: EventStopCriteria, GameStateListener {
     }
     if canExecuteActions {
       for action in self.eventActions {
-        action.execute()
+        action.execute(withOptionalValue: optionalValue)
       }
     }
     // If a stop criteria was given and it is not yet satisfied after the actions were executed, reset the event and run it again.
@@ -148,7 +148,7 @@ class Event: EventStopCriteria, GameStateListener {
     } else if self.stopCriteria == nil || !canExecuteActions {
       // If event is not repeating or has no stop criteria (thus cannot repeat at all), finish off any final actions set with the "then" method, and start the next event if it was set.
       for action in self.eventFinishedActions {
-        action.execute()
+        action.execute(withOptionalValue: optionalValue)
       }
       if let nextEvent = self.nextEvent {
         nextEvent.eventChainFinalActions.append(contentsOf: self.eventChainFinalActions)
@@ -156,7 +156,7 @@ class Event: EventStopCriteria, GameStateListener {
       } else {
         // If this is the last event in a chain, execute any remaining actions that carried over from the start of the event chain.
         for action in self.eventChainFinalActions {
-          action.execute()
+          action.execute(withOptionalValue: optionalValue)
         }
       }
     }

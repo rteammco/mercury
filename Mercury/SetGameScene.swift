@@ -17,7 +17,7 @@ class SetGameScene: EventAction {
     self.gameSceneName = gameSceneName
   }
   
-  override func execute() {
+  override func execute(withOptionalValue optionalValue: Any? = nil) {
     if let gameScene = self.caller {
       switch self.gameSceneName {
       case "main menu":

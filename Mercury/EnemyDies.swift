@@ -22,7 +22,7 @@ class EnemyDies: Event {
   // When the "enemy dies" game state event occurs, trigger this event.
   override func reportStateChange(key: GameStateKey, value: Any) {
     if key == .enemyDied {
-      trigger()
+      trigger(withOptionalValue: value)  // value here should be the Enemy object that died.
     }
   }
   

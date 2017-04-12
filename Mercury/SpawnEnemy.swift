@@ -11,12 +11,14 @@ import SpriteKit
 
 class SpawnEnemy: EventAction {
   
-  // TODO: location, and actually switch between the appropriate enemies.
+  let enemyName: String
+  
   init(_ enemyName: String) {
-    
+    self.enemyName = enemyName
   }
 
-  override func execute() {
+  override func execute(withOptionalValue optionalValue: Any? = nil) {
+    // TODO: Switch between the appropriate enemies.
     if let gameScene = self.caller {
       let gameState = gameScene.getGameState()
       

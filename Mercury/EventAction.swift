@@ -17,7 +17,7 @@ class EventAction {
   }
   
   // This method is called when an event is complete. The user should have access to the caller object.
-  func execute() {
+  func execute(withOptionalValue optionalValue: Any? = nil) {
     // Override as needed.
   }
   

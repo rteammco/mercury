@@ -50,7 +50,7 @@ class EventPhase: EventAction, EventCaller {
   }
   
   // This also poses as an EventAction. When any event part of this phase is completed, it "executes" this phase. The phase tracks the number of events that "executed" it, indicating that they finished. The phase ends when all of its events finish.
-  override func execute() {
+  override func execute(withOptionalValue optionalValue: Any? = nil) {
     self.numCompletedEvents += 1
     if self.numCompletedEvents >= self.events.count {
       finishPhase()
