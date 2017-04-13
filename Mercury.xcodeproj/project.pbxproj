@@ -23,6 +23,7 @@
 		79434FF01E9ECEB9009A516F /* CreateLootPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79434FEF1E9ECEB9009A516F /* CreateLootPackage.swift */; };
 		79434FF31E9EDB5E009A516F /* PlayerStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79434FF21E9EDB5E009A516F /* PlayerStatus.swift */; };
 		79434FF51E9FF527009A516F /* LootItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79434FF41E9FF527009A516F /* LootItem.swift */; };
+		79434FF71EA013CD009A516F /* Loot.sks in Resources */ = {isa = PBXBuildFile; fileRef = 79434FF61EA013CD009A516F /* Loot.sks */; };
 		7960143B1DD8EB23004640E9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143A1DD8EB23004640E9 /* Player.swift */; };
 		7960143D1DD8EB5A004640E9 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7960143C1DD8EB5A004640E9 /* GameObject.swift */; };
 		796FA7B41E96C3D7006255BF /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796FA7B31E96C3D7006255BF /* Util.swift */; };
@@ -91,6 +92,7 @@
 		79434FEF1E9ECEB9009A516F /* CreateLootPackage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateLootPackage.swift; sourceTree = "<group>"; };
 		79434FF21E9EDB5E009A516F /* PlayerStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerStatus.swift; sourceTree = "<group>"; };
 		79434FF41E9FF527009A516F /* LootItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LootItem.swift; sourceTree = "<group>"; };
+		79434FF61EA013CD009A516F /* Loot.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Loot.sks; sourceTree = "<group>"; };
 		7960143A1DD8EB23004640E9 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		7960143C1DD8EB5A004640E9 /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		796FA7B31E96C3D7006255BF /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 			children = (
 				79F5394F1E9965EC00BC9389 /* ImpactSpark.sks */,
 				79F5395B1E99833000BC9389 /* ImpactExplosion.sks */,
+				79434FF61EA013CD009A516F /* Loot.sks */,
 				79F539551E9981F800BC9389 /* Fireball.sks */,
 				79F539511E997C3400BC9389 /* ParticleSystems.swift */,
 			);
@@ -467,6 +470,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79434FF71EA013CD009A516F /* Loot.sks in Resources */,
 				79DEC47D1DD7BBF000A5BF16 /* Main.storyboard in Resources */,
 				79F5395C1E99833000BC9389 /* ImpactExplosion.sks in Resources */,
 				79DEC4741DD7BBF000A5BF16 /* GameScene.sks in Resources */,

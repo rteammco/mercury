@@ -30,10 +30,33 @@ struct Util {
     return atan2(vector.dy, vector.dx)
   }
   
+  // Returns the same vector scaled by the given scalar.
+  static func scaleVector(_ vector: CGVector, by scalar: CGFloat) -> CGVector {
+    return CGVector(dx: vector.dx * scalar, dy: vector.dy * scalar)
+  }
+  
+  //------------------------------------------------------------------------------
+  // Random value methods.
+  //------------------------------------------------------------------------------
+  
   // Returns a uniform random value (as a CGFloat) between the values in the given range (which is between 0 and 1 by default).
   static func getUniformRandomValue(between lowerBound: CGFloat = 0.0, and upperBound: CGFloat = 1.0) -> CGFloat {
     let range = abs(upperBound - lowerBound)
     return lowerBound + range * CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+  }
+  
+  // Returns a random 2D unit vector. This can be used for things such as randomizing an impulse direction.
+  static func getRandomUnitVector() -> CGVector {
+    let dx = getUniformRandomValue(between: -1, and: 1)
+    let dy = getUniformRandomValue(between: -1, and: 1)
+    return getNormalizedVector(CGVector(dx: dx, dy: dy))
+  }
+  
+  // Returns a random point in the given rectangle, uniformly sampled.
+  static func getRandomPointInRectangle(_ rectangle: CGRect) -> CGPoint {
+    let randX = Util.getUniformRandomValue(between: rectangle.minX, and: rectangle.maxX)
+    let randY = Util.getUniformRandomValue(between: rectangle.minY, and: rectangle.maxY)
+    return CGPoint(x: randX, y: randY)
   }
   
 }

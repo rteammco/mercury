@@ -29,8 +29,11 @@ class LootItem: PhysicsEnabledGameObject {
     let node = SKShapeNode(circleOfRadius: radius)
     node.position = getPosition()
     node.fillColor = SKColor.green
+    if let emitter = SKEmitterNode(fileNamed: "Loot.sks") {
+      node.addChild(emitter)
+    }
     self.gameSceneNode = node
-    self.initializePhysics()
+    initializePhysics()
     return node
   }
   

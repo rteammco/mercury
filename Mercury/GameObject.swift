@@ -91,6 +91,14 @@ class GameObject: GameStateListener {
   // Node operations (after node is added to the scene).
   //------------------------------------------------------------------------------
   
+  // Returns the bounding box in which the node is contained.
+  func getBoundingBox() -> CGRect {
+    if let gameSceneNode = self.gameSceneNode {
+      return gameSceneNode.calculateAccumulatedFrame()
+    }
+    return CGRect(x: 0, y: 0, width: 0, height: 0)
+  }
+  
   // Removes this object's scene node from the game scene.
   func removeSceneNodeFromGameScene() {
     self.gameSceneNode?.removeFromParent()

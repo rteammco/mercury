@@ -11,6 +11,9 @@ import SpriteKit
 
 class CreateLootPackage: EventAction {
   
+  // TODO: This is the amount of XP that can be contained in a single XP orb.
+  let numExperiencePointsPerOrb: Int = 5
+  
   let experienceAmount: Int
   
   // TODO: This should drop items, beyond just experience.
@@ -21,8 +24,18 @@ class CreateLootPackage: EventAction {
   override func execute(withOptionalValue enemy: Any? = nil) {
     if let gameScene = self.caller, let enemy = enemy as? Enemy {
       let gameState = gameScene.getGameState()
-      let lootItem = LootItem(position: enemy.getPosition(), gameState: gameState, withExperience: self.experienceAmount)
-      gameScene.addGameObject(lootItem)
+      
+      // Create XP "orbs", based on the amount of experience to be awarded.
+      let enemyBoundingBox = enemy.getBoundingBox()
+      var experienceRemaining = self.experienceAmount
+      while experienceRemaining > 0 {
+        let experienceOrbPosition = Util.getRandomPointInRectangle(enemyBoundingBox)
+        let experienceOrb = LootItem(position: experienceOrbPosition, gameState: gameState, withExperience: min(self.numExperiencePointsPerOrb, experienceRemaining))
+        gameScene.addGameObject(experienceOrb)
+        let impulseVector = Util.getRandomUnitVector()
+        experienceOrb.applyImpulse(Util.scaleVector(impulseVector, by: gameScene.getScaledValue(0.5)))
+        experienceRemaining -= self.numExperiencePointsPerOrb
+      }
     }
   }
   

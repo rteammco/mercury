@@ -132,6 +132,11 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     return CGPoint(x: halfScaleValue * normalizedPosition.x, y: halfScaleValue * normalizedPosition.y)
   }
   
+  // Returns a vector scaled by the scaling value.
+  func getScaledVector(_ normalizedVector: CGVector) -> CGVector {
+    return CGVector(dx: getScaledValue(normalizedVector.dx), dy: getScaledValue(normalizedVector.dy))
+  }
+  
   // Given a normalized value (e.g. speed), returns the absolute speed by scaling it up with the size of the world (which is dictated by the screen size of the device).
   func getScaledValue(_ normalizedValue: CGFloat) -> CGFloat {
     return normalizedValue * getScaleValue()
