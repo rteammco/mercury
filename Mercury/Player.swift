@@ -53,6 +53,15 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
     node.fillColor = SKColor.blue
     self.gameSceneNode = node
     self.initializePhysics()
+    
+    // Make the player attract items that want to gravitate towards it with a gravity node.
+    let gravityField = SKFieldNode.radialGravityField()
+    gravityField.categoryBitMask = PhysicsCollisionBitMask.playerGravityField
+    gravityField.strength = 1000
+    //gravityField.falloff = 0
+    gravityField.region = SKRegion(radius: Float(scale * 1))
+    node.addChild(gravityField)
+    
     return node
   }
   

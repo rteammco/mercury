@@ -31,6 +31,8 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
   
   var collisionContactTestBitMask: UInt32 = PhysicsCollisionBitMask.none  // The bitmask of all collision categories that this can collide with. Use binary AND to set multiple collision categories that this object can collide with.
   
+  var fieldAttractionBitMask: UInt32 = PhysicsCollisionBitMask.none  // Determines what field categories this object is attracted to.
+  
   // Adjust the mass of the object to fit the world's scale, or whatever scale is given.
   // This is just like GameObject's scaleMovementSpeed method specifically for objects with physical mass that use this mass to interact with the simulated physics.
   // Objects should define their mass on a normalized scale (e.g. 0 to 1, or more than 1 for very heavy objects). Then before the object is added to the game, scale its mass by the scale of the world.
@@ -46,6 +48,11 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
   // Adds a collision test category bitmask to this object (e.g. enemy or environment). This determines what other categories of objects this object can collide with.
   func addCollisionTestCategory(_ bitMask: UInt32) {
     self.collisionContactTestBitMask |= bitMask
+  }
+  
+  // Adds a field attraction bitmask to this object. Fields (i.e. gravitational fields) can attract certain types of objects towards them.
+  func addFieldAttractionBitMask(_ bitMask: UInt32) {
+    self.fieldAttractionBitMask |= bitMask
   }
   
   // Returns a physics body that represents this object's shape. This is used to compute collisions and interaction with other physics-enabled objects.
@@ -73,6 +80,7 @@ class PhysicsEnabledGameObject: GameObject, PhysicsEnabled {
       gameSceneNode.physicsBody?.categoryBitMask = self.collisionCategoryBitMask
       gameSceneNode.physicsBody?.contactTestBitMask = self.collisionContactTestBitMask
       gameSceneNode.physicsBody?.collisionBitMask = self.collisionContactTestBitMask
+      gameSceneNode.physicsBody?.fieldBitMask = self.fieldAttractionBitMask
     }
   }
   

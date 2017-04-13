@@ -23,11 +23,6 @@ class CreateLootPackage: EventAction {
       let gameState = gameScene.getGameState()
       let lootItem = LootItem(position: enemy.getPosition(), gameState: gameState, withExperience: self.experienceAmount)
       gameScene.addGameObject(lootItem)
-//      let gameState = gameScene.getGameState()
-//      if let playerStatus = gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
-//        playerStatus.addPlayerExperience(self.experienceAmount)
-//        gameState.inform(.playerExperienceChange)
-//      }
     }
   }
   

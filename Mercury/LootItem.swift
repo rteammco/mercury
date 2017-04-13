@@ -20,6 +20,7 @@ class LootItem: PhysicsEnabledGameObject {
     
     setCollisionCategory(PhysicsCollisionBitMask.item)
     addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
+    addFieldAttractionBitMask(PhysicsCollisionBitMask.playerGravityField)
   }
   
   // TODO: temporary color and shape.
