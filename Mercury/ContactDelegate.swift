@@ -23,11 +23,19 @@ class ContactDelegate: NSObject, SKPhysicsContactDelegate {
   
   // Given two objects that collide, this method figures out how the collision should be handled.
   private func processCollisionEvent(objectA: GameObject, objectB: GameObject) {
-    // If either object is a bullet, handle bullet-object collision.
+    // If either object is a Bullet, handle bullet-object collision.
     if objectA is Bullet {
       handleBulletCollision(bullet: objectA as! Bullet, target: objectB)
     } else if objectB is Bullet {
       handleBulletCollision(bullet: objectB as! Bullet, target: objectA)
+      
+    // If one object is a LootItem and the other is the Player, handle the loot-player collision.
+    } else if objectA is LootItem, objectB is Player {
+      handleLootItemCollision(lootItem: objectA as! LootItem)
+    } else if objectB is LootItem, objectA is Player {
+      handleLootItemCollision(lootItem: objectB as! LootItem)
+      
+      // Otherwise, if one of the objects is the Player, handle player-object collision.
     } else if objectA is Player {
       handlePlayerCollision(player: objectA as! Player, collidedWith: objectB)
     } else if objectB is Player {
@@ -40,6 +48,11 @@ class ContactDelegate: NSObject, SKPhysicsContactDelegate {
     ParticleSystems.runBulletImpactEffect(bullet: bullet, target: target)
     target.changeHitPoints(by: -bullet.getHitDamage())
     bullet.removeSceneNodeFromGameScene()
+  }
+  
+  private func handleLootItemCollision(lootItem: LootItem) {
+    lootItem.applyReward()
+    lootItem.destroyObject()
   }
   
   private func handlePlayerCollision(player: Player, collidedWith otherObject: GameObject) {

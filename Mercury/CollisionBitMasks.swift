@@ -14,13 +14,14 @@ struct PhysicsCollisionBitMask {
   static let none: UInt32           = 0
 
   // "friendly" is absolute in terms of the player. "enemy" is for all enemies of the player.
-  static let friendly: UInt32       = 0x1 << 1
+  static let friendly: UInt32       = 0x1 << 1  // TODO: Rename to "player" instead of "friendly".
   static let enemy: UInt32          = 0x1 << 2
   static let environment: UInt32    = 0x1 << 3
   
   // Projectiles are special case objects that can interact with other types, but not with each other. For example, bullets cannot collide with other bullets.
-  static let projectile: UInt32     = 0x1 << 4
+  static let item: UInt32          = 0x1 << 4
+  static let projectile: UInt32     = 0x1 << 5
   
-  static let anyObject: UInt32      = 0x1 << 5
+  static let anyObject: UInt32      = 0x1 << 6
   
 }
