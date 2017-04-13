@@ -11,7 +11,6 @@ import SpriteKit
 
 class LevelHud: GameObject {
   
-  let initialHealth: CGFloat
   var barWidth: CGFloat?
   var healthBarNode: SKShapeNode?
   var healthBarText: SKLabelNode?
@@ -19,7 +18,6 @@ class LevelHud: GameObject {
   var playerLevelTextNode: SKLabelNode?
   
   init(gameState: GameState) {
-    self.initialHealth = gameState.getCGFloat(forKey: .playerHealth)
     super.init(position: CGPoint(x: 0, y: 0), gameState: gameState)
     self.gameState.subscribe(self, to: .playerHealth)
     self.gameState.subscribe(self, to: .playerDied)
@@ -29,14 +27,10 @@ class LevelHud: GameObject {
   // Updates when player health changes or when player dies.
   override func reportStateChange(key: GameStateKey, value: Any) {
     switch key {
-    case .playerHealth:
-      if self.initialHealth > 0 {
-        let currentHealth = self.gameState.getCGFloat(forKey: .playerHealth)
-        let ratio = currentHealth / self.initialHealth
-        updateHealthBar(withHealthRatio: ratio)
+    case .playerHealth, .playerDied:
+      if let playerStatus = gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
+        updateHealthBar(playerStatus: playerStatus)
       }
-    case .playerDied:
-      updateHealthBar(withHealthRatio: 0)
     case .playerExperienceChange:
       if let playerStatus = gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
         updateLevelAndExperienceBar(playerStatus: playerStatus)
@@ -47,8 +41,9 @@ class LevelHud: GameObject {
   }
   
   // Updates the health bar and text given the ratio of health (ratio between max health and the current health). Ratio will always be normalized between 0 and 1.
-  private func updateHealthBar(withHealthRatio healthRatio: CGFloat) {
-    var ratio = healthRatio
+  private func updateHealthBar(playerStatus: PlayerStatus) {
+    let currentHealth = self.gameState.getCGFloat(forKey: .playerHealth)
+    var ratio: CGFloat = currentHealth / playerStatus.getMaxPlayerHealth()
     if ratio > 1.0 {
       ratio = 1.0
     } else if ratio < 0.0 {

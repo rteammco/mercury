@@ -16,11 +16,11 @@ class TestLevel: GameScene {
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
     createGUI()
     
-    when(EnemyDies()).execute(action: CreateExperienceTokens(withExperienceAmount: 50))  // TODO: The value should be aquired from the GameState or something.
+    when(EnemyDies()).execute(action: CreateExperienceTokens(withExperienceAmount: 500))  // TODO: The value should be aquired from the GameState or something.
     
     let phase1 = createEventPhase()
     phase1.execute(action: SpawnEnemy("test"))
-    phase1.when(EnemyDies()).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10)).then(DisplayText("You Did It!!"))
+    phase1.when(EnemyDies()).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 100)).then(DisplayText("You Did It!!"))
     
     let phase2 = createEventPhase()
     phase2.when(TimerFires(afterSeconds: 3)).execute(action: DisplayText("PHASE 2")).then(when: TimerFires(afterSeconds: 3)).execute(action: DisplayText("DONE"))
