@@ -11,21 +11,21 @@ import SpriteKit
 
 // The loot struct contains rewards that will be returned when LootPackage.generateLoot() is called.
 struct Loot {
-  var experience: Int = 0
+  var experience: CGFloat = 0.0
   var health: CGFloat = 0.0
 }
 
 // The LootPackage class handles generating a loot struct given some parameters.
 class LootPackage {
   
-  private var experienceAmount: Int
+  private var experienceAmount: CGFloat
   
   private var healthAmountLowerBound: CGFloat
   private var healthAmountUpperBound: CGFloat
   private var healthDropRate: CGFloat
   
   init() {
-    self.experienceAmount = 0
+    self.experienceAmount = 0.0
     self.healthAmountLowerBound = 0.0
     self.healthAmountUpperBound = 0.0
     self.healthDropRate = 0.0
@@ -42,7 +42,7 @@ class LootPackage {
   }
   
   // Set the amount of experience rewarded by this loot.
-  func setExperieceReward(to experienceAmount: Int) {
+  func setExperieceReward(to experienceAmount: CGFloat) {
     self.experienceAmount = experienceAmount
   }
   

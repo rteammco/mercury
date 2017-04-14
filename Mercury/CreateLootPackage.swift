@@ -15,7 +15,7 @@ class CreateLootPackage: EventAction {
   static let kMaxNumberOfOrbsPerType: Int = 10
   
   // TODO: This is the amount of XP that can be contained in a single XP orb.
-  let numExperiencePointsPerOrb: Int = 5
+  let numExperiencePointsPerOrb: CGFloat = 5
   let numHealthPointsPerOrb: CGFloat = 25
   
   let lootPackage: LootPackage
@@ -37,7 +37,7 @@ class CreateLootPackage: EventAction {
       var orb: LootItem?
       // Initialize orb depending on what type it is.
       if orbType == .ExperienceOrb {
-        orb = LootItem(position: orbPosition, gameState: gameState, withExperience: Int(orbValue))
+        orb = LootItem(position: orbPosition, gameState: gameState, withExperience: orbValue)
       } else if orbType == .HealthOrb {
         orb = LootItem(position: orbPosition, gameState: gameState, withHealth: orbValue)
       }
@@ -56,7 +56,7 @@ class CreateLootPackage: EventAction {
     if let gameScene = self.caller, let enemy = enemy as? Enemy {
       let loot = self.lootPackage.generateLoot()
       let enemyBoundingBox = enemy.getBoundingBox()
-      createOrbs(ofType: .ExperienceOrb, withQuanity: CGFloat(loot.experience), withMaxValuePerOrb: CGFloat(numExperiencePointsPerOrb), withinRegion: enemyBoundingBox, gameScene: gameScene)
+      createOrbs(ofType: .ExperienceOrb, withQuanity: loot.experience, withMaxValuePerOrb: numExperiencePointsPerOrb, withinRegion: enemyBoundingBox, gameScene: gameScene)
       createOrbs(ofType: .HealthOrb, withQuanity: loot.health, withMaxValuePerOrb: numHealthPointsPerOrb, withinRegion: enemyBoundingBox, gameScene: gameScene)
     }
   }
