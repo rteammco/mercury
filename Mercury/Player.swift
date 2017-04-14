@@ -58,7 +58,7 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
     // TODO: Place somewhere else.
     let gravityField = SKFieldNode.radialGravityField()
     gravityField.categoryBitMask = PhysicsCollisionBitMask.playerGravityField
-    gravityField.strength = Float(scale * 2.5)
+    gravityField.strength = Float(scale * 1.5)
     node.addChild(gravityField)
     
     return node

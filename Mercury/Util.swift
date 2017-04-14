@@ -35,6 +35,13 @@ struct Util {
     return CGVector(dx: vector.dx * scalar, dy: vector.dy * scalar)
   }
   
+  // Returns the distance (L2) between the given points.
+  static func getDistance(between point1: CGPoint, and point2: CGPoint) -> CGFloat {
+    let dx = point2.x - point1.x
+    let dy = point2.y - point1.y
+    return sqrt(dx * dx + dy * dy)
+  }
+  
   //------------------------------------------------------------------------------
   // Random value methods.
   //------------------------------------------------------------------------------

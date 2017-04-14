@@ -232,4 +232,14 @@ class GameObject: GameStateListener {
     default: break
     }
   }
+  
+  //------------------------------------------------------------------------------
+  // Animation and adjustment updates.
+  //------------------------------------------------------------------------------
+  
+  // Called every frame by the active GameScene.
+  func update(elapsedTime timeSinceLastUpdate: TimeInterval) {
+    // Override as needed.
+  }
+  
 }

@@ -269,10 +269,14 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // This method measures the elapsed time since the last frame and updates the current game level.
   // Called before each frame is rendered with the current time.
   override func update(_ currentTime: TimeInterval) {
-    // TODO
-    //if let lastFrameTime = self.lastFrameTime {
-    //  let elapsedTime = currentTime - lastFrameTime
-    //}
+    if let lastFrameTime = self.lastFrameTime {
+      let elapsedTime = currentTime - lastFrameTime
+      enumerateChildNodes(withName: "*", using: { (node, stop) -> Void in
+        if let gameObject = node.userData?.value(forKey: GameObject.nodeValueKey) as? GameObject {
+          gameObject.update(elapsedTime: elapsedTime)
+        }
+      })
+    }
     self.lastFrameTime = currentTime
     self.removeOffscreenNodes()
   }
