@@ -12,7 +12,7 @@ import SpriteKit
 class LootItem: PhysicsEnabledGameObject {
   
   // The type of item defines the appearance and behavior of this object.
-  private enum ItemType {
+  enum ItemType {
     case HealthOrb, ExperienceOrb
   }
   private let itemType: ItemType
