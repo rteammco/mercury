@@ -19,7 +19,7 @@ class LootItem: PhysicsEnabledGameObject {
   
   // Loot orb values.
   private var experiencePoints: Int?
-  private var healthPoints: Int?
+  private var healthPoints: CGFloat?
   private var lastDistanceToPlayer: CGFloat?
   
   // Use this constructor if this is an experience orb and awards experience points.
@@ -38,7 +38,7 @@ class LootItem: PhysicsEnabledGameObject {
   }
   
   // Use this constructor if this is a health orb and awards player health.
-  init(position: CGPoint, gameState: GameState, withHealth healthPoints: Int) {
+  init(position: CGPoint, gameState: GameState, withHealth healthPoints: CGFloat) {
     self.itemType = .HealthOrb
     self.healthPoints = healthPoints
     let playerPosition = gameState.getPoint(forKey: .playerPosition)
@@ -92,7 +92,7 @@ class LootItem: PhysicsEnabledGameObject {
         self.gameState.inform(.playerExperienceChange)
       }
     } else if self.itemType == .HealthOrb, let healthPoints = self.healthPoints {
-      // TODO: player.changeHitPoints(by: healthPoints)
+      self.gameState.inform(.playerHealthChange, value: healthPoints)
     }
   }
   

@@ -35,6 +35,7 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
     
     subscribeToUserInteractionStateChanges()
     self.gameState.subscribe(self, to: .playerLeveledUp)
+    self.gameState.subscribe(self, to: .playerHealthChange)
   }
   
   // Updates the player's variables based on the current player status, which scales with the player's level. This updates the player's bullet damage, and sets the player's health to the maximum current health value.
@@ -68,6 +69,10 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
     if key == .playerLeveledUp {
       updatePlayerVariables()
       self.gameState.set(.playerHealth, to: getHitPoints())
+    } else if key == .playerHealthChange {
+      if let amount = value as? CGFloat {
+        changeHitPoints(by: amount)
+      }
     }
   }
   
