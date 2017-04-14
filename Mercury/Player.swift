@@ -54,10 +54,9 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
     self.gameSceneNode = node
     self.initializePhysics()
     
-    // Make the player attract items that want to gravitate towards it with a gravity node.
-    // TODO: Place somewhere else.
+    // Make the Player attract loot items that want to gravitate towards it with a gravity node.
     let gravityField = SKFieldNode.radialGravityField()
-    gravityField.categoryBitMask = PhysicsCollisionBitMask.playerGravityField
+    gravityField.categoryBitMask = PhysicsCollisionBitMask.playerLootGravityField
     gravityField.strength = Float(scale * 1.5)
     node.addChild(gravityField)
     

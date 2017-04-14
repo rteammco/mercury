@@ -11,40 +11,88 @@ import SpriteKit
 
 class LootItem: PhysicsEnabledGameObject {
   
-  let experiencePoints: Int
-  var lastDistanceToPlayer: CGFloat
+  // The type of item defines the appearance and behavior of this object.
+  private enum ItemType {
+    case HealthOrb, ExperienceOrb
+  }
+  private let itemType: ItemType
   
+  // Loot orb values.
+  private var experiencePoints: Int?
+  private var healthPoints: Int?
+  private var lastDistanceToPlayer: CGFloat?
+  
+  // Use this constructor if this is an experience orb and awards experience points.
   init(position: CGPoint, gameState: GameState, withExperience experiencePoints: Int) {
+    self.itemType = .ExperienceOrb
     self.experiencePoints = experiencePoints
     let playerPosition = gameState.getPoint(forKey: .playerPosition)
     self.lastDistanceToPlayer = Util.getDistance(between: position, and: playerPosition)
+    
     super.init(position: position, gameState: gameState)
-    self.nodeName = "loot"
+    self.nodeName = "experience orb"
     
     setCollisionCategory(PhysicsCollisionBitMask.item)
     addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
-    addFieldAttractionBitMask(PhysicsCollisionBitMask.playerGravityField)
+    addFieldAttractionBitMask(PhysicsCollisionBitMask.playerLootGravityField)
   }
   
-  // TODO: temporary color and shape.
-  override func createGameSceneNode(scale: CGFloat) -> SKNode {
-    let radius = 0.02 * scale
+  // Use this constructor if this is a health orb and awards player health.
+  init(position: CGPoint, gameState: GameState, withHealth healthPoints: Int) {
+    self.itemType = .HealthOrb
+    self.healthPoints = healthPoints
+    let playerPosition = gameState.getPoint(forKey: .playerPosition)
+    self.lastDistanceToPlayer = Util.getDistance(between: position, and: playerPosition)
+    
+    super.init(position: position, gameState: gameState)
+    self.nodeName = "health orb"
+    
+    setCollisionCategory(PhysicsCollisionBitMask.item)
+    addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
+    addFieldAttractionBitMask(PhysicsCollisionBitMask.playerLootGravityField)
+  }
+  
+  // Returns a "loot orb" appearance node, which glows in particles and flies over to the player. This can be either a health orb or experience orb.
+  private func createOrbNode(scale: CGFloat) -> SKNode {
+    let radius = 0.005 * scale
     let node = SKShapeNode(circleOfRadius: radius)
     node.position = getPosition()
-    node.fillColor = SKColor.green
-    if let emitter = SKEmitterNode(fileNamed: "Loot.sks") {
-      node.addChild(emitter)
+    if self.itemType == .ExperienceOrb {
+      node.fillColor = GameConfiguration.hudExperienceBarColor
+      if let emitter = SKEmitterNode(fileNamed: "LootOrbExperience.sks") {
+        node.addChild(emitter)
+      }
+    } else if itemType == .HealthOrb {
+      node.fillColor = GameConfiguration.hudHealthBarColor
+      if let emitter = SKEmitterNode(fileNamed: "LootOrbHealth.sks") {
+        node.addChild(emitter)
+      }
+    }
+    return node
+  }
+  
+  // Creates the LootItem node depending on the type of loot item this is.
+  override func createGameSceneNode(scale: CGFloat) -> SKNode {
+    var node: SKNode?
+    if self.itemType == .HealthOrb || self.itemType == .ExperienceOrb {
+      node = createOrbNode(scale: scale)
+    } else {
+      node = SKShapeNode()  // empty node
     }
     self.gameSceneNode = node
     initializePhysics()
-    return node
+    return node!
   }
   
   // Applies the reward that's being carried by this loot item to the Player. This typically happens after the loot item collides with the Player when they "pick it up".
   func applyReward() {
-    if let playerStatus = self.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
-      playerStatus.addPlayerExperience(self.experiencePoints)
-      self.gameState.inform(.playerExperienceChange)
+    if self.itemType == .ExperienceOrb, let experiencePoints = self.experiencePoints {
+      if let playerStatus = self.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
+        playerStatus.addPlayerExperience(experiencePoints)
+        self.gameState.inform(.playerExperienceChange)
+      }
+    } else if self.itemType == .HealthOrb, let healthPoints = self.healthPoints {
+      // TODO: player.changeHitPoints(by: healthPoints)
     }
   }
   
@@ -52,11 +100,22 @@ class LootItem: PhysicsEnabledGameObject {
   //
   // TODO: This is a current "hacky" solution using the SKFieldNode.
   override func update(elapsedTime timeSinceLastUpdate: TimeInterval) {
+    // This only applies to the orbs that fly over to the Player.
+    if self.itemType != .ExperienceOrb && self.itemType != .HealthOrb {
+      return
+    }
+    
     let lootPosition = getPosition()
     let playerPosition = gameState.getPoint(forKey: .playerPosition)
-    let distanceToPlayer = Util.getDistance(between: getPosition(), and: playerPosition)
-    if distanceToPlayer > self.lastDistanceToPlayer {
-      let moveDistance = distanceToPlayer - self.lastDistanceToPlayer
+    let distanceToPlayer = Util.getDistance(between: lootPosition, and: playerPosition)
+    
+    guard let lastDistanceToPlayer = self.lastDistanceToPlayer else {
+      self.lastDistanceToPlayer = distanceToPlayer
+      return
+    }
+    
+    if distanceToPlayer > lastDistanceToPlayer {
+      let moveDistance = distanceToPlayer - lastDistanceToPlayer
       let directionToMove = Util.getDirectionVector(from: lootPosition, to: playerPosition)
       let adjustmentVector = Util.scaleVector(directionToMove, by: moveDistance)
       move(by: adjustmentVector)

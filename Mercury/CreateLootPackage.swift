@@ -36,6 +36,13 @@ class CreateLootPackage: EventAction {
         experienceOrb.applyImpulse(Util.scaleVector(impulseVector, by: gameScene.getScaledValue(0.5)))
         experienceRemaining -= self.numExperiencePointsPerOrb
       }
+      
+      // Create health "orbs". TODO: Fix the amount given here.
+      let healthOrbPosition = Util.getRandomPointInRectangle(enemyBoundingBox)
+      let healthOrb = LootItem(position: healthOrbPosition, gameState: gameState, withHealth: 10)
+      gameScene.addGameObject(healthOrb)
+      let impulseVector = Util.getRandomUnitVector()
+      healthOrb.applyImpulse(Util.scaleVector(impulseVector, by: gameScene.getScaledValue(0.5)))
     }
   }
   
