@@ -34,7 +34,7 @@ class LootItem: PhysicsEnabledGameObject {
     
     setCollisionCategory(PhysicsCollisionBitMask.item)
     addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
-    addFieldAttractionBitMask(PhysicsCollisionBitMask.playerLootGravityField)
+    addFieldAttractionBitMask(PhysicsCollisionBitMask.playerGlobalLootGravityField)
   }
   
   // Use this constructor if this is a health orb and awards player health.
@@ -49,7 +49,7 @@ class LootItem: PhysicsEnabledGameObject {
     
     setCollisionCategory(PhysicsCollisionBitMask.item)
     addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
-    addFieldAttractionBitMask(PhysicsCollisionBitMask.playerLootGravityField)
+    addFieldAttractionBitMask(PhysicsCollisionBitMask.playerGlobalLootGravityField)
   }
   
   // Returns a "loot orb" appearance node, which glows in particles and flies over to the player. This can be either a health orb or experience orb.

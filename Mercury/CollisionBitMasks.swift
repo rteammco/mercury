@@ -14,18 +14,19 @@ struct PhysicsCollisionBitMask {
   static let none: UInt32                     = 0
 
   // "friendly" is absolute in terms of the player. "enemy" is for all enemies of the player.
-  static let friendly: UInt32                 = 0x1 << 1  // TODO: Rename to "player" instead of "friendly".
-  static let enemy: UInt32                    = 0x1 << 2
-  static let environment: UInt32              = 0x1 << 3
-  static let item: UInt32                     = 0x1 << 4
+  static let friendly: UInt32                       = 0x1 << 1  // TODO: Rename to "player" instead of "friendly".
+  static let enemy: UInt32                          = 0x1 << 2
+  static let environment: UInt32                    = 0x1 << 3
+  static let item: UInt32                           = 0x1 << 4
   
   // Projectiles are special case objects that can interact with other types, but not with each other. For example, bullets cannot collide with other bullets.
-  static let projectile: UInt32               = 0x1 << 5
+  static let projectile: UInt32                     = 0x1 << 5
   
-  // Gravity field bitmasks.
-  static let playerLootGravityField: UInt32   = 0x1 << 6
+  // Gravity field bitmasks. The global field should work everywhere, whereas the local field will only impact items within a region around the Player.
+  static let playerGlobalLootGravityField: UInt32   = 0x1 << 6
+  static let playerLocalLootGravityField: UInt32    = 0x1 << 7
   
   // All bits are 1, so it can interact with any other object.
-  static let anyObject: UInt32                = UInt32.max
+  static let anyObject: UInt32                      = UInt32.max
   
 }
