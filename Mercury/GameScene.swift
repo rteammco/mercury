@@ -57,7 +57,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     let gameState = getGameState()
     // TODO: These values should be adjusted from a database or some configuration file.
     let playerStatus = PlayerStatus(gameState: gameState)
-    playerStatus.addPlayerExperience(5000)  // TODO: This is just here for testing.
+    playerStatus.addPlayerExperience(15)  // TODO: This is just here for testing.
     gameState.set(.playerStatus, to: playerStatus)
     gameState.setCGFloat(.playerHealth, to: playerStatus.getMaxPlayerHealth())
     gameState.setTimeInterval(.playerBulletFireInterval, to: 0.1)

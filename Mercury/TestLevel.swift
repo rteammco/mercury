@@ -16,7 +16,11 @@ class TestLevel: GameScene {
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
     createGUI()
     
-    when(EnemyDies()).execute(action: CreateLootPackage(withExperienceAmount: 35))  // TODO: The value should be aquired from the GameState or something.
+    // TODO: The loot values should be aquired from the GameState or something.
+    let lootPackage = LootPackage()
+    lootPackage.setExperieceReward(to: 35)
+    lootPackage.setHealthReward(to: 50, withDropRate: 0.2)
+    when(EnemyDies()).execute(action: CreateLootPackage(lootPackage: lootPackage))
     
     let phase1 = createEventPhase()
     phase1.execute(action: SpawnEnemy("test"))
