@@ -32,7 +32,11 @@ class GameObjectPath {
   // Run the pathing animation on the given target GameObject and at the given speed.
   func run(on targetObject: GameObject, withSpeed speed: CGFloat, reorientToPath: Bool = false) {
     let motionAction = SKAction.follow(self.path.cgPath, asOffset: false, orientToPath: reorientToPath, speed: speed)
-    targetObject.gameSceneNode?.run(motionAction)
+    let alertFinished = SKAction.run({
+      () in targetObject.notifyMotionEnded()
+    })
+    targetObject.gameSceneNode?.run(SKAction.sequence([motionAction, alertFinished]))
+    targetObject.notifyMotionStarted()
   }
   
 }

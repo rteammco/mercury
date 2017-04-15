@@ -29,8 +29,6 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
     setCollisionCategory(PhysicsCollisionBitMask.enemy)
     addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
     // TODO: they should probably be able to collide with the environment as well?
-    
-    startFireBulletTimer()
   }
   
   // TODO: temporary color and shape.
@@ -54,6 +52,11 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   //------------------------------------------------------------------------------
   // Methods for the ArmedWithProjectiles protocol.
   //------------------------------------------------------------------------------
+  
+  // The enemy will begin shooting when its initial motion finishes.
+  override func notifyMotionEnded() {
+    startFireBulletTimer()
+  }
   
   // Start firing bullets at the firing rate (fireBulletIntervalSeconds). This will continue to fire bullets at each of the intervals until stopFireBulletTimer() is called.
   // TODO: we may want to move this method into the GameObject super class.
