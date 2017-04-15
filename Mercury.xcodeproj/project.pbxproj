@@ -226,15 +226,10 @@
 			isa = PBXGroup;
 			children = (
 				79DEC4771DD7BBF000A5BF16 /* GameScene.swift */,
-				7960143C1DD8EB5A004640E9 /* GameObject.swift */,
-				79154F651E413ED300D9B71A /* GameState.swift */,
-				790B0B341E79E32100122B7B /* GameStateKeys.swift */,
-				79154F671E41431600D9B71A /* GameStateListener.swift */,
-				79B605E91E7499310090C791 /* ScreenTouchInfo.swift */,
-				797EDF541EA1393F003CCB81 /* LootPackage.swift */,
-				79434FF21E9EDB5E009A516F /* PlayerStatus.swift */,
-				796FA7B31E96C3D7006255BF /* Util.swift */,
 				7913A34A1E884B180070DF8E /* GameConfiguration.swift */,
+				797EDF611EA2C5CD003CCB81 /* State and Loading */,
+				79B605E91E7499310090C791 /* ScreenTouchInfo.swift */,
+				796FA7B31E96C3D7006255BF /* Util.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -247,14 +242,26 @@
 			name = Paths;
 			sourceTree = "<group>";
 		};
-		797EDF5C1EA2A423003CCB81 /* Loot */ = {
+		797EDF5C1EA2A423003CCB81 /* Loot and Rewards */ = {
 			isa = PBXGroup;
 			children = (
+				797EDF541EA1393F003CCB81 /* LootPackage.swift */,
 				79434FF41E9FF527009A516F /* LootItem.swift */,
 				797EDF5D1EA2A44A003CCB81 /* ExperienceOrb.swift */,
 				797EDF5F1EA2A5CA003CCB81 /* HealthOrb.swift */,
 			);
-			name = Loot;
+			name = "Loot and Rewards";
+			sourceTree = "<group>";
+		};
+		797EDF611EA2C5CD003CCB81 /* State and Loading */ = {
+			isa = PBXGroup;
+			children = (
+				79154F651E413ED300D9B71A /* GameState.swift */,
+				790B0B341E79E32100122B7B /* GameStateKeys.swift */,
+				79154F671E41431600D9B71A /* GameStateListener.swift */,
+				79434FF21E9EDB5E009A516F /* PlayerStatus.swift */,
+			);
+			name = "State and Loading";
 			sourceTree = "<group>";
 		};
 		7984856F1E902E4700DFE310 /* Level Phases */ = {
@@ -295,11 +302,11 @@
 		79D2294F1DEF6369003F68F9 /* Game Objects */ = {
 			isa = PBXGroup;
 			children = (
+				7960143C1DD8EB5A004640E9 /* GameObject.swift */,
 				79381B851E341A15006EC04C /* GameObject Protocols */,
 				7960143A1DD8EB23004640E9 /* Player.swift */,
 				79C4ABB91DF0BBBE006DDCAF /* Enemy.swift */,
 				79D2294D1DEF6339003F68F9 /* Bullet.swift */,
-				797EDF5C1EA2A423003CCB81 /* Loot */,
 			);
 			name = "Game Objects";
 			sourceTree = "<group>";
@@ -328,11 +335,12 @@
 			isa = PBXGroup;
 			children = (
 				79434FF11E9ED720009A516F /* Core */,
-				79DFF9CA1E37EF3B00F50514 /* Events */,
+				79DFF9CA1E37EF3B00F50514 /* Event System */,
 				799424B81E81949300C2BD88 /* Physics */,
 				79434FEC1E9EA044009A516F /* Pathing and Motion */,
 				79DFF9C71E37EBCC00F50514 /* Animations */,
 				792D7FFA1E9817F900273684 /* GUI */,
+				797EDF5C1EA2A423003CCB81 /* Loot and Rewards */,
 				79D2294F1DEF6369003F68F9 /* Game Objects */,
 				7906C4621DDD142000187846 /* Levels */,
 				79CCAB191E95506C0015E9A1 /* Menus */,
@@ -379,7 +387,7 @@
 			name = Animations;
 			sourceTree = "<group>";
 		};
-		79DFF9CA1E37EF3B00F50514 /* Events */ = {
+		79DFF9CA1E37EF3B00F50514 /* Event System */ = {
 			isa = PBXGroup;
 			children = (
 				79DFF9CB1E37EFB400F50514 /* Event.swift */,
@@ -391,7 +399,7 @@
 				793377D61E40631B00D4701C /* Level EventActions */,
 				7984856F1E902E4700DFE310 /* Level Phases */,
 			);
-			name = Events;
+			name = "Event System";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
