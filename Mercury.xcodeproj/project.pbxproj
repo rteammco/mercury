@@ -30,6 +30,8 @@
 		797EDF531EA1329E003CCB81 /* LootOrbExperience.sks in Resources */ = {isa = PBXBuildFile; fileRef = 797EDF521EA1329E003CCB81 /* LootOrbExperience.sks */; };
 		797EDF551EA1393F003CCB81 /* LootPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF541EA1393F003CCB81 /* LootPackage.swift */; };
 		797EDF591EA28E48003CCB81 /* BasicEnemyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF581EA28E48003CCB81 /* BasicEnemyPath.swift */; };
+		797EDF5E1EA2A44A003CCB81 /* ExperienceOrb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF5D1EA2A44A003CCB81 /* ExperienceOrb.swift */; };
+		797EDF601EA2A5CA003CCB81 /* HealthOrb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF5F1EA2A5CA003CCB81 /* HealthOrb.swift */; };
 		798485711E902E7100DFE310 /* CountdownPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798485701E902E7100DFE310 /* CountdownPhase.swift */; };
 		799424BA1E8194D900C2BD88 /* CollisionBitMasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799424B91E8194D900C2BD88 /* CollisionBitMasks.swift */; };
 		799424BC1E81CB1700C2BD88 /* EnemyDies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799424BB1E81CB1700C2BD88 /* EnemyDies.swift */; };
@@ -102,6 +104,8 @@
 		797EDF521EA1329E003CCB81 /* LootOrbExperience.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LootOrbExperience.sks; sourceTree = "<group>"; };
 		797EDF541EA1393F003CCB81 /* LootPackage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LootPackage.swift; sourceTree = "<group>"; };
 		797EDF581EA28E48003CCB81 /* BasicEnemyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicEnemyPath.swift; sourceTree = "<group>"; };
+		797EDF5D1EA2A44A003CCB81 /* ExperienceOrb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperienceOrb.swift; sourceTree = "<group>"; };
+		797EDF5F1EA2A5CA003CCB81 /* HealthOrb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthOrb.swift; sourceTree = "<group>"; };
 		798485701E902E7100DFE310 /* CountdownPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountdownPhase.swift; sourceTree = "<group>"; };
 		799424B91E8194D900C2BD88 /* CollisionBitMasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollisionBitMasks.swift; sourceTree = "<group>"; };
 		799424BB1E81CB1700C2BD88 /* EnemyDies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyDies.swift; sourceTree = "<group>"; };
@@ -243,6 +247,16 @@
 			name = Paths;
 			sourceTree = "<group>";
 		};
+		797EDF5C1EA2A423003CCB81 /* Loot */ = {
+			isa = PBXGroup;
+			children = (
+				79434FF41E9FF527009A516F /* LootItem.swift */,
+				797EDF5D1EA2A44A003CCB81 /* ExperienceOrb.swift */,
+				797EDF5F1EA2A5CA003CCB81 /* HealthOrb.swift */,
+			);
+			name = Loot;
+			sourceTree = "<group>";
+		};
 		7984856F1E902E4700DFE310 /* Level Phases */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,7 +299,7 @@
 				7960143A1DD8EB23004640E9 /* Player.swift */,
 				79C4ABB91DF0BBBE006DDCAF /* Enemy.swift */,
 				79D2294D1DEF6339003F68F9 /* Bullet.swift */,
-				79434FF41E9FF527009A516F /* LootItem.swift */,
+				797EDF5C1EA2A423003CCB81 /* Loot */,
 			);
 			name = "Game Objects";
 			sourceTree = "<group>";
@@ -526,6 +540,7 @@
 				79434FF31E9EDB5E009A516F /* PlayerStatus.swift in Sources */,
 				7960143B1DD8EB23004640E9 /* Player.swift in Sources */,
 				796FA7B41E96C3D7006255BF /* Util.swift in Sources */,
+				797EDF601EA2A5CA003CCB81 /* HealthOrb.swift in Sources */,
 				79F539521E997C3400BC9389 /* ParticleSystems.swift in Sources */,
 				793377D81E40633200D4701C /* DisplayText.swift in Sources */,
 				79DEC4781DD7BBF000A5BF16 /* GameScene.swift in Sources */,
@@ -534,6 +549,7 @@
 				793377D51E405BE100D4701C /* TimerFires.swift in Sources */,
 				79DFF9CC1E37EFB400F50514 /* Event.swift in Sources */,
 				797EDF551EA1393F003CCB81 /* LootPackage.swift in Sources */,
+				797EDF5E1EA2A44A003CCB81 /* ExperienceOrb.swift in Sources */,
 				7913A34B1E884B180070DF8E /* GameConfiguration.swift in Sources */,
 				79154F681E41431600D9B71A /* GameStateListener.swift in Sources */,
 				79434FF01E9ECEB9009A516F /* CreateLootPackage.swift in Sources */,

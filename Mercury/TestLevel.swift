@@ -18,7 +18,7 @@ class TestLevel: GameScene {
     
     // TODO: The loot values should be aquired from the GameState or something.
     let lootPackage = LootPackage()
-    lootPackage.setExperieceReward(to: 1000)
+    lootPackage.setExperieceReward(to: 10)
     lootPackage.setHealthReward(to: 50, withDropRate: 1)
     when(EnemyDies()).execute(action: CreateLootPackage(lootPackage: lootPackage))
     
