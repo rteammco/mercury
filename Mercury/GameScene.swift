@@ -21,6 +21,9 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // The size of the world used for scaling all displayed scene nodes.
   private var worldSize: CGFloat?
   
+  // The worldNode will hold everything.
+  private var worldNode: SKNode?
+  
   // User touch interaction variables.
   private var lastTouchPosition: CGPoint?
   
@@ -68,7 +71,13 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Initialize the current level scene by setting up all GameObjects and events. By default, initializes the background node and subscribes to state changes. Extend as needed.
   func initializeScene() {
-    // TODO: Create a good background node.
+    let worldSize = self.frame.height
+    let worldNode = SKSpriteNode(imageNamed: "stars")
+    worldNode.size = CGSize(width: worldSize, height: worldSize)
+    worldNode.zPosition = 0
+    addChild(worldNode, directlyToScene: true)
+    self.worldNode = worldNode
+    
     subscribeToStateChanges()
   }
   
@@ -88,6 +97,20 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   //------------------------------------------------------------------------------
   // General level methods.
   //------------------------------------------------------------------------------
+  
+  // Overload the default addChild behavior to add all nodes to the world node. This node handles the background visualizations, but also contains the entire scene so that it can be larger than the view itself.
+  override func addChild(_ node: SKNode) {
+    node.zPosition += 1
+    self.worldNode?.addChild(node)
+  }
+  // Use this method to explicity add a node to the scene directly, instead of adding it to the world node.
+  func addChild(_ node: SKNode, directlyToScene: Bool) {
+    if directlyToScene {
+      super.addChild(node)
+    } else {
+      addChild(node)
+    }
+  }
   
   // Adds the given GameObject type to the scene by appending its node. The object is automatically scaled according to the screen size.
   // Set withPhysicsScaling to true if the object is a PhysicsEnabledGameObject and its physical properties should be scaled to reflect the world size.
@@ -250,6 +273,9 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Removes all nodes that are no longer on the screen. For example, if a bullet flies off the screen, there is no reason to track or update it anymore. It's gone.
   private func removeOffscreenNodes() {
     removeOffscreenNodes(from: self)
+    if let worldNode = self.worldNode {
+      removeOffscreenNodes(from: worldNode)
+    }
   }
   // Helper method for removeOffscreenNodes() above.
   private func removeOffscreenNodes(from parentNode: SKNode) {
