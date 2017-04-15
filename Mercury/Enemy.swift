@@ -14,11 +14,9 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
   var fireBulletTimer: Timer?
   
-  init(position: CGPoint, gameState: GameState, speed: CGFloat) {
+  override init(position: CGPoint, gameState: GameState) {
     super.init(position: position, gameState: gameState)
     self.nodeName = "enemy"
-    self.scaleMovementSpeed(speed)
-    self.setMovementDirection(to: CGVector(dx: 0, dy: -1))  // Top to bottom of screen.
     initializeHitPoints(self.gameState.getCGFloat(forKey: .enemyHealthBase))
     
     // Customize physics properties:

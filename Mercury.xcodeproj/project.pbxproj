@@ -29,6 +29,7 @@
 		796FA7B41E96C3D7006255BF /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796FA7B31E96C3D7006255BF /* Util.swift */; };
 		797EDF531EA1329E003CCB81 /* LootOrbExperience.sks in Resources */ = {isa = PBXBuildFile; fileRef = 797EDF521EA1329E003CCB81 /* LootOrbExperience.sks */; };
 		797EDF551EA1393F003CCB81 /* LootPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF541EA1393F003CCB81 /* LootPackage.swift */; };
+		797EDF591EA28E48003CCB81 /* BasicEnemyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF581EA28E48003CCB81 /* BasicEnemyPath.swift */; };
 		798485711E902E7100DFE310 /* CountdownPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798485701E902E7100DFE310 /* CountdownPhase.swift */; };
 		799424BA1E8194D900C2BD88 /* CollisionBitMasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799424B91E8194D900C2BD88 /* CollisionBitMasks.swift */; };
 		799424BC1E81CB1700C2BD88 /* EnemyDies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799424BB1E81CB1700C2BD88 /* EnemyDies.swift */; };
@@ -100,6 +101,7 @@
 		796FA7B31E96C3D7006255BF /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		797EDF521EA1329E003CCB81 /* LootOrbExperience.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LootOrbExperience.sks; sourceTree = "<group>"; };
 		797EDF541EA1393F003CCB81 /* LootPackage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LootPackage.swift; sourceTree = "<group>"; };
+		797EDF581EA28E48003CCB81 /* BasicEnemyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicEnemyPath.swift; sourceTree = "<group>"; };
 		798485701E902E7100DFE310 /* CountdownPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountdownPhase.swift; sourceTree = "<group>"; };
 		799424B91E8194D900C2BD88 /* CollisionBitMasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollisionBitMasks.swift; sourceTree = "<group>"; };
 		799424BB1E81CB1700C2BD88 /* EnemyDies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyDies.swift; sourceTree = "<group>"; };
@@ -207,12 +209,13 @@
 			name = "GameObject Protocols";
 			sourceTree = "<group>";
 		};
-		79434FEC1E9EA044009A516F /* Pathing */ = {
+		79434FEC1E9EA044009A516F /* Pathing and Motion */ = {
 			isa = PBXGroup;
 			children = (
 				79434FED1E9EA067009A516F /* GameObjectPath.swift */,
+				797EDF571EA28E2C003CCB81 /* Paths */,
 			);
-			name = Pathing;
+			name = "Pathing and Motion";
 			sourceTree = "<group>";
 		};
 		79434FF11E9ED720009A516F /* Core */ = {
@@ -230,6 +233,14 @@
 				7913A34A1E884B180070DF8E /* GameConfiguration.swift */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		797EDF571EA28E2C003CCB81 /* Paths */ = {
+			isa = PBXGroup;
+			children = (
+				797EDF581EA28E48003CCB81 /* BasicEnemyPath.swift */,
+			);
+			name = Paths;
 			sourceTree = "<group>";
 		};
 		7984856F1E902E4700DFE310 /* Level Phases */ = {
@@ -305,7 +316,7 @@
 				79434FF11E9ED720009A516F /* Core */,
 				79DFF9CA1E37EF3B00F50514 /* Events */,
 				799424B81E81949300C2BD88 /* Physics */,
-				79434FEC1E9EA044009A516F /* Pathing */,
+				79434FEC1E9EA044009A516F /* Pathing and Motion */,
 				79DFF9C71E37EBCC00F50514 /* Animations */,
 				792D7FFA1E9817F900273684 /* GUI */,
 				79D2294F1DEF6369003F68F9 /* Game Objects */,
@@ -530,6 +541,7 @@
 				799424BA1E8194D900C2BD88 /* CollisionBitMasks.swift in Sources */,
 				79154F6A1E41469100D9B71A /* SpawnEnemy.swift in Sources */,
 				79C4ABC01DFDEF1B006DDCAF /* ContactDelegate.swift in Sources */,
+				797EDF591EA28E48003CCB81 /* BasicEnemyPath.swift in Sources */,
 				79DEC4721DD7BBF000A5BF16 /* AppDelegate.swift in Sources */,
 				79B605EA1E7499310090C791 /* ScreenTouchInfo.swift in Sources */,
 				79CCAB1F1E95657D0015E9A1 /* ArmedWithProjectiles.swift in Sources */,

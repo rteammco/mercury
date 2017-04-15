@@ -11,6 +11,9 @@ import SpriteKit
 
 class SpawnEnemy: EventAction {
   
+  // Default spawn location, just the center of the screen.
+  static let defaultSpawnLocation: CGPoint = CGPoint(x: 0, y: 0)
+  
   let enemyName: String
   
   init(_ enemyName: String) {
@@ -23,18 +26,11 @@ class SpawnEnemy: EventAction {
       let gameState = gameScene.getGameState()
       
       // Create the enemy and spawn it using the GameScene.
-      let xSpawnPos: CGFloat = Util.getUniformRandomValue(between: -1.0, and: 1.0)
-      let ySpawnPos: CGFloat = 2.0
-      let spawnPoint = gameScene.getScaledPosition(CGPoint(x: xSpawnPos, y: ySpawnPos))
-      let enemy = Enemy(position: spawnPoint, gameState: gameState, speed: 0.05)
+      let enemy = Enemy(position: SpawnEnemy.defaultSpawnLocation, gameState: gameState)
       gameScene.addGameObject(enemy, withPhysicsScaling: true)
-      
-      // Create a path for it so that it moves to a random target position.
-      let xTargetPos: CGFloat = Util.getUniformRandomValue(between: -0.75, and: 0.75)
-      let yTargetPos: CGFloat = Util.getUniformRandomValue(between: 0.15, and: 0.5)
-      let targetPosition = gameScene.getScaledPosition(CGPoint(x: xTargetPos, y: yTargetPos))
-      let path = GameObjectPath(from: spawnPoint, to: targetPosition)
-      path.run(on: enemy, withSpeed: gameScene.getScaledValue(0.1))
+      // Make a path for the enemy.
+      let enemyPath = BasicEnemyPath(inScene: gameScene)
+      enemyPath.run(on: enemy)
       
       // Inform the GameState of the change and update the global game state by incrementing the enemy spawn count value.
       gameState.inform(.spawnEnemy, value: enemy)
