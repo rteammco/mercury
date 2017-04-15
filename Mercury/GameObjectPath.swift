@@ -19,24 +19,16 @@ class GameObjectPath {
     self.path.addQuadCurve(to: endPoint, controlPoint: CGPoint(x: startPoint.x, y: endPoint.y))
   }
   
-  init(randomPathArea: CGRect, withNumStopPoints numStopPoints: Int, loop: Bool = false) {
-    self.path = UIBezierPath()
-    // TODO: Implement.
-  }
-  
-  init(on targetObject: GameObject, withScale worldScale: CGFloat) {
-    self.path = UIBezierPath()
-    // TODO: Implement.
-  }
-  
   // Run the pathing animation on the given target GameObject and at the given speed.
   func run(on targetObject: GameObject, withSpeed speed: CGFloat, reorientToPath: Bool = false) {
     let motionAction = SKAction.follow(self.path.cgPath, asOffset: false, orientToPath: reorientToPath, speed: speed)
     let alertFinished = SKAction.run({
       () in targetObject.notifyMotionEnded()
     })
-    targetObject.gameSceneNode?.run(SKAction.sequence([motionAction, alertFinished]))
-    targetObject.notifyMotionStarted()
+    if let gameSceneNode = targetObject.gameSceneNode {
+      gameSceneNode.run(SKAction.sequence([motionAction, alertFinished]))
+      targetObject.notifyMotionStarted()
+    }
   }
   
 }

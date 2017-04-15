@@ -55,6 +55,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
   // The enemy will begin shooting when its initial motion finishes.
   override func notifyMotionEnded() {
+    super.notifyMotionEnded()
     startFireBulletTimer()
   }
   

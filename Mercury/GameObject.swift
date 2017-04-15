@@ -131,12 +131,18 @@ class GameObject: GameStateListener {
   
   // If an external controller is moving this object (e.g. a GameObjectPath), it will notify the object using this method when movement is started.
   func notifyMotionStarted() {
-    // Override as needed.
+    // Extend as needed.
+    if let gameSceneNode = self.gameSceneNode {
+      self.position = gameSceneNode.position
+    }
   }
   
   // Similarly, when externally-controlled movement ends, this method will be called to notify the object that movement finished.
   func notifyMotionEnded() {
-    // Override as needed.
+    // Extend as needed.
+    if let gameSceneNode = self.gameSceneNode {
+      self.position = gameSceneNode.position
+    }
   }
   
   //------------------------------------------------------------------------------
