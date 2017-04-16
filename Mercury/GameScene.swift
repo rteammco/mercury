@@ -17,6 +17,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   static let zPositionForObjects: CGFloat = 1
   static let zPositionForText: CGFloat = 2
   static let zPositionForGUI: CGFloat = 2
+  static let zPositionForOverlayMenu: CGFloat = 3
   
   // The contact delegate needs to be a local variable or else it disappears.
   private var contactDelegate: ContactDelegate?
@@ -163,6 +164,36 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     run(SKAction.sequence([waitBeforeFade, textFadeOut, waitBeforeRemove, removeTextNode]))
   }
   
+  // Pauses the game and creates a pause menu on the screen.
+  private func pauseGame() {
+    // View must exist and not be paused already.
+    guard let view = self.view, !view.isPaused else {
+      return
+    }
+    
+    // Create the pause menu. It will remove itself upon resuming the game.
+    let pauseMenuNode = SKShapeNode(rectOf: CGSize(width: self.frame.width, height: self.frame.height))
+    pauseMenuNode.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+    pauseMenuNode.fillColor = SKColor.black
+    pauseMenuNode.alpha = 0.75
+    pauseMenuNode.zPosition = GameScene.zPositionForOverlayMenu
+    // Create a resume button. This automatically removes the pause menu when pressed.
+    let resumeButton = ButtonNode.menuButton(withText: "Resume")
+    resumeButton.position = CGPoint(x: pauseMenuNode.frame.midX, y: pauseMenuNode.frame.midY)
+    resumeButton.setCallback {
+      pauseMenuNode.removeFromParent()
+      self.getGameState().inform(.resumeGame)
+    }
+    pauseMenuNode.addChild(resumeButton)
+    addChild(pauseMenuNode)
+    
+    // Now actually pause the game. Need to wait 0 seconds so the pause action is executed next frame, after the pause menu was already displayed.
+    let pauseGameAction = SKAction.run {
+      view.isPaused = true
+    }
+    run(SKAction.sequence([SKAction.wait(forDuration: 0), pauseGameAction]))
+  }
+
   // Returns a scaled version of the given normalized position. Position (0, 0) is in the center. If the X coordinate is -1, that's the left-most side of the screen; +1 is the right-most side. Since the screen is taller than it is wide, +/-1 in the Y axis is not going to be completely at the bottom or top.
   func getScaledPosition(_ normalizedPosition: CGPoint) -> CGPoint {
     let halfScaleValue = getScaleValue() / 2.0
@@ -361,6 +392,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   func subscribeToStateChanges() {
     let gameState = getGameState()
     gameState.subscribe(self, to: .pauseGame)
+    gameState.subscribe(self, to: .resumeGame)
     gameState.subscribe(self, to: .playerPosition)
     gameState.subscribe(self, to: .spawnPlayerBullet)
     gameState.subscribe(self, to: .spawnEnemyBullet)
@@ -393,10 +425,9 @@ class GameScene: SKScene, EventCaller, GameStateListener {
         addChild(emitter)
       }
     case .pauseGame:
-      // Pause the game.
-      if let view = self.view {
-        view.isPaused = !view.isPaused
-      }
+      pauseGame()
+    case .resumeGame:
+      self.view?.isPaused = false
     default:
       break
     }
