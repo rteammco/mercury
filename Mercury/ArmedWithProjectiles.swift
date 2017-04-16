@@ -12,7 +12,6 @@ import Foundation
 protocol ArmedWithProjectiles {
   
   // Bullet firing (standard weapon) actions.
-  var fireBulletTimer: Timer? {get set}
   func startFireBulletTimer()
   func stopFireBulletTimer()
   func fireBullet()

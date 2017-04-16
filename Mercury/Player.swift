@@ -11,8 +11,8 @@ import SpriteKit
 
 class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
-  // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
-  var fireBulletTimer: Timer?
+  // The player fire timer key. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
+  static let fireBulletTimerKey = "player bullet timer"
   
   // Bullet damage.
   var bulletDamage: CGFloat = 0
@@ -90,16 +90,16 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // Start firing bullets at the firing rate (fireBulletIntervalSeconds). This will continue to fire bullets at each of the intervals until stopFireBulletTimer() is called.
   func startFireBulletTimer() {
     let bulletFireIntervalSeconds = self.gameState.getTimeInterval(forKey: .playerBulletFireInterval)
-    self.fireBulletTimer = startLoopedTimer(every: bulletFireIntervalSeconds, callbackFunctionSelector: #selector(self.fireBullet), fireImmediately: true)
+    startLoopedTimer(withKey: Player.fireBulletTimerKey, every: bulletFireIntervalSeconds, withCallback: fireBullet, fireImmediately: true)
   }
   
   // Stops firing bullets by invalidating the fireBulletTimer.
   func stopFireBulletTimer() {
-    self.fireBulletTimer?.invalidate()
+    stopLoopedTimer(withKey: Player.fireBulletTimerKey)
   }
   
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
-  @objc func fireBullet() {
+  func fireBullet() {
     let playerPosition = Util.getPlayerWorldPosition(fromGameState: self.gameState)
     let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), gameState: self.gameState, speed: 2.0, damage: self.bulletDamage)
     bullet.setColor(to: GameConfiguration.friendlyColor)

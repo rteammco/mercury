@@ -394,7 +394,9 @@ class GameScene: SKScene, EventCaller, GameStateListener {
       }
     case .pauseGame:
       // Pause the game.
-      print("game pause requested")
+      if let view = self.view {
+        view.isPaused = !view.isPaused
+      }
     default:
       break
     }

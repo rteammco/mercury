@@ -11,8 +11,8 @@ import SpriteKit
 
 class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
-  // The bullet fire timer. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
-  var fireBulletTimer: Timer?
+  // The bullet fire timer key. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
+  static let fireBulletTimerKey = "enemy bullet timer"
   
   override init(position: CGPoint, gameState: GameState) {
     super.init(position: position, gameState: gameState)
@@ -63,17 +63,16 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // TODO: we may want to move this method into the GameObject super class.
   func startFireBulletTimer() {
     let bulletFireIntervalSeconds = self.gameState.getTimeInterval(forKey: .enemyBulletFireInterval)
-    self.fireBulletTimer = startLoopedTimer(every: bulletFireIntervalSeconds, callbackFunctionSelector: #selector(self.fireBullet))
+    startLoopedTimer(withKey: Enemy.fireBulletTimerKey, every: bulletFireIntervalSeconds, withCallback: fireBullet, fireImmediately: true)
   }
   
   // Stops firing bullets by invalidating the fireBulletTimer.
-  // TODO: we may want to move this method into the GameObject super class.
   func stopFireBulletTimer() {
-    self.fireBulletTimer?.invalidate()
+    stopLoopedTimer(withKey: Enemy.fireBulletTimerKey)
   }
   
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
-  @objc func fireBullet() {
+  func fireBullet() {
     let enemyPosition = getPosition()
     let bullet = Bullet(position: CGPoint(x: enemyPosition.x, y: enemyPosition.y), gameState: self.gameState, speed: 1.0, damage: self.gameState.getCGFloat(forKey: .enemyBulletDamage))
     bullet.setColor(to: GameConfiguration.enemyColor)

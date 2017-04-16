@@ -18,9 +18,6 @@ class GameObject: GameStateListener {
   // User interaction variable tracks if this object is currently being touched by the user or not.
   private var isTouched: Bool
   
-  // Tracks any timers associated with this object that need to be cleaned up when the object is destroyed.
-  private var timers: [Timer]
-  
   // The scene node for animation and rendering.
   var gameSceneNode: SKNode?
   private var position: CGPoint
@@ -55,7 +52,6 @@ class GameObject: GameStateListener {
   // Create the object, and get the global GameState to communicate with other GameObjects and modules in the scene.
   init(position: CGPoint, gameState: GameState) {
     self.isTouched = false
-    self.timers = [Timer]()
     self.position = position
     self.gameState = gameState
     self.destroyObjectCalled = false
@@ -158,16 +154,23 @@ class GameObject: GameStateListener {
   // Utility methods for generic GameObject functionality.
   //------------------------------------------------------------------------------
   
-  // Starts a looped timer that calls the given function (wrapped in a Selector) - use #selector(objcFunction) - after every interval given passes. The given function must have no parameters and should have no return type.
-  // Set fireImmediately to true if you would like the timer to call the method at time 0 as well.
-  // The Timer is returned. Used the returned value to invalidate it when you're done.
-  func startLoopedTimer(every intervalSeconds: TimeInterval, callbackFunctionSelector: Selector, fireImmediately: Bool = false) -> Timer {
-    let timer = Timer.scheduledTimer(timeInterval: intervalSeconds, target: self, selector: callbackFunctionSelector, userInfo: nil, repeats: true)
+  // Starts a looped timer that calls the given function after every interval given passes. Set fireImmediately to true if you would like the timer to call the method at time 0 as well.
+  func startLoopedTimer(withKey key: String, every intervalSeconds: TimeInterval, withCallback callbackFunction: @escaping (() -> Void), fireImmediately: Bool = false) {
+    let wait = SKAction.wait(forDuration: intervalSeconds)
+    let runCallback = SKAction.run(callbackFunction)
+    var actionSequence = [SKAction]()
     if fireImmediately {
-      timer.fire()
+      actionSequence = [runCallback, wait]
+    } else {
+      actionSequence = [wait, runCallback]
     }
-    timers.append(timer)
-    return timer
+    let action = SKAction.repeatForever(SKAction.sequence(actionSequence))
+    self.gameSceneNode?.run(action, withKey: key)
+  }
+  
+  // Stops a looping timer with the given unique key.
+  func stopLoopedTimer(withKey key: String) {
+    self.gameSceneNode?.removeAction(forKey: key)
   }
   
   //------------------------------------------------------------------------------
@@ -205,9 +208,6 @@ class GameObject: GameStateListener {
   // Called to destroy or "kill" the object, typically when it dies (health reaches zero).
   func destroyObject() {
     self.destroyObjectCalled = true
-    for timer in self.timers {
-      timer.invalidate()
-    }
     removeSceneNodeFromGameScene()
   }
   
