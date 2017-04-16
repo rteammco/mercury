@@ -12,6 +12,12 @@ import GameplayKit
 
 class GameScene: SKScene, EventCaller, GameStateListener {
   
+  // These values control the Z positions of nodes.
+  static let zPositionForBackground: CGFloat = 0
+  static let zPositionForObjects: CGFloat = 1
+  static let zPositionForText: CGFloat = 2
+  static let zPositionForGUI: CGFloat = 2
+  
   // The contact delegate needs to be a local variable or else it disappears.
   private var contactDelegate: ContactDelegate?
   
@@ -74,7 +80,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     let worldSize = self.frame.height
     let worldNode = SKSpriteNode(imageNamed: "stars")
     worldNode.size = CGSize(width: worldSize, height: worldSize)
-    worldNode.zPosition = 0  // TODO: Organize this with static variables.
+    worldNode.zPosition = GameScene.zPositionForBackground
     addChild(worldNode)
     self.worldNode = worldNode
     
@@ -99,7 +105,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Add the standard GUI to the scene (optional).
   func createGUI() {
     let hud = LevelHud(gameState: getGameState())
-    addGameObject(hud, directlyToScene: true)
+    addGameObject(hud, directlyToScene: true, withZPosition: GameScene.zPositionForGUI)
   }
   
   //------------------------------------------------------------------------------
@@ -108,7 +114,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Adds the given GameObject type to the scene by appending its node. The object is automatically scaled according to the screen size.
   // Set withPhysicsScaling to true if the object is a PhysicsEnabledGameObject and its physical properties should be scaled to reflect the world size.
-  func addGameObject(_ gameObject: GameObject, withPhysicsScaling: Bool = false, directlyToScene: Bool = false) {
+  func addGameObject(_ gameObject: GameObject, withPhysicsScaling: Bool = false, directlyToScene: Bool = false, withZPosition zPosition: CGFloat = GameScene.zPositionForObjects) {
     if let worldSize = self.worldSize {
       let sceneNode = gameObject.createGameSceneNode(scale: worldSize)
       gameObject.connectToSceneNode(sceneNode)
@@ -119,7 +125,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
           physicsEnabledGameObject.scaleMass(by: getScaleValue())
         }
       }
-      sceneNode.zPosition += 1  // TODO: Organize this with static variables.
+      sceneNode.zPosition = zPosition
       if directlyToScene {
         addChild(sceneNode)
       } else {
@@ -135,7 +141,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     labelNode.fontSize = GameConfiguration.mainFontSize
     labelNode.fontColor = GameConfiguration.primaryColor
     labelNode.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
-    labelNode.zPosition = 10
+    labelNode.zPosition = GameScene.zPositionForText
     addChild(labelNode)
     
     let waitBeforeFade = SKAction.wait(forDuration: textOnScreenDuration)

@@ -22,6 +22,7 @@ class MainMenu: GameScene {
     testLevelButton.fontColor = GameConfiguration.primaryColor
     testLevelButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
     testLevelButton.name = self.testLevelButtonName
+    testLevelButton.zPosition = GameScene.zPositionForGUI  // TODO: Make buttons a standard GUI object that controls its own zPosition and callback behavior.
     addChild(testLevelButton)
     
     // Subscribe to touch events to handle button presses.
