@@ -22,10 +22,6 @@ struct PhysicsCollisionBitMask {
   // Projectiles are special case objects that can interact with other types, but not with each other. For example, bullets cannot collide with other bullets.
   static let projectile: UInt32                     = 0x1 << 5
   
-  // Gravity field bitmasks. The global field should work everywhere, whereas the local field will only impact items within a region around the Player.
-  static let playerGlobalLootGravityField: UInt32   = 0x1 << 6
-  static let playerLocalLootGravityField: UInt32    = 0x1 << 7
-  
   // All bits are 1, so it can interact with any other object.
   static let anyObject: UInt32                      = UInt32.max
   

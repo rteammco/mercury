@@ -43,24 +43,6 @@ class LootItem: PhysicsEnabledGameObject {
     return node
   }
   
-  // This update forces this item to never increase its distance from the player. This prevents items moving towards the player using a gravitational force from "overshooting" and moving out of orbit.
-  //
-  // TODO: This is a current "hacky" solution using the SKFieldNode.
-  func restrictItemDistanceFromPlayer() {
-    let lootPosition = getPosition()
-    let playerPosition = Util.getPlayerWorldPosition(fromGameState: self.gameState)
-    let distanceToPlayer = Util.getDistance(between: lootPosition, and: playerPosition)
-    
-    if distanceToPlayer > self.lastDistanceToPlayer {
-      let moveDistance = distanceToPlayer - self.lastDistanceToPlayer
-      let directionToMove = Util.getDirectionVector(from: lootPosition, to: playerPosition)
-      let adjustmentVector = Util.scaleVector(directionToMove, by: moveDistance)
-      move(by: adjustmentVector)
-    } else {
-      self.lastDistanceToPlayer = distanceToPlayer
-    }
-  }
-  
   // Applies the reward that's being carried by this loot item to the Player. This typically happens after the loot item collides with the Player when they "pick it up".
   func applyReward() {
     // Override as needed.

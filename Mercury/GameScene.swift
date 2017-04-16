@@ -66,13 +66,13 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     let gameState = getGameState()
     // TODO: These values should be adjusted from a database or some configuration file.
     let playerStatus = PlayerStatus(gameState: gameState)
-    playerStatus.addPlayerExperience(150000)  // TODO: This is just here for testing.
+    playerStatus.addPlayerExperience(15)  // TODO: This is just here for testing.
     gameState.set(.playerStatus, to: playerStatus)
     gameState.setCGFloat(.playerHealth, to: playerStatus.getMaxPlayerHealth())
     gameState.setTimeInterval(.playerBulletFireInterval, to: 0.1)
     gameState.setCGFloat(.enemyHealthBase, to: 250)
     gameState.setCGFloat(.enemyBulletDamage, to: 5)
-    gameState.setTimeInterval(.enemyBulletFireInterval, to: 0.1)
+    gameState.setTimeInterval(.enemyBulletFireInterval, to: 0.2)
   }
   
   // Initialize the current level scene by setting up all GameObjects and events. By default, initializes the background node and subscribes to state changes. Extend as needed.
@@ -310,14 +310,6 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // This method measures the elapsed time since the last frame and updates the current game level.
   // Called before each frame is rendered with the current time.
   override func update(_ currentTime: TimeInterval) {
-    if let lastFrameTime = self.lastFrameTime {
-      let elapsedTime = currentTime - lastFrameTime
-      enumerateChildNodes(withName: "*", using: { (node, stop) -> Void in
-        if let gameObject = node.userData?.value(forKey: GameObject.nodeValueKey) as? GameObject {
-          gameObject.update(elapsedTime: elapsedTime)
-        }
-      })
-    }
     self.lastFrameTime = currentTime
     self.removeOffscreenNodes()
   }

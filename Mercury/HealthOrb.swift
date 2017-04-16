@@ -20,7 +20,6 @@ class HealthOrb: LootItem {
     
     setCollisionCategory(PhysicsCollisionBitMask.item)
     addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
-    addFieldAttractionBitMask(PhysicsCollisionBitMask.playerGlobalLootGravityField)
   }
   
   // Creates the LootItem node depending on the type of loot item this is.
@@ -32,11 +31,6 @@ class HealthOrb: LootItem {
   // Rewards the player with the experience points.
   override func applyReward() {
     self.gameState.inform(.playerHealthChange, value: self.healthPoints)
-  }
-  
-  // Force this orb to move towards the player at all times.
-  override func update(elapsedTime timeSinceLastUpdate: TimeInterval) {
-    restrictItemDistanceFromPlayer()
   }
   
 }

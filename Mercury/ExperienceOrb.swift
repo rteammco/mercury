@@ -20,7 +20,6 @@ class ExperienceOrb: LootItem {
     
     setCollisionCategory(PhysicsCollisionBitMask.item)
     addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
-    addFieldAttractionBitMask(PhysicsCollisionBitMask.playerGlobalLootGravityField)
   }
   
   // Creates the LootItem node depending on the type of loot item this is.
@@ -35,11 +34,6 @@ class ExperienceOrb: LootItem {
       playerStatus.addPlayerExperience(Int(experiencePoints))  // Convert to Int.
       self.gameState.inform(.playerExperienceChange)
     }
-  }
-  
-  // Force this orb to move towards the player at all times.
-  override func update(elapsedTime timeSinceLastUpdate: TimeInterval) {
-    restrictItemDistanceFromPlayer()
   }
   
 }
