@@ -12,8 +12,8 @@
 
 enum GameStateKey: String {
   
-  // Screen interaction events:
-  case screenTouchDown, screenTouchMoved, screenTouchUp
+  // Screen and user interaction events:
+  case screenTouchDown, screenTouchMoved, screenTouchUp, pauseGame
   
   // Object spawning events:
   case spawnPlayerBullet, spawnEnemy, spawnEnemyBullet, createParticleEffect

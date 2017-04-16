@@ -26,6 +26,7 @@ class ButtonNode: SKLabelNode {
   init(withText text: String) {
     super.init()
     self.text = text
+    self.verticalAlignmentMode = .center
     self.isUserInteractionEnabled = true
     self.zPosition = GameScene.zPositionForGUI
   }

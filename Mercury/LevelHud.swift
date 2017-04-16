@@ -130,6 +130,14 @@ class LevelHud: GameObject {
       updateLevelAndExperienceBar(playerStatus: playerStatus)
     }
     
+    // Finally, create the pause button.
+    let pauseButton = ButtonNode.menuButton(withText: "P")
+    pauseButton.position = CGPoint(x: -width / 1.8, y: 0)
+    pauseButton.setCallback {
+      self.gameState.inform(.pauseGame)
+    }
+    hudNode.addChild(pauseButton)
+    
     // Add the node to the scene.
     hudNode.zPosition = GameConfiguration.hudZPosition
     self.gameSceneNode = hudNode

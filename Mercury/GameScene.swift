@@ -360,6 +360,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Subscribe this GameScene to all relevant game state changes that it needs to handle. Extend as needed with custom subscriptions for a given level.
   func subscribeToStateChanges() {
     let gameState = getGameState()
+    gameState.subscribe(self, to: .pauseGame)
     gameState.subscribe(self, to: .playerPosition)
     gameState.subscribe(self, to: .spawnPlayerBullet)
     gameState.subscribe(self, to: .spawnEnemyBullet)
@@ -370,29 +371,32 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   //
   // TODO: Some of these might work better as separate functions, specific EventActions that handle all the mechanics, or even factory objects to make the code cleaner.
   func reportStateChange(key: GameStateKey, value: Any) {
-    // If player moves, update the world node position.
-    if key == .playerPosition {
+    switch key {
+    case .playerPosition:
+      // If player moves, update the world node position.
       if let position = value as? CGPoint, let worldNode = self.worldNode {
         let relativePositioning = (2 * position.x) / self.frame.width  // -1 to +1
         let widthDifference = worldNode.frame.width - self.frame.width
         let newWorldPosition = -relativePositioning * (widthDifference / 2)
         worldNode.position.x = newWorldPosition
       }
-    }
-    // Add spawned physics-enabled objects to the game.
-    else if key == .spawnPlayerBullet || key == .spawnEnemyBullet {
+    case .spawnPlayerBullet, .spawnEnemyBullet:
+      // Add spawned physics-enabled objects to the game.
       if let gameObject = value as? PhysicsEnabledGameObject {
         addGameObject(gameObject, withPhysicsScaling: true)
         gameObject.setDefaultVelocity()
       }
-    }
-    // Add particle effects nodes.
-    else if key == .createParticleEffect {
+    case .createParticleEffect:
+      // Add particle effects nodes.
       if let emitter = value as? SKEmitterNode {
         emitter.targetNode = self
         addChild(emitter)
       }
+    case .pauseGame:
+      // Pause the game.
+      print("game pause requested")
+    default:
+      break
     }
   }
-  
 }
