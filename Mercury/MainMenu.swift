@@ -16,33 +16,13 @@ class MainMenu: GameScene {
   // Add all buttons to the menu.
   override func initializeScene() {
     super.initializeScene()
-    let testLevelButton = SKLabelNode(fontNamed: GameConfiguration.mainFont)
-    testLevelButton.text = "Start Test Level"
-    testLevelButton.fontSize = GameConfiguration.mainFontSize
-    testLevelButton.fontColor = GameConfiguration.primaryColor
+    let testLevelButton = ButtonNode.menuButton(withText: "Start Test Level")
     testLevelButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
-    testLevelButton.name = self.testLevelButtonName
-    testLevelButton.zPosition = GameScene.zPositionForGUI  // TODO: Make buttons a standard GUI object that controls its own zPosition and callback behavior.
-    addChild(testLevelButton)
-    
-    // Subscribe to touch events to handle button presses.
-    getGameState().subscribe(self, to: .screenTouchDown)
-  }
-  
-  // Handle button touches and run the appropriate action based on the button that was pressed.
-  override func reportStateChange(key: GameStateKey, value: Any) {
-    if key == .screenTouchDown {
-      if let screenTouchInfo = value as? ScreenTouchInfo {
-        let nodes = screenTouchInfo.touchedNodes
-        for node in nodes {
-          if node.name == self.testLevelButtonName {
-            let testLevel = TestLevel()
-            setCurrentLevel(to: testLevel)
-            break
-          }
-        }
-      }
+    testLevelButton.setCallback {
+      let testLevel = TestLevel()
+      self.setCurrentLevel(to: testLevel)
     }
+    addChild(testLevelButton)
   }
   
 }

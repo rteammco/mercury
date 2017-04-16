@@ -34,6 +34,7 @@
 		797EDF601EA2A5CA003CCB81 /* HealthOrb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF5F1EA2A5CA003CCB81 /* HealthOrb.swift */; };
 		797EDF6B1EA3F579003CCB81 /* FlyingStars.sks in Resources */ = {isa = PBXBuildFile; fileRef = 797EDF6A1EA3F579003CCB81 /* FlyingStars.sks */; };
 		798485711E902E7100DFE310 /* CountdownPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798485701E902E7100DFE310 /* CountdownPhase.swift */; };
+		79878F2B1EA4042400125E29 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79878F2A1EA4042400125E29 /* ButtonNode.swift */; };
 		799424BA1E8194D900C2BD88 /* CollisionBitMasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799424B91E8194D900C2BD88 /* CollisionBitMasks.swift */; };
 		799424BC1E81CB1700C2BD88 /* EnemyDies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799424BB1E81CB1700C2BD88 /* EnemyDies.swift */; };
 		79B605EA1E7499310090C791 /* ScreenTouchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B605E91E7499310090C791 /* ScreenTouchInfo.swift */; };
@@ -109,6 +110,7 @@
 		797EDF5F1EA2A5CA003CCB81 /* HealthOrb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthOrb.swift; sourceTree = "<group>"; };
 		797EDF6A1EA3F579003CCB81 /* FlyingStars.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FlyingStars.sks; sourceTree = "<group>"; };
 		798485701E902E7100DFE310 /* CountdownPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountdownPhase.swift; sourceTree = "<group>"; };
+		79878F2A1EA4042400125E29 /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		799424B91E8194D900C2BD88 /* CollisionBitMasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollisionBitMasks.swift; sourceTree = "<group>"; };
 		799424BB1E81CB1700C2BD88 /* EnemyDies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyDies.swift; sourceTree = "<group>"; };
 		79B605E91E7499310090C791 /* ScreenTouchInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenTouchInfo.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				792D7FFB1E98181000273684 /* LevelHud.swift */,
+				79878F2A1EA4042400125E29 /* ButtonNode.swift */,
 			);
 			name = GUI;
 			sourceTree = "<group>";
@@ -576,6 +579,7 @@
 				79434FF31E9EDB5E009A516F /* PlayerStatus.swift in Sources */,
 				7960143B1DD8EB23004640E9 /* Player.swift in Sources */,
 				796FA7B41E96C3D7006255BF /* Util.swift in Sources */,
+				79878F2B1EA4042400125E29 /* ButtonNode.swift in Sources */,
 				797EDF601EA2A5CA003CCB81 /* HealthOrb.swift in Sources */,
 				79F539521E997C3400BC9389 /* ParticleSystems.swift in Sources */,
 				793377D81E40633200D4701C /* DisplayText.swift in Sources */,
