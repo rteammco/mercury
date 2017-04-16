@@ -21,7 +21,7 @@ class LootItem: PhysicsEnabledGameObject {
   var lastDistanceToPlayer: CGFloat
   
   override init(position: CGPoint, gameState: GameState) {
-    let playerPosition = gameState.getPoint(forKey: .playerPosition)
+    let playerPosition = Util.getPlayerWorldPosition(fromGameState: gameState)
     self.lastDistanceToPlayer = Util.getDistance(between: position, and: playerPosition)
     super.init(position: position, gameState: gameState)
   }
@@ -48,7 +48,7 @@ class LootItem: PhysicsEnabledGameObject {
   // TODO: This is a current "hacky" solution using the SKFieldNode.
   func restrictItemDistanceFromPlayer() {
     let lootPosition = getPosition()
-    let playerPosition = gameState.getPoint(forKey: .playerPosition)
+    let playerPosition = Util.getPlayerWorldPosition(fromGameState: self.gameState)
     let distanceToPlayer = Util.getDistance(between: lootPosition, and: playerPosition)
     
     if distanceToPlayer > self.lastDistanceToPlayer {

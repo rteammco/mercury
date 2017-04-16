@@ -81,7 +81,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.environment)
     
     // Set the direction of the bullet based on the player's current position.
-    let playerPosition = self.gameState.getPoint(forKey: .playerPosition)
+    let playerPosition = Util.getPlayerWorldPosition(fromGameState: self.gameState)
     var bulletDirection = Util.getDirectionVector(from: enemyPosition, to: playerPosition)
     bulletDirection.dx += Util.getUniformRandomValue(between: -0.1, and: 0.1)
     bulletDirection.dy += Util.getUniformRandomValue(between: -0.1, and: 0.1)

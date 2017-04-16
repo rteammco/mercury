@@ -114,7 +114,7 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
   @objc func fireBullet() {
-    let playerPosition = Util.getPlayerPosition(fromGameState: self.gameState)
+    let playerPosition = Util.getPlayerWorldPosition(fromGameState: self.gameState)
     let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), gameState: self.gameState, speed: 2.0, damage: self.bulletDamage)
     bullet.setColor(to: GameConfiguration.friendlyColor)
     bullet.setMovementDirection(to: CGVector(dx: 0.0, dy: 1.0))
