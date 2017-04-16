@@ -78,8 +78,16 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Initialize the current level scene by setting up all GameObjects and events. By default, initializes the background node and subscribes to state changes. Extend as needed.
   func initializeScene() {
     let worldSize = self.frame.height
-    let worldNode = SKSpriteNode(imageNamed: "stars")
-    worldNode.size = CGSize(width: worldSize, height: worldSize)
+    let worldNode = SKShapeNode(rectOf: CGSize(width: worldSize, height: worldSize))
+    //let worldNode = SKSpriteNode(imageNamed: "stars")
+    //worldNode.size = CGSize(width: worldSize, height: worldSize)
+    worldNode.fillColor = SKColor.black
+    if let backgroundEmitter = SKEmitterNode(fileNamed: "FlyingStars.sks") {
+      backgroundEmitter.position.y = worldNode.frame.height / 2
+      backgroundEmitter.particlePositionRange = CGVector(dx: worldNode.frame.width, dy: 0)
+      backgroundEmitter.advanceSimulationTime(10)  // So we start will full screen of stars.
+      worldNode.addChild(backgroundEmitter)
+    }
     worldNode.zPosition = GameScene.zPositionForBackground
     addChild(worldNode)
     self.worldNode = worldNode

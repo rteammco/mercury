@@ -32,6 +32,7 @@
 		797EDF591EA28E48003CCB81 /* BasicEnemyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF581EA28E48003CCB81 /* BasicEnemyPath.swift */; };
 		797EDF5E1EA2A44A003CCB81 /* ExperienceOrb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF5D1EA2A44A003CCB81 /* ExperienceOrb.swift */; };
 		797EDF601EA2A5CA003CCB81 /* HealthOrb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF5F1EA2A5CA003CCB81 /* HealthOrb.swift */; };
+		797EDF6B1EA3F579003CCB81 /* FlyingStars.sks in Resources */ = {isa = PBXBuildFile; fileRef = 797EDF6A1EA3F579003CCB81 /* FlyingStars.sks */; };
 		798485711E902E7100DFE310 /* CountdownPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798485701E902E7100DFE310 /* CountdownPhase.swift */; };
 		799424BA1E8194D900C2BD88 /* CollisionBitMasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799424B91E8194D900C2BD88 /* CollisionBitMasks.swift */; };
 		799424BC1E81CB1700C2BD88 /* EnemyDies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799424BB1E81CB1700C2BD88 /* EnemyDies.swift */; };
@@ -106,6 +107,7 @@
 		797EDF581EA28E48003CCB81 /* BasicEnemyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicEnemyPath.swift; sourceTree = "<group>"; };
 		797EDF5D1EA2A44A003CCB81 /* ExperienceOrb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperienceOrb.swift; sourceTree = "<group>"; };
 		797EDF5F1EA2A5CA003CCB81 /* HealthOrb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthOrb.swift; sourceTree = "<group>"; };
+		797EDF6A1EA3F579003CCB81 /* FlyingStars.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FlyingStars.sks; sourceTree = "<group>"; };
 		798485701E902E7100DFE310 /* CountdownPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountdownPhase.swift; sourceTree = "<group>"; };
 		799424B91E8194D900C2BD88 /* CollisionBitMasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollisionBitMasks.swift; sourceTree = "<group>"; };
 		799424BB1E81CB1700C2BD88 /* EnemyDies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyDies.swift; sourceTree = "<group>"; };
@@ -264,12 +266,38 @@
 			name = "State and Loading";
 			sourceTree = "<group>";
 		};
+		797EDF661EA3F509003CCB81 /* Impact Effects */ = {
+			isa = PBXGroup;
+			children = (
+				79F5394F1E9965EC00BC9389 /* ImpactSpark.sks */,
+				79F5395B1E99833000BC9389 /* ImpactExplosion.sks */,
+			);
+			name = "Impact Effects";
+			sourceTree = "<group>";
+		};
+		797EDF671EA3F516003CCB81 /* Items */ = {
+			isa = PBXGroup;
+			children = (
+				79434FF61EA013CD009A516F /* LootOrbHealth.sks */,
+				797EDF521EA1329E003CCB81 /* LootOrbExperience.sks */,
+			);
+			name = Items;
+			sourceTree = "<group>";
+		};
 		7984856F1E902E4700DFE310 /* Level Phases */ = {
 			isa = PBXGroup;
 			children = (
 				798485701E902E7100DFE310 /* CountdownPhase.swift */,
 			);
 			name = "Level Phases";
+			sourceTree = "<group>";
+		};
+		79878F291EA3F75700125E29 /* Backgrounds */ = {
+			isa = PBXGroup;
+			children = (
+				797EDF6A1EA3F579003CCB81 /* FlyingStars.sks */,
+			);
+			name = Backgrounds;
 			sourceTree = "<group>";
 		};
 		799424B81E81949300C2BD88 /* Physics */ = {
@@ -377,12 +405,11 @@
 		79DFF9C71E37EBCC00F50514 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
-				79F5394F1E9965EC00BC9389 /* ImpactSpark.sks */,
-				79F5395B1E99833000BC9389 /* ImpactExplosion.sks */,
-				79434FF61EA013CD009A516F /* LootOrbHealth.sks */,
-				797EDF521EA1329E003CCB81 /* LootOrbExperience.sks */,
-				79F539551E9981F800BC9389 /* Fireball.sks */,
 				79F539511E997C3400BC9389 /* ParticleSystems.swift */,
+				797EDF661EA3F509003CCB81 /* Impact Effects */,
+				797EDF671EA3F516003CCB81 /* Items */,
+				79878F291EA3F75700125E29 /* Backgrounds */,
+				79F539551E9981F800BC9389 /* Fireball.sks */,
 			);
 			name = Animations;
 			sourceTree = "<group>";
@@ -515,6 +542,7 @@
 				79DEC4741DD7BBF000A5BF16 /* GameScene.sks in Resources */,
 				79DEC47F1DD7BBF000A5BF16 /* Assets.xcassets in Resources */,
 				79DEC4821DD7BBF000A5BF16 /* LaunchScreen.storyboard in Resources */,
+				797EDF6B1EA3F579003CCB81 /* FlyingStars.sks in Resources */,
 				79F539561E9981F800BC9389 /* Fireball.sks in Resources */,
 				797EDF531EA1329E003CCB81 /* LootOrbExperience.sks in Resources */,
 				79DEC4761DD7BBF000A5BF16 /* Actions.sks in Resources */,
