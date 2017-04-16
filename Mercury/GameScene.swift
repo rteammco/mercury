@@ -278,9 +278,10 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Removes all nodes that are no longer on the screen. For example, if a bullet flies off the screen, there is no reason to track or update it anymore. It's gone.
   private func removeOffscreenNodes() {
-    removeOffscreenNodes(from: self)
     if let worldNode = self.worldNode {
       removeOffscreenNodes(from: worldNode)
+    } else {
+      removeOffscreenNodes(from: self)
     }
   }
   // Helper method for removeOffscreenNodes() above.
