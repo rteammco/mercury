@@ -41,7 +41,7 @@ class GameObject: GameStateListener {
   var nodeName = "object"
   
   // A guard to prevent destroyed objects from interacting with the game.
-  var wasDestroyed: Bool
+  private var destroyObjectCalled: Bool
   
   // The "health", or number of hit points (HP), of this GameObject. Typically, when HP reaches zero, the object "dies". This behavior is determined for each GameObject individually.
   // The maxHitPoints value is used to track the current percentage or ratio of health, and to track its maximum health amount. An object's hitPoints typically cannot exceed maxHitPoints or go below 0.
@@ -58,7 +58,7 @@ class GameObject: GameStateListener {
     self.timers = [Timer]()
     self.position = position
     self.gameState = gameState
-    self.wasDestroyed = false
+    self.destroyObjectCalled = false
   }
   
   // Scale the movement speed by the given non-negative value.
@@ -106,6 +106,11 @@ class GameObject: GameStateListener {
   // Removes this object's scene node from the game scene.
   func removeSceneNodeFromGameScene() {
     self.gameSceneNode?.removeFromParent()
+  }
+  
+  // Returns true if destroyObject() was previously called on this object.
+  func wasDestroyed() -> Bool {
+    return self.destroyObjectCalled
   }
   
   //------------------------------------------------------------------------------
@@ -199,7 +204,7 @@ class GameObject: GameStateListener {
   
   // Called to destroy or "kill" the object, typically when it dies (health reaches zero).
   func destroyObject() {
-    self.wasDestroyed = true
+    self.destroyObjectCalled = true
     for timer in self.timers {
       timer.invalidate()
     }
