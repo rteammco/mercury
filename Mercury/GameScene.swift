@@ -60,7 +60,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     let gameState = getGameState()
     // TODO: These values should be adjusted from a database or some configuration file.
     let playerStatus = PlayerStatus(gameState: gameState)
-    playerStatus.addPlayerExperience(15)  // TODO: This is just here for testing.
+    playerStatus.addPlayerExperience(150000)  // TODO: This is just here for testing.
     gameState.set(.playerStatus, to: playerStatus)
     gameState.setCGFloat(.playerHealth, to: playerStatus.getMaxPlayerHealth())
     gameState.setTimeInterval(.playerBulletFireInterval, to: 0.1)
@@ -74,8 +74,8 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     let worldSize = self.frame.height
     let worldNode = SKSpriteNode(imageNamed: "stars")
     worldNode.size = CGSize(width: worldSize, height: worldSize)
-    worldNode.zPosition = 0
-    addChild(worldNode, directlyToScene: true)
+    worldNode.zPosition = 0  // TODO: Organize this with static variables.
+    addChild(worldNode)
     self.worldNode = worldNode
     
     subscribeToStateChanges()
@@ -83,38 +83,32 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Add the player object to the scene (optional).
   func createPlayer(atPosition position: CGPoint) {
-    let player = Player(position: getScaledPosition(position), gameState: getGameState())
-    addGameObject(player)
+    let gameState = getGameState()
+    // Since the player moves within the main screen window and not the world node, we have to offset the player's position relative to the world.
+    var worldPositionScaling: CGFloat = 1
+    if let worldNode = self.worldNode {
+      worldPositionScaling = worldNode.frame.width / self.frame.width
+    }
+    gameState.setCGFloat(.playerPositionXScaling, to: worldPositionScaling)
+    // Now add the player object.
+    let player = Player(position: getScaledPosition(position), gameState: gameState)
+    addGameObject(player, directlyToScene: true)
     when(PlayerDies()).execute(action: DisplayText("Player Died"))  // TODO: Add an action that will handle this.
   }
   
   // Add the standard GUI to the scene (optional).
   func createGUI() {
     let hud = LevelHud(gameState: getGameState())
-    addGameObject(hud)
+    addGameObject(hud, directlyToScene: true)
   }
   
   //------------------------------------------------------------------------------
   // General level methods.
   //------------------------------------------------------------------------------
   
-  // Overload the default addChild behavior to add all nodes to the world node. This node handles the background visualizations, but also contains the entire scene so that it can be larger than the view itself.
-  override func addChild(_ node: SKNode) {
-    node.zPosition += 1
-    self.worldNode?.addChild(node)
-  }
-  // Use this method to explicity add a node to the scene directly, instead of adding it to the world node.
-  func addChild(_ node: SKNode, directlyToScene: Bool) {
-    if directlyToScene {
-      super.addChild(node)
-    } else {
-      addChild(node)
-    }
-  }
-  
   // Adds the given GameObject type to the scene by appending its node. The object is automatically scaled according to the screen size.
   // Set withPhysicsScaling to true if the object is a PhysicsEnabledGameObject and its physical properties should be scaled to reflect the world size.
-  func addGameObject(_ gameObject: GameObject, withPhysicsScaling: Bool = false) {
+  func addGameObject(_ gameObject: GameObject, withPhysicsScaling: Bool = false, directlyToScene: Bool = false) {
     if let worldSize = self.worldSize {
       let sceneNode = gameObject.createGameSceneNode(scale: worldSize)
       gameObject.connectToSceneNode(sceneNode)
@@ -125,7 +119,12 @@ class GameScene: SKScene, EventCaller, GameStateListener {
           physicsEnabledGameObject.scaleMass(by: getScaleValue())
         }
       }
-      addChild(sceneNode)
+      sceneNode.zPosition += 1  // TODO: Organize this with static variables.
+      if directlyToScene {
+        addChild(sceneNode)
+      } else {
+        self.worldNode?.addChild(sceneNode)
+      }
     }
   }
   
@@ -136,6 +135,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     labelNode.fontSize = GameConfiguration.mainFontSize
     labelNode.fontColor = GameConfiguration.primaryColor
     labelNode.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+    labelNode.zPosition = 10
     addChild(labelNode)
     
     let waitBeforeFade = SKAction.wait(forDuration: textOnScreenDuration)
@@ -353,6 +353,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Subscribe this GameScene to all relevant game state changes that it needs to handle. Extend as needed with custom subscriptions for a given level.
   func subscribeToStateChanges() {
     let gameState = getGameState()
+    gameState.subscribe(self, to: .playerPosition)
     gameState.subscribe(self, to: .spawnPlayerBullet)
     gameState.subscribe(self, to: .spawnEnemyBullet)
     gameState.subscribe(self, to: .createParticleEffect)
@@ -362,15 +363,24 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   //
   // TODO: Some of these might work better as separate functions, specific EventActions that handle all the mechanics, or even factory objects to make the code cleaner.
   func reportStateChange(key: GameStateKey, value: Any) {
+    // If player moves, update the world node position.
+    if key == .playerPosition {
+      if let position = value as? CGPoint, let worldNode = self.worldNode {
+        let relativePositioning = (2 * position.x) / self.frame.width  // -1 to +1
+        let widthDifference = worldNode.frame.width - self.frame.width
+        let newWorldPosition = -relativePositioning * (widthDifference / 2)
+        worldNode.position.x = newWorldPosition
+      }
+    }
     // Add spawned physics-enabled objects to the game.
-    if key == .spawnPlayerBullet || key == .spawnEnemyBullet {
+    else if key == .spawnPlayerBullet || key == .spawnEnemyBullet {
       if let gameObject = value as? PhysicsEnabledGameObject {
         addGameObject(gameObject, withPhysicsScaling: true)
         gameObject.setDefaultVelocity()
       }
     }
     // Add particle effects nodes.
-    if key == .createParticleEffect {
+    else if key == .createParticleEffect {
       if let emitter = value as? SKEmitterNode {
         emitter.targetNode = self
         addChild(emitter)
