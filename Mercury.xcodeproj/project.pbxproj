@@ -36,6 +36,7 @@
 		798485711E902E7100DFE310 /* CountdownPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798485701E902E7100DFE310 /* CountdownPhase.swift */; };
 		79878F2B1EA4042400125E29 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79878F2A1EA4042400125E29 /* ButtonNode.swift */; };
 		79878F2D1EA50E0F00125E29 /* MenuNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79878F2C1EA50E0F00125E29 /* MenuNode.swift */; };
+		79878F2F1EA52AC000125E29 /* HandlePlayerDeath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79878F2E1EA52AC000125E29 /* HandlePlayerDeath.swift */; };
 		799424BA1E8194D900C2BD88 /* CollisionBitMasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799424B91E8194D900C2BD88 /* CollisionBitMasks.swift */; };
 		799424BC1E81CB1700C2BD88 /* EnemyDies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799424BB1E81CB1700C2BD88 /* EnemyDies.swift */; };
 		79B605EA1E7499310090C791 /* ScreenTouchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B605E91E7499310090C791 /* ScreenTouchInfo.swift */; };
@@ -113,6 +114,7 @@
 		798485701E902E7100DFE310 /* CountdownPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountdownPhase.swift; sourceTree = "<group>"; };
 		79878F2A1EA4042400125E29 /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		79878F2C1EA50E0F00125E29 /* MenuNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuNode.swift; sourceTree = "<group>"; };
+		79878F2E1EA52AC000125E29 /* HandlePlayerDeath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandlePlayerDeath.swift; sourceTree = "<group>"; };
 		799424B91E8194D900C2BD88 /* CollisionBitMasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollisionBitMasks.swift; sourceTree = "<group>"; };
 		799424BB1E81CB1700C2BD88 /* EnemyDies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyDies.swift; sourceTree = "<group>"; };
 		79B605E91E7499310090C791 /* ScreenTouchInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenTouchInfo.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				793377D71E40633200D4701C /* DisplayText.swift */,
 				79154F691E41469100D9B71A /* SpawnEnemy.swift */,
 				79434FEF1E9ECEB9009A516F /* CreateLootPackage.swift */,
+				79878F2E1EA52AC000125E29 /* HandlePlayerDeath.swift */,
 				79CCAB1C1E9557CA0015E9A1 /* SetGameScene.swift */,
 			);
 			name = "Level EventActions";
@@ -594,6 +597,7 @@
 				79DFF9CC1E37EFB400F50514 /* Event.swift in Sources */,
 				797EDF551EA1393F003CCB81 /* LootPackage.swift in Sources */,
 				797EDF5E1EA2A44A003CCB81 /* ExperienceOrb.swift in Sources */,
+				79878F2F1EA52AC000125E29 /* HandlePlayerDeath.swift in Sources */,
 				7913A34B1E884B180070DF8E /* GameConfiguration.swift in Sources */,
 				79154F681E41431600D9B71A /* GameStateListener.swift in Sources */,
 				79434FF01E9ECEB9009A516F /* CreateLootPackage.swift in Sources */,

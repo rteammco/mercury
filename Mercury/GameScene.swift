@@ -108,7 +108,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     // Now add the player object.
     let player = Player(position: getScaledPosition(position), gameState: gameState)
     addGameObject(player, directlyToScene: true)
-    when(PlayerDies()).execute(action: DisplayText("Player Died"))  // TODO: Add an action that will handle this.
+    when(PlayerDies()).execute(action: HandlePlayerDeath())
   }
   
   // Add the standard GUI to the scene (optional).
@@ -162,6 +162,17 @@ class GameScene: SKScene, EventCaller, GameStateListener {
       () in labelNode.run(SKAction.removeFromParent())
     })
     run(SKAction.sequence([waitBeforeFade, textFadeOut, waitBeforeRemove, removeTextNode]))
+  }
+  
+  // Set the speed of the game to the given ratio. This will be applied to both the rendering and physics, effectively slowing down or speeding up time of the entire game world.
+  func setGameSpeed(to relativeSpeed: CGFloat) {
+    var speed = relativeSpeed
+    if relativeSpeed < 0 {
+      speed = 0
+    }
+    self.speed = speed
+    self.physicsWorld.speed = speed
+    // TODO: this doesn't affect particle emitters, which should be slowed/sped up too.
   }
   
   // Pauses the game and creates a pause menu on the screen.

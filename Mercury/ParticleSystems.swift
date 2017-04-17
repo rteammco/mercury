@@ -49,10 +49,15 @@ struct ParticleSystems {
   
   // Runs an explosion effect at the given object's location. This effect is not tied to the given object, but rather simulates it exploading in a separate animation.
   static func runExplosionEffect(on gameObject: GameObject) {
+    runExplosionEffect(atPosition: gameObject.getPosition(), withGameState: gameObject.gameState)
+  }
+  
+  // Runs an explosion effect at the given location. A GameState must be passed in to inform of the effect.
+  static func runExplosionEffect(atPosition position: CGPoint, withGameState gameState: GameState) {
     if let emitter = SKEmitterNode(fileNamed: "ImpactExplosion.sks") {
-      emitter.position = gameObject.getPosition()
+      emitter.position = position
       runEffect(emitter, forDuration: EXPLOSION_EFFECT_DURATION)
-      gameObject.gameState.inform(.createParticleEffect, value: emitter)
+      gameState.inform(.createParticleEffect, value: emitter)
     }
   }
   
