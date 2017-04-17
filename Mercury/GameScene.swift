@@ -167,7 +167,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Pauses the game and creates a pause menu on the screen.
   private func pauseGame() {
     // View must exist and not be paused already.
-    guard let view = self.view, !view.isPaused else {
+    guard !self.isPaused else {
       return
     }
     
@@ -191,9 +191,14 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     
     // Now actually pause the game. Need to wait 0 seconds so the pause action is executed next frame, after the pause menu was already displayed.
     let pauseGameAction = SKAction.run {
-      view.isPaused = true
+      self.isPaused = true
     }
     run(SKAction.sequence([SKAction.wait(forDuration: 0), pauseGameAction]))
+  }
+  
+  // Call to unpause a paused game. If game is not paused, this will have no effect.
+  private func resumePausedGame() {
+    self.isPaused = false
   }
 
   // Returns a scaled version of the given normalized position. Position (0, 0) is in the center. If the X coordinate is -1, that's the left-most side of the screen; +1 is the right-most side. Since the screen is taller than it is wide, +/-1 in the Y axis is not going to be completely at the bottom or top.
@@ -429,7 +434,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     case .pauseGame:
       pauseGame()
     case .resumeGame:
-      self.view?.isPaused = false
+      resumePausedGame()
     default:
       break
     }
