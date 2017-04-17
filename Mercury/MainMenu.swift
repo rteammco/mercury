@@ -16,13 +16,14 @@ class MainMenu: GameScene {
   // Add all buttons to the menu.
   override func initializeScene() {
     super.initializeScene()
+    let menuNode = MenuNode(inFrame: self.frame)
     let testLevelButton = ButtonNode.menuButton(withText: "Start Test Level")
-    testLevelButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
     testLevelButton.setCallback {
       let testLevel = TestLevel()
       self.setCurrentLevel(to: testLevel)
     }
-    addChild(testLevelButton)
+    menuNode.add(button: testLevelButton)
+    addChild(menuNode)
   }
   
 }

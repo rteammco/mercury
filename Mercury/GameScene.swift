@@ -172,20 +172,22 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     }
     
     // Create the pause menu. It will remove itself upon resuming the game.
-    let pauseMenuNode = SKShapeNode(rectOf: CGSize(width: self.frame.width, height: self.frame.height))
-    pauseMenuNode.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
-    pauseMenuNode.fillColor = SKColor.black
-    pauseMenuNode.alpha = 0.75
-    pauseMenuNode.zPosition = GameScene.zPositionForOverlayMenu
+    let pauseMenu = MenuNode(inFrame: self.frame, withBackgroundAlpha: 0.75)
+    pauseMenu.zPosition = GameScene.zPositionForOverlayMenu
     // Create a resume button. This automatically removes the pause menu when pressed.
     let resumeButton = ButtonNode.menuButton(withText: "Resume")
-    resumeButton.position = CGPoint(x: pauseMenuNode.frame.midX, y: pauseMenuNode.frame.midY)
     resumeButton.setCallback {
-      pauseMenuNode.removeFromParent()
+      pauseMenu.removeFromParent()
       self.getGameState().inform(.resumeGame)
     }
-    pauseMenuNode.addChild(resumeButton)
-    addChild(pauseMenuNode)
+    pauseMenu.add(button: resumeButton)
+    // Create a main menu button that will take the player to the main menu screen.
+    let mainMenuButton = ButtonNode.menuButton(withText: "Main Menu")
+    mainMenuButton.setCallback {
+      self.setCurrentLevel(to: MainMenu())
+    }
+    pauseMenu.add(button: mainMenuButton)
+    addChild(pauseMenu)
     
     // Now actually pause the game. Need to wait 0 seconds so the pause action is executed next frame, after the pause menu was already displayed.
     let pauseGameAction = SKAction.run {
