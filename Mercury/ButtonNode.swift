@@ -22,6 +22,15 @@ class ButtonNode: SKLabelNode {
     return buttonNode
   }
   
+  // Create a smaller interface button.
+  static func interfaceButton(withText text: String) -> ButtonNode {
+    let buttonNode = ButtonNode(withText: text)
+    buttonNode.fontName = GameConfiguration.secondaryFont
+    buttonNode.fontSize = GameConfiguration.secondaryFontSize
+    buttonNode.fontColor = GameConfiguration.secondaryColor
+    return buttonNode
+  }
+  
   // Standard constructor. Use this one.
   init(withText text: String) {
     super.init()

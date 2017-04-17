@@ -15,10 +15,10 @@ struct GameConfiguration {
   // Fonts.
   //------------------------------------------------------------------------------
   
-  static let mainFont: String = "Papyrus"
+  static let mainFont: String = "AppleSDGothicNeo-Light"
   static let mainFontSize: CGFloat = 60
   
-  static let secondaryFont: String = "Papyrus"
+  static let secondaryFont: String = "AppleSDGothicNeo-UltraLight"
   static let secondaryFontSize: CGFloat = 40
   
   //------------------------------------------------------------------------------
@@ -39,18 +39,11 @@ struct GameConfiguration {
   static let hudBarAlpha: CGFloat = 0.75
   
   static let hudHealthTextColor: SKColor = SKColor.white
-  static let hudHealthTextFont: String = "Arial-BoldMT"
-  static let hudHealthTextFontSize: CGFloat = 34
+  static let hudHealthTextFont: String = "PingFangTC-Regular"
+  static let hudHealthTextFontSize: CGFloat = 28
   
   static let hudPlayerLevelTextColor: SKColor = SKColor.white
-  static let hudPlayerLevelTextFont: String = "Arial-BoldMT"
-  static let hudPlayerLevelTextFontSize: CGFloat = 34
-  
-  //------------------------------------------------------------------------------
-  // UI Layers:
-  // By default, everything in the game is at z-position 0. Set z-position values greater than zero to objects that should be prioritized above the game objects.
-  //------------------------------------------------------------------------------
-  
-  static let hudZPosition: CGFloat = 1
+  static let hudPlayerLevelTextFont: String = "PingFangTC-SemiBold"
+  static let hudPlayerLevelTextFontSize: CGFloat = 30
   
 }
