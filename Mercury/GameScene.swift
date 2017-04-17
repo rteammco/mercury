@@ -308,6 +308,16 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     self.eventPhaseSequence.first?.start()
   }
   
+  // Resets the scene. This clears all nodes and resets the background. Individual levels should extend this method and call other functions, such as createPlayer() and createGUI() if desired.
+  func reset() {
+    enumerateChildNodes(withName: "*", using: { (node, stop) -> Void in
+      node.removeFromParent()
+    })
+    if let worldNode = self.worldNode {
+      addChild(worldNode)
+    }
+  }
+  
   //------------------------------------------------------------------------------
   // Touch event methods.
   //------------------------------------------------------------------------------

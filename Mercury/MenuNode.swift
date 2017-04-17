@@ -11,10 +11,10 @@ import SpriteKit
 
 class MenuNode: SKShapeNode {
   
-  var buttons: [ButtonNode]
+  var menuItems: [SKLabelNode]
   
   init(inFrame frame: CGRect, withBackgroundAlpha alpha: CGFloat = 0.0) {
-    self.buttons = [ButtonNode]()
+    self.menuItems = [SKLabelNode]()
     super.init()
     
     self.path = CGPath(rect: frame, transform: nil)
@@ -32,7 +32,7 @@ class MenuNode: SKShapeNode {
   
   // Swift complains if these constructors aren't there.
   override init() {  // Runtime error if not present.
-    self.buttons = [ButtonNode]()
+    self.menuItems = [SKLabelNode]()
     super.init()
   }
   required init(coder aDecoder: NSCoder) {  // Compile error if not present.
@@ -41,28 +41,44 @@ class MenuNode: SKShapeNode {
   
   // Add a new button to this menu.
   func add(button: ButtonNode) {
-    addChild(button)
-    buttons.append(button)
-    organizeButtonPositions()
+    button.fontName = GameConfiguration.mainFont
+    button.fontSize = GameConfiguration.mainFontSize
+    button.color = GameConfiguration.primaryColor
+    add(item: button)
+  }
+  
+  // Add a new label node to this menu. Menu labels are generally non-interactable and their color is different.
+  func add(label: SKLabelNode) {
+    label.fontName = GameConfiguration.mainFont
+    label.fontSize = GameConfiguration.mainFontSize
+    label.color = GameConfiguration.secondaryColor
+    add(item: label)
+  }
+  
+  // Generic add function to add any SKLabelNode (button or otherwise).
+  private func add(item: SKLabelNode) {
+    addChild(item)
+    self.menuItems.append(item)
+    organizeItemPositions()
   }
   
   // Organizes the button positions so that they all line up in the menu.
-  private func organizeButtonPositions() {
-    guard self.buttons.count > 0 else {
+  private func organizeItemPositions() {
+    guard self.menuItems.count > 0 else {
       return
     }
     
     var totalHeight: CGFloat = 0
-    for button in self.buttons {
+    for button in self.menuItems {
       totalHeight += button.frame.height
     }
     totalHeight *= 1.5  // Account for padding between buttons.
     
-    let heightPerButton = totalHeight / CGFloat(self.buttons.count)
-    var buttonY = self.frame.midY + totalHeight / 2
-    for button in self.buttons {
-      button.position = CGPoint(x: self.frame.midX, y: buttonY)
-      buttonY -= heightPerButton
+    let heightPerItem = totalHeight / CGFloat(self.menuItems.count)
+    var itemY = self.frame.midY + totalHeight / 2
+    for item in self.menuItems {
+      item.position = CGPoint(x: self.frame.midX, y: itemY)
+      itemY -= heightPerItem
     }
   }
   

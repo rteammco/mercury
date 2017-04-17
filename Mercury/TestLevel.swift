@@ -33,6 +33,12 @@ class TestLevel: GameScene {
     start(withCountdown: 3)
   }
   
+  override func reset() {
+    super.reset()
+    createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
+    createGUI()
+  }
+  
   override func reportStateChange(key: GameStateKey, value: Any) {
     super.reportStateChange(key: key, value: value)
   }
