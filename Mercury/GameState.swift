@@ -12,14 +12,20 @@ import SpriteKit
 class GameState {
   
   // Maps GameState variables (identified by a String key) to whatever value they are given.
-  var gameStateValues: [GameStateKey: Any]
+  private var gameStateValues: [GameStateKey: Any]
   
   // Maps variables (identified by their key) to a set of GameStateListeners which have subscribed to getting reports on changes for those variables.
-  var gameStateListeners: [GameStateKey: [GameStateListener]]
+  private var gameStateListeners: [GameStateKey: [GameStateListener]]
   
   init() {
     self.gameStateValues = [GameStateKey: Any]()
     self.gameStateListeners = [GameStateKey: [GameStateListener]]()
+  }
+  
+  // Creates an exact copy of the GameState, which will include all existing values and subscriptions.
+  init(copyFrom other: GameState) {
+    self.gameStateValues = other.gameStateValues
+    self.gameStateListeners = other.gameStateListeners
   }
   
   // Set a value for the GameState. If the value did not exist before, it will be modified. Keys are case-sensitive and must match exactly.
@@ -107,4 +113,5 @@ class GameState {
       self.gameStateListeners[key] = [listener]
     }
   }
+  
 }

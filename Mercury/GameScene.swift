@@ -34,11 +34,14 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Animation variables.
   private var lastFrameTime: TimeInterval?
   
-  // GameState that keeps track of all of the game's state variables.
+  // GameState that keeps track of all of the game's state variables. If Phases are running, this will keep track of the GameState as it was *before* the phase began and it is updated whenever a phase finishes. Hence, this variable might be out-of-date for any given phase.
   private var gameState: GameState?
   
+  // This is a GameState copied before the current phase began. In the event of a phase reset, this copy will be used to reset the current GameState.
+  private var previousGameState: GameState?
+  
   // The current EventPhase. This is used to access the currently running phase to pause events or reset the phase.
-  var currentPhase: EventPhase?
+  private var currentPhase: EventPhase?
   
   //------------------------------------------------------------------------------
   // Scene initialization.
@@ -280,6 +283,17 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     }
   }
   
+  // Sets the next phase and uses its GameState to update for all future phases. Only if a phase is reset do we drop the last GameState and re-use the original one.
+  func setNextPhase(to nextPhase: EventPhase) {
+    self.currentPhase = nextPhase
+    self.previousGameState = GameState(copyFrom: getGameState())
+  }
+  
+  // Returns the current phase or nil if there is no current phase.
+  func getCurrentPhase() -> EventPhase? {
+    return self.currentPhase
+  }
+  
   // Starts the level, triggering the first phase.
   func start(withCountdown countdownTime: Int = 0) {
     if countdownTime > 0 {
@@ -299,7 +313,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     
     if let firstPhase = self.eventPhaseSequence.first {
       firstPhase.start()
-      self.currentPhase = firstPhase
+      setNextPhase(to: firstPhase)
     }
   }
   
@@ -311,6 +325,11 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     if let worldNode = self.worldNode {
       addChild(worldNode)
     }
+    // Reset the current phase.
+    if let previousGameState = self.previousGameState {
+      self.gameState = GameState(copyFrom: previousGameState)
+    }
+    self.currentPhase?.start()
   }
   
   //------------------------------------------------------------------------------

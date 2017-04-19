@@ -66,8 +66,8 @@ class EventPhase: EventAction, EventCaller {
   // If the nextPhase is set, it gets started.
   private func finishPhase() {
     if let nextPhase = self.nextPhase {
+      self.gameScene.setNextPhase(to: nextPhase)
       nextPhase.start()
-      self.gameScene.currentPhase = nextPhase
     }
   }
   
