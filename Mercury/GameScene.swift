@@ -185,16 +185,17 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     
     // Create the pause menu. It will remove itself upon resuming the game.
     let pauseMenu = MenuNode(inFrame: self.frame, withBackgroundAlpha: 0.75)
+    pauseMenu.add(label: SKLabelNode(text: "Game Paused"))
     pauseMenu.zPosition = GameScene.zPositionForOverlayMenu
     // Create a resume button. This automatically removes the pause menu when pressed.
-    let resumeButton = ButtonNode.menuButton(withText: "Resume")
+    let resumeButton = ButtonNode(withText: "Resume")
     resumeButton.setCallback {
       pauseMenu.removeFromParent()
       self.getGameState().inform(.resumeGame)
     }
     pauseMenu.add(button: resumeButton)
     // Create a main menu button that will take the player to the main menu screen.
-    let mainMenuButton = ButtonNode.menuButton(withText: "Main Menu")
+    let mainMenuButton = ButtonNode(withText: "Main Menu")
     mainMenuButton.setCallback {
       self.setCurrentLevel(to: MainMenu())
     }

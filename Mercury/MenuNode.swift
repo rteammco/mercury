@@ -41,24 +41,29 @@ class MenuNode: SKShapeNode {
   
   // Add a new button to this menu.
   func add(button: ButtonNode) {
-    button.fontName = GameConfiguration.mainFont
-    button.fontSize = GameConfiguration.mainFontSize
-    button.color = GameConfiguration.primaryColor
+    button.fontName = GameConfiguration.menuButtonFont
+    button.fontSize = GameConfiguration.menuButtonFontSize
+    button.fontColor = GameConfiguration.menuButtonColor
     add(item: button)
   }
   
   // Add a new label node to this menu. Menu labels are generally non-interactable and their color is different.
   func add(label: SKLabelNode) {
-    label.fontName = GameConfiguration.mainFont
-    label.fontSize = GameConfiguration.mainFontSize
-    label.color = GameConfiguration.secondaryColor
-    add(item: label)
+    label.fontName = GameConfiguration.menuLabelFont
+    label.fontSize = GameConfiguration.menuLabelFontSize
+    label.fontColor = GameConfiguration.menuLabelColor
+    label.isUserInteractionEnabled = false
+    add(item: label, pushToTop: true)
   }
   
   // Generic add function to add any SKLabelNode (button or otherwise).
-  private func add(item: SKLabelNode) {
+  private func add(item: SKLabelNode, pushToTop: Bool = false) {
     addChild(item)
-    self.menuItems.append(item)
+    if pushToTop {
+      self.menuItems.insert(item, at: 0)
+    } else {
+      self.menuItems.append(item)
+    }
     organizeItemPositions()
   }
   
@@ -72,7 +77,7 @@ class MenuNode: SKShapeNode {
     for button in self.menuItems {
       totalHeight += button.frame.height
     }
-    totalHeight *= 1.5  // Account for padding between buttons.
+    totalHeight *= 2  // Account for padding between buttons.
     
     let heightPerItem = totalHeight / CGFloat(self.menuItems.count)
     var itemY = self.frame.midY + totalHeight / 2

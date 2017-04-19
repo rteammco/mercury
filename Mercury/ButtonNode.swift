@@ -13,15 +13,6 @@ class ButtonNode: SKLabelNode {
   
   private var callbackFunction: (() -> Void)?
   
-  // Creates and returns a larger menu button.
-  static func menuButton(withText text: String) -> ButtonNode {
-    let buttonNode = ButtonNode(withText: text)
-    buttonNode.fontName = GameConfiguration.mainFont
-    buttonNode.fontSize = GameConfiguration.mainFontSize
-    buttonNode.fontColor = GameConfiguration.primaryColor
-    return buttonNode
-  }
-  
   // Create a smaller interface button.
   static func interfaceButton(withText text: String) -> ButtonNode {
     let buttonNode = ButtonNode(withText: text)

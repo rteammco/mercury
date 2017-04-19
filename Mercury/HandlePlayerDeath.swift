@@ -20,7 +20,7 @@ class HandlePlayerDeath: EventAction {
       let playerDiedMenu = MenuNode(inFrame: gameScene.frame, withBackgroundAlpha: 0.5)
       playerDiedMenu.add(label: SKLabelNode(text: "Player Died"))
       
-      let tryAgainButton = ButtonNode.menuButton(withText: "Try Again")
+      let tryAgainButton = ButtonNode(withText: "Try Again")
       tryAgainButton.setCallback {
         playerDiedMenu.removeFromParent()
         gameScene.setGameSpeed(to: 1.0)
@@ -29,7 +29,7 @@ class HandlePlayerDeath: EventAction {
       }
       playerDiedMenu.add(button: tryAgainButton)
       
-      let mainMenuButton = ButtonNode.menuButton(withText: "Main Menu")
+      let mainMenuButton = ButtonNode(withText: "Main Menu")
       mainMenuButton.setCallback {
         gameScene.setCurrentLevel(to: MainMenu())
       }

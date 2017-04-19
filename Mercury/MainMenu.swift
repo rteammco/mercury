@@ -17,7 +17,7 @@ class MainMenu: GameScene {
   override func initializeScene() {
     super.initializeScene()
     let menuNode = MenuNode(inFrame: self.frame)
-    let testLevelButton = ButtonNode.menuButton(withText: "Start Test Level")
+    let testLevelButton = ButtonNode(withText: "Start Test Level")
     testLevelButton.setCallback {
       let testLevel = TestLevel()
       self.setCurrentLevel(to: testLevel)

@@ -12,7 +12,7 @@ import SpriteKit
 struct GameConfiguration {
   
   //------------------------------------------------------------------------------
-  // Fonts.
+  // General fonts.
   //------------------------------------------------------------------------------
   
   static let mainFont: String = "AppleSDGothicNeo-Light"
@@ -29,6 +29,18 @@ struct GameConfiguration {
   static let secondaryColor: SKColor = SKColor.cyan
   static let friendlyColor: SKColor = SKColor.green
   static let enemyColor: SKColor = SKColor.red
+  
+  //------------------------------------------------------------------------------
+  // Menu fonts and colors.
+  //------------------------------------------------------------------------------
+  
+  static let menuButtonFont: String = "AppleSDGothicNeo-Light"
+  static let menuButtonFontSize: CGFloat = 50
+  static let menuButtonColor: SKColor = SKColor.cyan
+  
+  static let menuLabelFont: String = "AppleSDGothicNeo-SemiBold"
+  static let menuLabelFontSize: CGFloat = 50
+  static let menuLabelColor: SKColor = SKColor.yellow
   
   //------------------------------------------------------------------------------
   // HUD design and colors.
