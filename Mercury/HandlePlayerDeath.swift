@@ -35,6 +35,7 @@ class HandlePlayerDeath: EventAction {
       }
       playerDiedMenu.add(button: mainMenuButton)
       
+      gameScene.currentPhase?.stop()
       gameState.set(.canPauseGame, to: false)
       gameScene.addChild(playerDiedMenu)
     }

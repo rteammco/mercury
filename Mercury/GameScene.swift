@@ -37,6 +37,9 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // GameState that keeps track of all of the game's state variables.
   private var gameState: GameState?
   
+  // The current EventPhase. This is used to access the currently running phase to pause events or reset the phase.
+  var currentPhase: EventPhase?
+  
   //------------------------------------------------------------------------------
   // Scene initialization.
   //------------------------------------------------------------------------------
@@ -294,7 +297,10 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     self.eventPhaseSequence.last?.setNextPhase(to: finishLevelPhase)
     self.eventPhaseSequence.append(finishLevelPhase)
     
-    self.eventPhaseSequence.first?.start()
+    if let firstPhase = self.eventPhaseSequence.first {
+      firstPhase.start()
+      self.currentPhase = firstPhase
+    }
   }
   
   // Resets the scene. This clears all nodes and resets the background. Individual levels should extend this method and call other functions, such as createPlayer() and createGUI() if desired.
@@ -313,17 +319,17 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   private func touchDown(atPoint pos: CGPoint) {
     let touchedNodes: [SKNode] = nodes(at: pos)
-    self.gameState?.inform(.screenTouchDown, value: ScreenTouchInfo(pos, touchedNodes))
+    getGameState().inform(.screenTouchDown, value: ScreenTouchInfo(pos, touchedNodes))
   }
   
   private func touchMoved(toPoint pos: CGPoint) {
     let touchedNodes: [SKNode] = nodes(at: pos)
-    self.gameState?.inform(.screenTouchMoved, value: ScreenTouchInfo(pos, touchedNodes))
+    getGameState().inform(.screenTouchMoved, value: ScreenTouchInfo(pos, touchedNodes))
   }
   
   private func touchUp(atPoint pos: CGPoint) {
     let touchedNodes: [SKNode] = nodes(at: pos)
-    self.gameState?.inform(.screenTouchUp, value: ScreenTouchInfo(pos, touchedNodes))
+    getGameState().inform(.screenTouchUp, value: ScreenTouchInfo(pos, touchedNodes))
   }
   
   //------------------------------------------------------------------------------
