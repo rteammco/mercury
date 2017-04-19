@@ -13,7 +13,7 @@
 enum GameStateKey: String {
   
   // Screen and user interaction events:
-  case screenTouchDown, screenTouchMoved, screenTouchUp, pauseGame, resumeGame
+  case screenTouchDown, screenTouchMoved, screenTouchUp, pauseGame, resumeGame, canPauseGame
   
   // Object spawning events:
   case spawnPlayerBullet, spawnEnemy, spawnEnemyBullet, createParticleEffect

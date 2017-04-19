@@ -91,6 +91,14 @@ class GameState {
     return defaultValue
   }
   
+  // Returns the value as a Bool. Default false unless otherwise specified.
+  func getBool(forKey key: GameStateKey, defaultValue: Bool = false) -> Bool {
+    if let value = self.gameStateValues[key] as? Bool {
+      return value
+    }
+    return defaultValue
+  }
+  
   // Subscribes a GameStateListener to listen to the state variable identified by the given key. Whenever this state variable is updated, the listener will be notified via the reportStateChange method.
   func subscribe(_ listener: GameStateListener, to key: GameStateKey) {
     if self.gameStateListeners[key] != nil {

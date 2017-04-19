@@ -65,6 +65,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Initializes values in the GameState. Eventually, this will load data from saved state values in the database.
   private func initializeGameState() {
     let gameState = getGameState()
+    gameState.set(.canPauseGame, to: true)
     // TODO: These values should be adjusted from a database or some configuration file.
     let playerStatus = PlayerStatus(gameState: gameState)
     playerStatus.addPlayerExperience(15)  // TODO: This is just here for testing.
@@ -178,7 +179,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Pauses the game and creates a pause menu on the screen.
   private func pauseGame() {
     // View must exist and not be paused already.
-    guard !self.isPaused else {
+    guard !self.isPaused, getGameState().getBool(forKey: .canPauseGame) else {
       return
     }
     

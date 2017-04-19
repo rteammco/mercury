@@ -25,6 +25,7 @@ class HandlePlayerDeath: EventAction {
         playerDiedMenu.removeFromParent()
         gameScene.setGameSpeed(to: 1.0)
         gameScene.reset()
+        gameState.set(.canPauseGame, to: true)
       }
       playerDiedMenu.add(button: tryAgainButton)
       
@@ -34,6 +35,7 @@ class HandlePlayerDeath: EventAction {
       }
       playerDiedMenu.add(button: mainMenuButton)
       
+      gameState.set(.canPauseGame, to: false)
       gameScene.addChild(playerDiedMenu)
     }
   }
