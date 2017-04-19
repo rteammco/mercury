@@ -31,9 +31,6 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // The worldNode will hold everything.
   private var worldNode: SKNode?
   
-  // User touch interaction variables.
-  private var lastTouchPosition: CGPoint?
-  
   // Animation variables.
   private var lastFrameTime: TimeInterval?
   
@@ -238,16 +235,6 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     return 1.0
   }
   
-  // Returns the previous position on the screen that a user's touch occured.
-  // The previous location is the one before the latest touch action. If no touch was previously recorded, returns (0, 0) which is the center of the screen.
-  func getPreviousTouchPosition() -> CGPoint {
-    if let previousTouchPosition = self.lastTouchPosition {
-      return previousTouchPosition
-    } else {
-      return CGPoint(x: 0, y: 0)
-    }
-  }
-  
   // Returns the GameState for this GameScene. This GameState contains all game state variables and should be updated by any and all objects that need to set their variables to the global game state for Events and other objects to reference.
   func getGameState() -> GameState {
     if let gameState = self.gameState {
@@ -327,13 +314,11 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   private func touchDown(atPoint pos: CGPoint) {
     let touchedNodes: [SKNode] = nodes(at: pos)
     self.gameState?.inform(.screenTouchDown, value: ScreenTouchInfo(pos, touchedNodes))
-    self.lastTouchPosition = pos
   }
   
   private func touchMoved(toPoint pos: CGPoint) {
     let touchedNodes: [SKNode] = nodes(at: pos)
     self.gameState?.inform(.screenTouchMoved, value: ScreenTouchInfo(pos, touchedNodes))
-    self.lastTouchPosition = pos
   }
   
   private func touchUp(atPoint pos: CGPoint) {
