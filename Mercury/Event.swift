@@ -177,6 +177,7 @@ class Event: EventStopCriteria, GameStateListener {
   
   // Subscribes this event to the given set of keys. This will only work the first time it is called. Use this method in the start() method instead of directly subscribing to GameState changes for optimal results.
   func subscribeTo(stateChanges keys: GameStateKey...) {
+    // NOTE: We block the subscribe changes because start() typically runs the subscriptions, and start() is called in event loops.
     if !self.isSubscribedToGameStateChanges {
       for key in keys {
         GameScene.gameState.subscribe(self, to: key)
@@ -195,10 +196,20 @@ class Event: EventStopCriteria, GameStateListener {
     self.isActive = true
     // Extend as needed, e.g. start a clock timer, and once it's done, call self.trigger(). Initialize all variables for the event here.
   }
+  
   // Stop the event from firing.
   func stop() {
-    print("Stopped event", self)
+    // Extend as needed, e.g. by forcing a timer to stop, etc.
     self.isActive = false
+  }
+  
+  // Reset the event. This will reset its execution state to the default values. Use this when the phase or level is reset.
+  //
+  // NOTE: Do not call reset() in start(), because start() is executed every time a repeating event loops. The state should NOT be reset during that time.
+  func reset() {
+    self.wasTriggered = false
+    self.isActive = true
+    self.isSubscribedToGameStateChanges = false
   }
   
   //------------------------------------------------------------------------------
