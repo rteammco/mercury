@@ -17,9 +17,9 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // Bullet damage.
   var bulletDamage: CGFloat = 0
   
-  override init(position: CGPoint, gameState: GameState) {
-    super.init(position: position, gameState: gameState)
-    self.gameState.set(.playerPosition, to: getPosition())
+  override init(position: CGPoint) {
+    super.init(position: position)
+    GameScene.gameState.set(.playerPosition, to: getPosition())
     self.nodeName = "player"
     
     updatePlayerVariables()
@@ -34,13 +34,13 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
     addCollisionTestCategory(PhysicsCollisionBitMask.enemy)
     
     subscribeToUserInteractionStateChanges()
-    self.gameState.subscribe(self, to: .playerLeveledUp)
-    self.gameState.subscribe(self, to: .playerHealthChange)
+    GameScene.gameState.subscribe(self, to: .playerLeveledUp)
+    GameScene.gameState.subscribe(self, to: .playerHealthChange)
   }
   
   // Updates the player's variables based on the current player status, which scales with the player's level. This updates the player's bullet damage, and sets the player's health to the maximum current health value.
   private func updatePlayerVariables() {
-    if let playerStatus = self.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
+    if let playerStatus = GameScene.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
       self.bulletDamage = playerStatus.getBasePlayerDamage()
       initializeHitPoints(playerStatus.getMaxPlayerHealth())
     }
@@ -61,7 +61,7 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
     super.reportStateChange(key: key, value: value)
     if key == .playerLeveledUp {
       updatePlayerVariables()
-      self.gameState.set(.playerHealth, to: getHitPoints())
+      GameScene.gameState.set(.playerHealth, to: getHitPoints())
     } else if key == .playerHealthChange {
       if let amount = value as? CGFloat {
         changeHitPoints(by: amount)
@@ -75,12 +75,12 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
   override func changeHitPoints(by amount: CGFloat) {
     super.changeHitPoints(by: amount)
-    self.gameState.set(.playerHealth, to: getHitPoints())
+    GameScene.gameState.set(.playerHealth, to: getHitPoints())
   }
   
   override func destroyObject() {
     super.destroyObject()
-    self.gameState.inform(.playerDied, value: self)
+    GameScene.gameState.inform(.playerDied, value: self)
   }
   
   //------------------------------------------------------------------------------
@@ -89,7 +89,7 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
   // Start firing bullets at the firing rate (fireBulletIntervalSeconds). This will continue to fire bullets at each of the intervals until stopFireBulletTimer() is called.
   func startFireBulletTimer() {
-    let bulletFireIntervalSeconds = self.gameState.getTimeInterval(forKey: .playerBulletFireInterval)
+    let bulletFireIntervalSeconds = GameScene.gameState.getTimeInterval(forKey: .playerBulletFireInterval)
     startLoopedTimer(withKey: Player.fireBulletTimerKey, every: bulletFireIntervalSeconds, withCallback: fireBullet, fireImmediately: true)
   }
   
@@ -100,13 +100,13 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
   func fireBullet() {
-    let playerPosition = Util.getPlayerWorldPosition(fromGameState: self.gameState)
-    let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), gameState: self.gameState, speed: 2.0, damage: self.bulletDamage)
+    let playerPosition = Util.getPlayerWorldPosition()
+    let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: 2.0, damage: self.bulletDamage)
     bullet.setColor(to: GameConfiguration.friendlyColor)
     bullet.setMovementDirection(to: CGVector(dx: 0.0, dy: 1.0))
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.enemy)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.environment)
-    self.gameState.inform(.spawnPlayerBullet, value: bullet)
+    GameScene.gameState.inform(.spawnPlayerBullet, value: bullet)
   }
   
   //------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
     let dx = to.x - playerPosition.x
     let dy = to.y - playerPosition.y
     move(by: CGVector(dx: dx, dy: dy))
-    self.gameState.set(.playerPosition, to: getPosition())
+    GameScene.gameState.set(.playerPosition, to: getPosition())
   }
   
   // If this node is touched, start the bullet fire timer.

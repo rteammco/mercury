@@ -13,9 +13,9 @@ class HealthOrb: LootItem {
   
   let healthPoints: CGFloat
   
-  init(position: CGPoint, gameState: GameState, withHealth healthPoints: CGFloat) {
+  init(position: CGPoint, withHealth healthPoints: CGFloat) {
     self.healthPoints = healthPoints
-    super.init(position: position, gameState: gameState)
+    super.init(position: position)
     self.nodeName = "health orb"
     
     setCollisionCategory(PhysicsCollisionBitMask.item)
@@ -30,7 +30,7 @@ class HealthOrb: LootItem {
   
   // Rewards the player with the experience points.
   override func applyReward() {
-    self.gameState.inform(.playerHealthChange, value: self.healthPoints)
+    GameScene.gameState.inform(.playerHealthChange, value: self.healthPoints)
   }
   
 }

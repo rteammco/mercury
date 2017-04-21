@@ -13,10 +13,8 @@ class EnemyDies: Event {
   
   // Subscribe to the "enemy dies" game state event.
   override func start() {
-    if let gameScene = self.caller {
-      let gameState = gameScene.getGameState()
-      subscribeTo(stateChanges: .enemyDied, from: gameState)
-    }
+    super.start()
+    subscribeTo(stateChanges: .enemyDied)
   }
   
   // When the "enemy dies" game state event occurs, trigger this event.

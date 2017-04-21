@@ -11,8 +11,6 @@ import SpriteKit
 
 class PlayerStatus {
   
-  private let gameState: GameState
-  
   // Player level.
   private var playerLevel: Int
   
@@ -28,9 +26,7 @@ class PlayerStatus {
   private let playerHealthScaling: CGFloat
   
   // TODO: This should probably have access to the GameState for alerting things like leveling up the player, etc.
-  init(gameState: GameState) {
-    self.gameState = gameState
-    
+  init() {
     // TODO: These should be set from a database and configuration file(s).
     self.playerLevel = 1
     
@@ -72,7 +68,7 @@ class PlayerStatus {
       self.playerLevel += 1
       self.currentPlayerExperience -= nextLevelRequirement
       nextLevelRequirement = playerExperienceRequiredToNextLevel()
-      self.gameState.inform(.playerLeveledUp, value: self.playerLevel)
+      GameScene.gameState.inform(.playerLeveledUp, value: self.playerLevel)
     }
   }
   

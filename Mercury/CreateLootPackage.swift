@@ -27,7 +27,6 @@ class CreateLootPackage: EventAction {
   
   // Creates experience or health orbs, depending on the specified type, that will award the given values in either experience or health.
   private func createOrbs(ofType orbType: LootItem.ItemType, withQuanity value: CGFloat, withMaxValuePerOrb maxOrbValue: CGFloat, withinRegion region: CGRect, gameScene: GameScene) {
-    let gameState = gameScene.getGameState()
     let valuePerOrb: CGFloat = max(maxOrbValue, value / CGFloat(CreateLootPackage.kMaxNumberOfOrbsPerType))
     
     var amountRemaining: CGFloat = value
@@ -38,9 +37,9 @@ class CreateLootPackage: EventAction {
       var orb: LootItem?
       // Initialize orb depending on what type it is.
       if orbType == .experienceOrb {
-        orb = ExperienceOrb(position: orbPosition, gameState: gameState, withExperience: orbValue)
+        orb = ExperienceOrb(position: orbPosition, withExperience: orbValue)
       } else if orbType == .healthOrb {
-        orb = HealthOrb(position: orbPosition, gameState: gameState, withHealth: orbValue)
+        orb = HealthOrb(position: orbPosition, withHealth: orbValue)
       }
       // Add orb to the scene.
       if let orbObject = orb {
@@ -55,10 +54,9 @@ class CreateLootPackage: EventAction {
     if let gameScene = self.caller, let enemy = enemy as? Enemy {
       let loot = self.lootPackage.generateLoot()
       let enemyBoundingBox = enemy.getBoundingBox()
-      let gameState = gameScene.getGameState()
-      if loot.experience > 0, let playerStatus = gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
+      if loot.experience > 0, let playerStatus = GameScene.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
         playerStatus.addPlayerExperience(Int(loot.experience))  // Convert to Int.
-        gameState.inform(.playerExperienceChange)
+        GameScene.gameState.inform(.playerExperienceChange)
       }
       createOrbs(ofType: .healthOrb, withQuanity: loot.health, withMaxValuePerOrb: numHealthPointsPerOrb, withinRegion: enemyBoundingBox, gameScene: gameScene)
     }

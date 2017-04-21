@@ -51,8 +51,10 @@ class EventPhase: EventAction, EventCaller {
   
   // Stops the phase from running.
   func stop() {
-    // TODO: Stop all events from firing.
-    // TODO: Add a reset mechanism (or maybe just call "start" again). This will involve resetting the GameState as well.
+    for event in self.events {
+      event.stop()
+    }
+    self.numCompletedEvents = 0
   }
   
   // This also poses as an EventAction. When any event part of this phase is completed, it "executes" this phase. The phase tracks the number of events that "executed" it, indicating that they finished. The phase ends when all of its events finish.

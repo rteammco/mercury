@@ -14,10 +14,10 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // The bullet fire timer key. If active, this will trigger bullet fires every fireBulletIntervalSeconds time interval.
   static let fireBulletTimerKey = "enemy bullet timer"
   
-  override init(position: CGPoint, gameState: GameState) {
-    super.init(position: position, gameState: gameState)
+  override init(position: CGPoint) {
+    super.init(position: position)
     self.nodeName = "enemy"
-    initializeHitPoints(self.gameState.getCGFloat(forKey: .enemyHealthBase))
+    initializeHitPoints(GameScene.gameState.getCGFloat(forKey: .enemyHealthBase))
     
     // Customize physics properties:
     self.physicsMass = 1.0
@@ -46,7 +46,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   override func destroyObject() {
     super.destroyObject()
     ParticleSystems.runExplosionEffect(on: self)
-    self.gameState.inform(.enemyDied, value: self)
+    GameScene.gameState.inform(.enemyDied, value: self)
   }
   
   //------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // Start firing bullets at the firing rate (fireBulletIntervalSeconds). This will continue to fire bullets at each of the intervals until stopFireBulletTimer() is called.
   // TODO: we may want to move this method into the GameObject super class.
   func startFireBulletTimer() {
-    let bulletFireIntervalSeconds = self.gameState.getTimeInterval(forKey: .enemyBulletFireInterval)
+    let bulletFireIntervalSeconds = GameScene.gameState.getTimeInterval(forKey: .enemyBulletFireInterval)
     startLoopedTimer(withKey: Enemy.fireBulletTimerKey, every: bulletFireIntervalSeconds, withCallback: fireBullet, fireImmediately: true)
   }
   
@@ -74,19 +74,19 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
   func fireBullet() {
     let enemyPosition = getPosition()
-    let bullet = Bullet(position: CGPoint(x: enemyPosition.x, y: enemyPosition.y), gameState: self.gameState, speed: 1.0, damage: self.gameState.getCGFloat(forKey: .enemyBulletDamage))
+    let bullet = Bullet(position: CGPoint(x: enemyPosition.x, y: enemyPosition.y), speed: 1.0, damage: GameScene.gameState.getCGFloat(forKey: .enemyBulletDamage))
     bullet.setColor(to: GameConfiguration.enemyColor)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.environment)
     
     // Set the direction of the bullet based on the player's current position.
-    let playerPosition = Util.getPlayerWorldPosition(fromGameState: self.gameState)
+    let playerPosition = Util.getPlayerWorldPosition()
     var bulletDirection = Util.getDirectionVector(from: enemyPosition, to: playerPosition)
     bulletDirection.dx += Util.getUniformRandomValue(between: -0.1, and: 0.1)
     bulletDirection.dy += Util.getUniformRandomValue(between: -0.1, and: 0.1)
     bullet.setMovementDirection(to: bulletDirection)
     
-    self.gameState.inform(.spawnEnemyBullet, value: bullet)
+    GameScene.gameState.inform(.spawnEnemyBullet, value: bullet)
   }
   
 }

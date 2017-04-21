@@ -18,10 +18,10 @@ class Bullet: PhysicsEnabledGameObject {
   // The amount of damage this bullet does on impact.
   private let damage: CGFloat
   
-  init(position: CGPoint, gameState: GameState, speed: CGFloat, damage: CGFloat) {
+  init(position: CGPoint, speed: CGFloat, damage: CGFloat) {
     self.color = SKColor.yellow
     self.damage = damage
-    super.init(position: position, gameState: gameState)
+    super.init(position: position)
     self.nodeName = "bullet"
     self.scaleMovementSpeed(speed)
     

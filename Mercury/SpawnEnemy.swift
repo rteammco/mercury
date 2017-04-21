@@ -23,19 +23,18 @@ class SpawnEnemy: EventAction {
   override func execute(withOptionalValue optionalValue: Any? = nil) {
     // TODO: Switch between the appropriate enemies.
     if let gameScene = self.caller {
-      let gameState = gameScene.getGameState()
       
       // Create the enemy and spawn it using the GameScene.
-      let enemy = Enemy(position: SpawnEnemy.defaultSpawnLocation, gameState: gameState)
+      let enemy = Enemy(position: SpawnEnemy.defaultSpawnLocation)
       gameScene.addGameObject(enemy, withPhysicsScaling: true)
       // Make a path for the enemy.
       let enemyPath = BasicEnemyPath(inScene: gameScene)
       enemyPath.run(on: enemy)
       
       // Inform the GameState of the change and update the global game state by incrementing the enemy spawn count value.
-      gameState.inform(.spawnEnemy, value: enemy)
-      let numEnemiesSpawned = gameState.getInt(forKey: .numSpawnedEnemies)
-      gameState.set(.numSpawnedEnemies, to: numEnemiesSpawned + 1)
+      GameScene.gameState.inform(.spawnEnemy, value: enemy)
+      let numEnemiesSpawned = GameScene.gameState.getInt(forKey: .numSpawnedEnemies)
+      GameScene.gameState.set(.numSpawnedEnemies, to: numEnemiesSpawned + 1)
     }
   }
   

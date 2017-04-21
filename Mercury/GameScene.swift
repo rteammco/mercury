@@ -35,7 +35,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   private var lastFrameTime: TimeInterval?
   
   // GameState that keeps track of all of the game's state variables. If Phases are running, this will keep track of the GameState as it was *before* the phase began and it is updated whenever a phase finishes. Hence, this variable might be out-of-date for any given phase.
-  private var gameState: GameState?
+  static var gameState = GameState()
   
   // This is a GameState copied before the current phase began. In the event of a phase reset, this copy will be used to reset the current GameState.
   private var previousGameState: GameState?
@@ -51,7 +51,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   override func didMove(to view: SKView) {
     // Set the size of the world based on the scene's size.
     self.worldSize = min(self.size.width, self.size.height)
-    self.gameState = GameState()
+    GameScene.gameState = GameState()  // Reset the global game state.
     
     initializePhysics()
     initializeGameState()
@@ -67,17 +67,16 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Initializes values in the GameState. Eventually, this will load data from saved state values in the database.
   private func initializeGameState() {
-    let gameState = getGameState()
-    gameState.set(.canPauseGame, to: true)
+    GameScene.gameState.set(.canPauseGame, to: true)
     // TODO: These values should be adjusted from a database or some configuration file.
-    let playerStatus = PlayerStatus(gameState: gameState)
+    let playerStatus = PlayerStatus()
     playerStatus.addPlayerExperience(15)  // TODO: This is just here for testing.
-    gameState.set(.playerStatus, to: playerStatus)
-    gameState.setCGFloat(.playerHealth, to: playerStatus.getMaxPlayerHealth())
-    gameState.setTimeInterval(.playerBulletFireInterval, to: 0.1)
-    gameState.setCGFloat(.enemyHealthBase, to: 250)
-    gameState.setCGFloat(.enemyBulletDamage, to: 5)
-    gameState.setTimeInterval(.enemyBulletFireInterval, to: 0.2)
+    GameScene.gameState.set(.playerStatus, to: playerStatus)
+    GameScene.gameState.setCGFloat(.playerHealth, to: playerStatus.getMaxPlayerHealth())
+    GameScene.gameState.setTimeInterval(.playerBulletFireInterval, to: 0.1)
+    GameScene.gameState.setCGFloat(.enemyHealthBase, to: 250)
+    GameScene.gameState.setCGFloat(.enemyBulletDamage, to: 5)
+    GameScene.gameState.setTimeInterval(.enemyBulletFireInterval, to: 0.2)
   }
   
   // Initialize the current level scene by setting up all GameObjects and events. By default, initializes the background node and subscribes to state changes. Extend as needed.
@@ -102,22 +101,21 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Add the player object to the scene (optional).
   func createPlayer(atPosition position: CGPoint) {
-    let gameState = getGameState()
     // Since the player moves within the main screen window and not the world node, we have to offset the player's position relative to the world.
     var worldPositionScaling: CGFloat = 1
     if let worldNode = self.worldNode {
       worldPositionScaling = worldNode.frame.width / self.frame.width
     }
-    gameState.setCGFloat(.playerPositionXScaling, to: worldPositionScaling)
+    GameScene.gameState.setCGFloat(.playerPositionXScaling, to: worldPositionScaling)
     // Now add the player object.
-    let player = Player(position: getScaledPosition(position), gameState: gameState)
+    let player = Player(position: getScaledPosition(position))
     addGameObject(player, directlyToScene: true)
     when(PlayerDies()).execute(action: HandlePlayerDeath())
   }
   
   // Add the standard GUI to the scene (optional).
   func createGUI() {
-    let hud = LevelHud(gameState: getGameState())
+    let hud = LevelHud()
     addGameObject(hud, directlyToScene: true, withZPosition: GameScene.zPositionForGUI)
   }
   
@@ -182,7 +180,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Pauses the game and creates a pause menu on the screen.
   private func pauseGame() {
     // View must exist and not be paused already.
-    guard !self.isPaused, getGameState().getBool(forKey: .canPauseGame) else {
+    guard !self.isPaused, GameScene.gameState.getBool(forKey: .canPauseGame) else {
       return
     }
     
@@ -194,7 +192,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     let resumeButton = ButtonNode(withText: "Resume")
     resumeButton.setCallback {
       pauseMenu.removeFromParent()
-      self.getGameState().inform(.resumeGame)
+      GameScene.gameState.inform(.resumeGame)
     }
     pauseMenu.add(button: resumeButton)
     // Create a main menu button that will take the player to the main menu screen.
@@ -241,17 +239,6 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     return 1.0
   }
   
-  // Returns the GameState for this GameScene. This GameState contains all game state variables and should be updated by any and all objects that need to set their variables to the global game state for Events and other objects to reference.
-  func getGameState() -> GameState {
-    if let gameState = self.gameState {
-      return gameState
-    } else {
-      let gameState = GameState()
-      self.gameState = gameState
-      return gameState
-    }
-  }
-  
   // Sets the current GameScene to the object defined in the given GameScene file. This GameScene will be presented to the view.
   func setCurrentLevel(to nextLevel: GameScene) {
     if let view = self.view {
@@ -286,7 +273,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Sets the next phase and uses its GameState to update for all future phases. Only if a phase is reset do we drop the last GameState and re-use the original one.
   func setNextPhase(to nextPhase: EventPhase) {
     self.currentPhase = nextPhase
-    self.previousGameState = GameState(copyFrom: getGameState())
+    self.previousGameState = GameState(copyFrom: GameScene.gameState)
   }
   
   // Returns the current phase or nil if there is no current phase.
@@ -327,7 +314,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     }
     // Reset the current phase.
     if let previousGameState = self.previousGameState {
-      self.gameState = GameState(copyFrom: previousGameState)
+      GameScene.gameState = GameState(copyFrom: previousGameState)
     }
     self.currentPhase?.start()
   }
@@ -338,17 +325,17 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   private func touchDown(atPoint pos: CGPoint) {
     let touchedNodes: [SKNode] = nodes(at: pos)
-    getGameState().inform(.screenTouchDown, value: ScreenTouchInfo(pos, touchedNodes))
+    GameScene.gameState.inform(.screenTouchDown, value: ScreenTouchInfo(pos, touchedNodes))
   }
   
   private func touchMoved(toPoint pos: CGPoint) {
     let touchedNodes: [SKNode] = nodes(at: pos)
-    getGameState().inform(.screenTouchMoved, value: ScreenTouchInfo(pos, touchedNodes))
+    GameScene.gameState.inform(.screenTouchMoved, value: ScreenTouchInfo(pos, touchedNodes))
   }
   
   private func touchUp(atPoint pos: CGPoint) {
     let touchedNodes: [SKNode] = nodes(at: pos)
-    getGameState().inform(.screenTouchUp, value: ScreenTouchInfo(pos, touchedNodes))
+    GameScene.gameState.inform(.screenTouchUp, value: ScreenTouchInfo(pos, touchedNodes))
   }
   
   //------------------------------------------------------------------------------
@@ -430,13 +417,12 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Subscribe this GameScene to all relevant game state changes that it needs to handle. Extend as needed with custom subscriptions for a given level.
   func subscribeToStateChanges() {
-    let gameState = getGameState()
-    gameState.subscribe(self, to: .pauseGame)
-    gameState.subscribe(self, to: .resumeGame)
-    gameState.subscribe(self, to: .playerPosition)
-    gameState.subscribe(self, to: .spawnPlayerBullet)
-    gameState.subscribe(self, to: .spawnEnemyBullet)
-    gameState.subscribe(self, to: .createParticleEffect)
+    GameScene.gameState.subscribe(self, to: .pauseGame)
+    GameScene.gameState.subscribe(self, to: .resumeGame)
+    GameScene.gameState.subscribe(self, to: .playerPosition)
+    GameScene.gameState.subscribe(self, to: .spawnPlayerBullet)
+    GameScene.gameState.subscribe(self, to: .spawnEnemyBullet)
+    GameScene.gameState.subscribe(self, to: .createParticleEffect)
   }
 
   // When a game state change is reported, handle it here. Extend as needed with custom handlers for a given level.

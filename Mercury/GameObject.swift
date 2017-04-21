@@ -22,9 +22,6 @@ class GameObject: GameStateListener {
   var gameSceneNode: SKNode?
   private var position: CGPoint
   
-  // The global game state used to communicate with other GameObjects and the scene.
-  let gameState: GameState
-  
   // How fast the object moves in the world.
   // This is a relative value and is scaled by the GameScene depending on the screen size. It should only ever be modified with scaleMovementSpeed().
   var movementSpeed: CGFloat = 1.0
@@ -49,11 +46,10 @@ class GameObject: GameStateListener {
   // Initialization methods and functionality.
   //------------------------------------------------------------------------------
   
-  // Create the object, and get the global GameState to communicate with other GameObjects and modules in the scene.
-  init(position: CGPoint, gameState: GameState) {
+  // Create the object.
+  init(position: CGPoint) {
     self.isTouched = false
     self.position = position
-    self.gameState = gameState
     self.destroyObjectCalled = false
   }
   
@@ -217,9 +213,9 @@ class GameObject: GameStateListener {
   
   // This will subscribe the GameObject to the default set of user interaction global state changes, namely touch events. Only call this if your object needs access to most of these events. Otherwise, it is recommended to subscribe it explicity to the ones it needs.
   func subscribeToUserInteractionStateChanges() {
-    self.gameState.subscribe(self, to: .screenTouchDown)
-    self.gameState.subscribe(self, to: .screenTouchMoved)
-    self.gameState.subscribe(self, to: .screenTouchUp)
+    GameScene.gameState.subscribe(self, to: .screenTouchDown)
+    GameScene.gameState.subscribe(self, to: .screenTouchMoved)
+    GameScene.gameState.subscribe(self, to: .screenTouchUp)
   }
   
   // Default handlers for the touch methods. Override to implement functionality.

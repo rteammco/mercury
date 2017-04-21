@@ -45,6 +45,9 @@ class Event: EventStopCriteria, GameStateListener {
   
   var wasTriggered: Bool
   
+  // An inactive event cannot be triggered. Use stop() to inactivate.
+  var isActive: Bool
+  
   // Once this event is subscribed to GameState changes, this flag is flipped to true. This way, if the event is reset, it will not re-subscribe itself to those state changes again.
   var isSubscribedToGameStateChanges: Bool
   
@@ -53,6 +56,7 @@ class Event: EventStopCriteria, GameStateListener {
     self.eventFinishedActions = [EventAction]()
     self.eventChainFinalActions = [EventAction]()
     self.wasTriggered = false
+    self.isActive = true
     self.isSubscribedToGameStateChanges = false
   }
   
@@ -121,8 +125,12 @@ class Event: EventStopCriteria, GameStateListener {
     self.eventChainFinalActions = eventChainFinalActions
   }
   
+  
   // Executes all the actions to be performed when the event occurs.
   func trigger(withOptionalValue optionalValue: Any? = nil) {
+    if !self.isActive {
+      return
+    }
     self.wasTriggered = true
     // Run the actions, but verify that a stop criteria wasn't satisfied already.
     var canExecuteActions = true
@@ -134,6 +142,7 @@ class Event: EventStopCriteria, GameStateListener {
     if canExecuteActions {
       for action in self.eventActions {
         action.execute(withOptionalValue: optionalValue)
+        print(self, "executed action", action)
       }
     }
     // If a stop criteria was given and it is not yet satisfied after the actions were executed, reset the event and run it again.
@@ -144,7 +153,7 @@ class Event: EventStopCriteria, GameStateListener {
       }
     }
     if willEventRepeat {
-      reset()
+      start()
     } else if self.stopCriteria == nil || !canExecuteActions {
       // If event is not repeating or has no stop criteria (thus cannot repeat at all), finish off any final actions set with the "then" method, and start the next event if it was set.
       for action in self.eventFinishedActions {
@@ -167,17 +176,11 @@ class Event: EventStopCriteria, GameStateListener {
     return self.wasTriggered
   }
   
-  // Resets the Event and calls start() again to loop the event from the beginning. Any setup needed should be implemented in the start() method.
-  private func reset() {
-    self.wasTriggered = false
-    start()
-  }
-  
   // Subscribes this event to the given set of keys. This will only work the first time it is called. Use this method in the start() method instead of directly subscribing to GameState changes for optimal results.
-  func subscribeTo(stateChanges keys: GameStateKey..., from gameState: GameState) {
+  func subscribeTo(stateChanges keys: GameStateKey...) {
     if !self.isSubscribedToGameStateChanges {
       for key in keys {
-        gameState.subscribe(self, to: key)
+        GameScene.gameState.subscribe(self, to: key)
       }
       self.isSubscribedToGameStateChanges = true
     }
@@ -187,9 +190,16 @@ class Event: EventStopCriteria, GameStateListener {
   // The following methods need to be implemented by each Event object.
   //------------------------------------------------------------------------------
   
-  // Starts the event. The event won't do anything until start is called. This will be called every time after an event is reset and re-started.
+  // Starts the event. The event typically won't do anything until start is called. This should be called every time after an event is reset and re-started as well.
   func start() {
-    // Override as needed, e.g. start a clock timer, and once it's done, call self.trigger(). Initialize all variables for the event here.
+    self.wasTriggered = false
+    self.isActive = true
+    // Extend as needed, e.g. start a clock timer, and once it's done, call self.trigger(). Initialize all variables for the event here.
+  }
+  // Stop the event from firing.
+  func stop() {
+    print("Stopped event", self)
+    self.isActive = false
   }
   
   //------------------------------------------------------------------------------

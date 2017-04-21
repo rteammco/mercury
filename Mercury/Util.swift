@@ -71,9 +71,9 @@ struct Util {
   //------------------------------------------------------------------------------
   
   // Returns the player position within the game world. This position might be scaled due to a difference in the screen width vs. the game world width.
-  static func getPlayerWorldPosition(fromGameState gameState: GameState) -> CGPoint {
-    let position = gameState.getPoint(forKey: .playerPosition)
-    let scale = gameState.getCGFloat(forKey: .playerPositionXScaling, defaultValue: 1.0)
+  static func getPlayerWorldPosition() -> CGPoint {
+    let position = GameScene.gameState.getPoint(forKey: .playerPosition)
+    let scale = GameScene.gameState.getCGFloat(forKey: .playerPositionXScaling, defaultValue: 1.0)
     let scaledPosition = CGPoint(x: position.x * scale, y: position.y)
     return scaledPosition
   }

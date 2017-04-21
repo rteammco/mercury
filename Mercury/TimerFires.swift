@@ -23,6 +23,7 @@ class TimerFires: Event {
   
   // Starts the timer, which will trigger the event once the timer is done. This timer is set to not repeat since repeating timers are done as chained events.
   override func start() {
+    super.start()
     self.timer = Timer.scheduledTimer(timeInterval: TimeInterval(self.timeInSeconds), target: self, selector: #selector(runTriggerFunction), userInfo: nil, repeats: false)
   }
   
@@ -30,6 +31,12 @@ class TimerFires: Event {
   @objc func runTriggerFunction() {
     self.timer?.invalidate()
     trigger()
+  }
+  
+  // The stop method will also invalidate the current timer.
+  override func stop() {
+    super.stop()
+    self.timer?.invalidate()
   }
   
 }

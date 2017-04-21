@@ -13,9 +13,9 @@ class ExperienceOrb: LootItem {
   
   let experiencePoints: CGFloat
   
-  init(position: CGPoint, gameState: GameState, withExperience experiencePoints: CGFloat) {
+  init(position: CGPoint, withExperience experiencePoints: CGFloat) {
     self.experiencePoints = experiencePoints
-    super.init(position: position, gameState: gameState)
+    super.init(position: position)
     self.nodeName = "experience orb"
     
     setCollisionCategory(PhysicsCollisionBitMask.item)
@@ -30,9 +30,9 @@ class ExperienceOrb: LootItem {
   
   // Rewards the player with the experience points.
   override func applyReward() {
-    if let playerStatus = self.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
+    if let playerStatus = GameScene.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
       playerStatus.addPlayerExperience(Int(experiencePoints))  // Convert to Int.
-      self.gameState.inform(.playerExperienceChange)
+      GameScene.gameState.inform(.playerExperienceChange)
     }
   }
   

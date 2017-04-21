@@ -20,10 +20,10 @@ class LootItem: PhysicsEnabledGameObject {
   // Tracks the last updated distance of this item from the Player.
   var lastDistanceToPlayer: CGFloat
   
-  override init(position: CGPoint, gameState: GameState) {
-    let playerPosition = Util.getPlayerWorldPosition(fromGameState: gameState)
+  override init(position: CGPoint) {
+    let playerPosition = Util.getPlayerWorldPosition()
     self.lastDistanceToPlayer = Util.getDistance(between: position, and: playerPosition)
-    super.init(position: position, gameState: gameState)
+    super.init(position: position)
   }
   
   // Creates a loot orb object with the given properties. Certain items that take the appearance of a loot orb should use this method to build it.

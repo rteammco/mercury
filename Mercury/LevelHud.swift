@@ -17,22 +17,22 @@ class LevelHud: GameObject {
   var experienceBarNode: SKShapeNode?
   var playerLevelTextNode: SKLabelNode?
   
-  init(gameState: GameState) {
-    super.init(position: CGPoint(x: 0, y: 0), gameState: gameState)
-    self.gameState.subscribe(self, to: .playerHealth)
-    self.gameState.subscribe(self, to: .playerDied)
-    self.gameState.subscribe(self, to: .playerExperienceChange)
+  init() {
+    super.init(position: CGPoint(x: 0, y: 0))
+    GameScene.gameState.subscribe(self, to: .playerHealth)
+    GameScene.gameState.subscribe(self, to: .playerDied)
+    GameScene.gameState.subscribe(self, to: .playerExperienceChange)
   }
   
   // Updates when player health changes or when player dies.
   override func reportStateChange(key: GameStateKey, value: Any) {
     switch key {
     case .playerHealth, .playerDied:
-      if let playerStatus = gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
+      if let playerStatus = GameScene.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
         updateHealthBar(playerStatus: playerStatus)
       }
     case .playerExperienceChange:
-      if let playerStatus = gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
+      if let playerStatus = GameScene.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
         updateLevelAndExperienceBar(playerStatus: playerStatus)
       }
     default:
@@ -42,7 +42,7 @@ class LevelHud: GameObject {
   
   // Updates the health bar and text given the ratio of health (ratio between max health and the current health). Ratio will always be normalized between 0 and 1.
   private func updateHealthBar(playerStatus: PlayerStatus) {
-    let currentHealth = self.gameState.getCGFloat(forKey: .playerHealth)
+    let currentHealth = GameScene.gameState.getCGFloat(forKey: .playerHealth)
     var ratio: CGFloat = currentHealth / playerStatus.getMaxPlayerHealth()
     if ratio > 1.0 {
       ratio = 1.0
@@ -126,7 +126,7 @@ class LevelHud: GameObject {
     hudNode.addChild(playerLevelText)
     
     // Set the current level and XP based on the current playerStatus.
-    if let playerStatus = self.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
+    if let playerStatus = GameScene.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
       updateLevelAndExperienceBar(playerStatus: playerStatus)
     }
     
@@ -134,7 +134,7 @@ class LevelHud: GameObject {
     let pauseButton = ButtonNode.interfaceButton(withText: "⏸")
     pauseButton.position = CGPoint(x: -width / 1.7, y: 0)  // Right of the HP bar.
     pauseButton.setCallback {
-      self.gameState.inform(.pauseGame)
+      GameScene.gameState.inform(.pauseGame)
     }
     hudNode.addChild(pauseButton)
     
