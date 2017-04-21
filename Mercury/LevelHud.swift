@@ -28,22 +28,18 @@ class LevelHud: GameObject {
   override func reportStateChange(key: GameStateKey, value: Any) {
     switch key {
     case .playerHealth, .playerDied:
-      if let playerStatus = GameScene.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
-        updateHealthBar(playerStatus: playerStatus)
-      }
+      updateHealthBar()
     case .playerExperienceChange:
-      if let playerStatus = GameScene.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
-        updateLevelAndExperienceBar(playerStatus: playerStatus)
-      }
+      updateLevelAndExperienceBar()
     default:
       break
     }
   }
   
   // Updates the health bar and text given the ratio of health (ratio between max health and the current health). Ratio will always be normalized between 0 and 1.
-  private func updateHealthBar(playerStatus: PlayerStatus) {
+  private func updateHealthBar() {
     let currentHealth = GameScene.gameState.getCGFloat(forKey: .playerHealth)
-    var ratio: CGFloat = currentHealth / playerStatus.getMaxPlayerHealth()
+    var ratio: CGFloat = currentHealth / GameScene.gameState.getPlayerStatus().getMaxPlayerHealth()
     if ratio > 1.0 {
       ratio = 1.0
     } else if ratio < 0.0 {
@@ -59,7 +55,8 @@ class LevelHud: GameObject {
   }
   
   // Updates the player level display experience bar visualization based on the given playerStatus variable.
-  private func updateLevelAndExperienceBar(playerStatus: PlayerStatus) {
+  private func updateLevelAndExperienceBar() {
+    let playerStatus = GameScene.gameState.getPlayerStatus()
     var ratio = CGFloat(playerStatus.getCurrentPlayerExperience()) / CGFloat(playerStatus.playerExperienceRequiredToNextLevel())
     if ratio > 1.0 {
       ratio = 1.0
@@ -126,9 +123,7 @@ class LevelHud: GameObject {
     hudNode.addChild(playerLevelText)
     
     // Set the current level and XP based on the current playerStatus.
-    if let playerStatus = GameScene.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
-      updateLevelAndExperienceBar(playerStatus: playerStatus)
-    }
+    updateLevelAndExperienceBar()
     
     // Finally, create the pause button.
     let pauseButton = ButtonNode.interfaceButton(withText: "⏸")

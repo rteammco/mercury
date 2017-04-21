@@ -30,10 +30,8 @@ class ExperienceOrb: LootItem {
   
   // Rewards the player with the experience points.
   override func applyReward() {
-    if let playerStatus = GameScene.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
-      playerStatus.addPlayerExperience(Int(experiencePoints))  // Convert to Int.
-      GameScene.gameState.inform(.playerExperienceChange)
-    }
+    GameScene.gameState.getPlayerStatus().addPlayerExperience(Int(experiencePoints))
+    GameScene.gameState.inform(.playerExperienceChange)
   }
   
 }

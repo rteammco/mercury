@@ -54,8 +54,8 @@ class CreateLootPackage: EventAction {
     if let gameScene = self.caller, let enemy = enemy as? Enemy {
       let loot = self.lootPackage.generateLoot()
       let enemyBoundingBox = enemy.getBoundingBox()
-      if loot.experience > 0, let playerStatus = GameScene.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
-        playerStatus.addPlayerExperience(Int(loot.experience))  // Convert to Int.
+      if loot.experience > 0 {
+        GameScene.gameState.getPlayerStatus().addPlayerExperience(Int(loot.experience))
         GameScene.gameState.inform(.playerExperienceChange)
       }
       createOrbs(ofType: .healthOrb, withQuanity: loot.health, withMaxValuePerOrb: numHealthPointsPerOrb, withinRegion: enemyBoundingBox, gameScene: gameScene)

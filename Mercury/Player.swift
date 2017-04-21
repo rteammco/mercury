@@ -40,10 +40,9 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
   // Updates the player's variables based on the current player status, which scales with the player's level. This updates the player's bullet damage, and sets the player's health to the maximum current health value.
   private func updatePlayerVariables() {
-    if let playerStatus = GameScene.gameState.get(valueForKey: .playerStatus) as? PlayerStatus {
-      self.bulletDamage = playerStatus.getBasePlayerDamage()
-      initializeHitPoints(playerStatus.getMaxPlayerHealth())
-    }
+    let playerStatus = GameScene.gameState.getPlayerStatus()
+    self.bulletDamage = playerStatus.getBasePlayerDamage()
+    initializeHitPoints(playerStatus.getMaxPlayerHealth())
   }
   
   // TODO: temporary color and shape.

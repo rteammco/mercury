@@ -26,7 +26,7 @@ class GameState {
   init(copyFrom other: GameState) {
     self.gameStateValues = other.gameStateValues
     self.gameStateListeners = other.gameStateListeners
-    // Specific class intances must be copied explicity.
+    // Specific class intances must be copied explicity. Only copy if it exists.
     if let playerStatus = other.get(valueForKey: .playerStatus) as? PlayerStatus {
       set(.playerStatus, to: PlayerStatus(copyFrom: playerStatus))
     }
@@ -114,6 +114,7 @@ class GameState {
     if let playerStatus = self.gameStateValues[.playerStatus] as? PlayerStatus {
       return playerStatus
     } else {
+      print("WARNING: Player status not set. Returning empty status.")
       return PlayerStatus()
     }
   }
