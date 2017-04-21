@@ -28,7 +28,6 @@ class ButtonNode: SKLabelNode {
     self.text = text
     self.verticalAlignmentMode = .center
     self.isUserInteractionEnabled = true
-    self.zPosition = GameScene.zPositionForGUI
   }
   
   // Swift complains if these constructors aren't there.
