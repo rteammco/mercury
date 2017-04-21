@@ -65,15 +65,41 @@ class PlayerStatus {
     return self.currentPlayerExperience
   }
   
+  // Computes and returns the total amount of experience the player has earned thus far.
+  func getTotalPlayerExperience() -> Int {
+    var totalExperience = self.currentPlayerExperience
+    for i in (1 ..< self.playerLevel) {
+      totalExperience += playerExperienceRequiredFor(level: i)
+    }
+    return totalExperience
+  }
+  
   // Returns the amount of experience required to level up to the next level.
   func playerExperienceRequiredToNextLevel() -> Int {
-    let scaleFactor = pow(CGFloat(self.playerLevel), self.playerExperienceRequirementGrowthRate)
+    return playerExperienceRequiredFor(level: self.playerLevel)
+  }
+  
+  // Returns the amount of experience required for the given level.
+  private func playerExperienceRequiredFor(level: Int) -> Int {
+    let scaleFactor = pow(CGFloat(level), self.playerExperienceRequirementGrowthRate)
     return self.basePlayerExperienceRequirement * Int(scaleFactor)
   }
   
   // Adds experience to the player. If this causes the player to level up, this will also process the new player's level.
   func addPlayerExperience(_ experience: Int) {
     self.currentPlayerExperience += experience
+    updateLevelFromExperience()
+  }
+  
+  // Sets the Player's current experience value to whatever the given amount is. This will also reset the player's level and recompute the current level given this new experience amount.
+  func setPlayerExperience(to experience: Int) {
+    self.currentPlayerExperience = experience
+    self.playerLevel = 1
+    updateLevelFromExperience()
+  }
+  
+  // Updates the player's level in the event of an experience gain.
+  private func updateLevelFromExperience() {
     var nextLevelRequirement = playerExperienceRequiredToNextLevel()
     while self.currentPlayerExperience >= nextLevelRequirement {
       self.playerLevel += 1

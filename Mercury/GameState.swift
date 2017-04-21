@@ -109,6 +109,15 @@ class GameState {
     return defaultValue
   }
   
+  // Returns the value as the current PlayerStatus. Default value is a newly constructed PlayerStatus.
+  func getPlayerStatus() -> PlayerStatus {
+    if let playerStatus = self.gameStateValues[.playerStatus] as? PlayerStatus {
+      return playerStatus
+    } else {
+      return PlayerStatus()
+    }
+  }
+  
   // Subscribes a GameStateListener to listen to the state variable identified by the given key. Whenever this state variable is updated, the listener will be notified via the reportStateChange method.
   func subscribe(_ listener: GameStateListener, to key: GameStateKey) {
     if self.gameStateListeners[key] != nil {

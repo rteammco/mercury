@@ -322,9 +322,11 @@ class GameScene: SKScene, EventCaller, GameStateListener {
       worldNode.removeAllChildren()
       addChild(worldNode)
     }
-    // Reset the current phase.
+    // Reset the current phase, but preserve the player's gained experience.
     if let previousGameState = self.previousGameState {
+      let playerExperience = GameScene.gameState.getPlayerStatus().getTotalPlayerExperience()
       GameScene.gameState = GameState(copyFrom: previousGameState)
+      GameScene.gameState.getPlayerStatus().setPlayerExperience(to: playerExperience)
     }
     self.currentPhase?.start()
   }
