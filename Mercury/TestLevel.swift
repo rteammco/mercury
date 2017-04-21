@@ -13,6 +13,7 @@ class TestLevel: GameScene {
     
   override func initializeScene() {
     super.initializeScene()
+    createBackground()
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
     createGUI()
     
@@ -36,6 +37,7 @@ class TestLevel: GameScene {
   
   override func reset() {
     super.reset()
+    createBackground()
     createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
     createGUI()
   }

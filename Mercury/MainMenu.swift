@@ -16,7 +16,9 @@ class MainMenu: GameScene {
   // Add all buttons to the menu.
   override func initializeScene() {
     super.initializeScene()
+    createBackground()
     let menuNode = MenuNode(inFrame: self.frame)
+    menuNode.add(label: SKLabelNode(text: "Main Menu"))
     let testLevelButton = ButtonNode(withText: "Start Test Level")
     testLevelButton.setCallback {
       let testLevel = TestLevel()

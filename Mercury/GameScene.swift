@@ -83,20 +83,31 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   func initializeScene() {
     let worldSize = self.frame.height
     let worldNode = SKShapeNode(rectOf: CGSize(width: worldSize, height: worldSize))
-    //let worldNode = SKSpriteNode(imageNamed: "stars")
-    //worldNode.size = CGSize(width: worldSize, height: worldSize)
     worldNode.fillColor = SKColor.black
-    if let backgroundEmitter = SKEmitterNode(fileNamed: "FlyingStars.sks") {
-      backgroundEmitter.position.y = worldNode.frame.height / 2
-      backgroundEmitter.particlePositionRange = CGVector(dx: worldNode.frame.width, dy: 0)
-      backgroundEmitter.advanceSimulationTime(10)  // So we start will full screen of stars.
-      worldNode.addChild(backgroundEmitter)
-    }
     worldNode.zPosition = GameScene.zPositionForBackground
     addChild(worldNode)
     self.worldNode = worldNode
     
     subscribeToStateChanges()
+  }
+  
+  // Creates the background animation(s). The background is added to either the world node (if available) or directly to the scene.
+  //
+  // TODO: Allow the background type to be specified by the user.
+  func createBackground() {
+    if let backgroundEmitter = SKEmitterNode(fileNamed: "FlyingStars.sks") {
+      backgroundEmitter.advanceSimulationTime(10)  // So we start will full screen of stars.
+      if let worldNode = self.worldNode {
+        backgroundEmitter.position.y = worldNode.frame.height / 2
+        backgroundEmitter.particlePositionRange = CGVector(dx: worldNode.frame.width, dy: 0)
+        worldNode.addChild(backgroundEmitter)
+      } else {
+        backgroundEmitter.zPosition = GameScene.zPositionForBackground
+        backgroundEmitter.position.y = self.frame.height / 2
+        backgroundEmitter.particlePositionRange = CGVector(dx: self.frame.width, dy: 0)
+        addChild(backgroundEmitter)
+      }
+    }
   }
   
   // Add the player object to the scene (optional).
@@ -306,10 +317,9 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Resets the scene. This clears all nodes and resets the background. Individual levels should extend this method and call other functions, such as createPlayer() and createGUI() if desired.
   func reset() {
-    enumerateChildNodes(withName: "*", using: { (node, stop) -> Void in
-      node.removeFromParent()
-    })
+    self.removeAllChildren()
     if let worldNode = self.worldNode {
+      worldNode.removeAllChildren()
       addChild(worldNode)
     }
     // Reset the current phase.

@@ -38,6 +38,7 @@ class LootItem: PhysicsEnabledGameObject {
     if let emitter = SKEmitterNode(fileNamed: animationFile) {
       node.addChild(emitter)
     }
+    node.name = self.nodeName
     self.gameSceneNode = node
     initializePhysics()
     return node
