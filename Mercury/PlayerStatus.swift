@@ -40,6 +40,17 @@ class PlayerStatus {
     self.playerHealthScaling = 1.5
   }
   
+  init(copyFrom other: PlayerStatus) {
+    self.playerLevel = other.playerLevel
+    self.basePlayerExperienceRequirement = other.basePlayerExperienceRequirement
+    self.playerExperienceRequirementGrowthRate = other.playerExperienceRequirementGrowthRate
+    self.currentPlayerExperience = other.currentPlayerExperience
+    self.basePlayerDamage = other.basePlayerDamage
+    self.playerDamageScaling = other.playerDamageScaling
+    self.basePlayerHealth = other.basePlayerHealth
+    self.playerHealthScaling = other.playerHealthScaling
+  }
+  
   //------------------------------------------------------------------------------
   // Player level and experience.
   //------------------------------------------------------------------------------

@@ -142,7 +142,6 @@ class Event: EventStopCriteria, GameStateListener {
     if canExecuteActions {
       for action in self.eventActions {
         action.execute(withOptionalValue: optionalValue)
-        print(self, "executed action", action)
       }
     }
     // If a stop criteria was given and it is not yet satisfied after the actions were executed, reset the event and run it again.

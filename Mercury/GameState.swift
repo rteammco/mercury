@@ -26,6 +26,10 @@ class GameState {
   init(copyFrom other: GameState) {
     self.gameStateValues = other.gameStateValues
     self.gameStateListeners = other.gameStateListeners
+    // Specific class intances must be copied explicity.
+    if let playerStatus = other.get(valueForKey: .playerStatus) as? PlayerStatus {
+      set(.playerStatus, to: PlayerStatus(copyFrom: playerStatus))
+    }
   }
   
   // Set a value for the GameState. If the value did not exist before, it will be modified. Keys are case-sensitive and must match exactly.
