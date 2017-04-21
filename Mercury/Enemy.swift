@@ -33,7 +33,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
   // TODO: temporary color and shape.
   override func createGameSceneNode(scale: CGFloat) -> SKNode {
-    let size = 0.1 * scale
+    let size = GameConfiguration.smallObjectSize * scale
     let node = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
     node.position = getPosition()
     node.fillColor = SKColor.cyan
@@ -74,7 +74,7 @@ class Enemy: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
   func fireBullet() {
     let enemyPosition = getPosition()
-    let bullet = Bullet(position: CGPoint(x: enemyPosition.x, y: enemyPosition.y), speed: 1.0, damage: GameScene.gameState.getCGFloat(forKey: .enemyBulletDamage))
+    let bullet = Bullet(position: CGPoint(x: enemyPosition.x, y: enemyPosition.y), speed: GameConfiguration.enemyBulletSpeed, damage: GameScene.gameState.getCGFloat(forKey: .enemyBulletDamage))
     bullet.setColor(to: GameConfiguration.enemyColor)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.friendly)
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.environment)

@@ -40,8 +40,8 @@ class Bullet: PhysicsEnabledGameObject {
   
   // TODO: temporary color and shape.
   override func createGameSceneNode(scale: CGFloat) -> SKNode {
-    let width = 0.04 * scale
-    let height = 0.01 * scale
+    let width = GameConfiguration.bulletWidth * scale
+    let height = GameConfiguration.bulletHeight * scale
     let node = SKShapeNode(rectOf: CGSize(width: width, height: height))
     node.position = getPosition()
     node.zRotation = Util.getOrientation(of: self.movementDirection)

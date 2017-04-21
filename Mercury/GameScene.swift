@@ -25,9 +25,6 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // The phase sequence that will be executed when this GameScene is started.
   private var eventPhaseSequence = [EventPhase]()
   
-  // The size of the world used for scaling all displayed scene nodes.
-  private var worldSize: CGFloat?
-  
   // The worldNode will hold everything.
   private var worldNode: SKNode?
   
@@ -49,10 +46,6 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Called whenever the scene is presented into the view.
   override func didMove(to view: SKView) {
-    // Set the size of the world based on the scene's size.
-    self.worldSize = min(self.size.width, self.size.height)
-    GameScene.gameState = GameState()  // Reset the global game state.
-    
     initializePhysics()
     initializeGameState()
     initializeScene()
@@ -67,6 +60,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Initializes values in the GameState. Eventually, this will load data from saved state values in the database.
   private func initializeGameState() {
+    GameScene.gameState = GameState()
     GameScene.gameState.set(.canPauseGame, to: true)
     // TODO: These values should be adjusted from a database or some configuration file.
     let playerStatus = PlayerStatus()
@@ -137,22 +131,20 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // Adds the given GameObject type to the scene by appending its node. The object is automatically scaled according to the screen size.
   // Set withPhysicsScaling to true if the object is a PhysicsEnabledGameObject and its physical properties should be scaled to reflect the world size.
   func addGameObject(_ gameObject: GameObject, withPhysicsScaling: Bool = false, directlyToScene: Bool = false, withZPosition zPosition: CGFloat = GameScene.zPositionForObjects) {
-    if let worldSize = self.worldSize {
-      let sceneNode = gameObject.createGameSceneNode(scale: worldSize)
-      gameObject.connectToSceneNode(sceneNode)
-      sceneNode.name = gameObject.nodeName
-      if withPhysicsScaling {
-        gameObject.scaleMovementSpeed(getScaleValue())
-        if let physicsEnabledGameObject = gameObject as? PhysicsEnabledGameObject {
-          physicsEnabledGameObject.scaleMass(by: getScaleValue())
-        }
+    let sceneNode = gameObject.createGameSceneNode(scale: getScaleValue())
+    gameObject.connectToSceneNode(sceneNode)
+    sceneNode.name = gameObject.nodeName
+    if withPhysicsScaling {
+      gameObject.scaleMovementSpeed(getScaleValue())
+      if let physicsEnabledGameObject = gameObject as? PhysicsEnabledGameObject {
+        physicsEnabledGameObject.scaleMass(by: getScaleValue())
       }
-      sceneNode.zPosition = zPosition
-      if directlyToScene {
-        addChild(sceneNode)
-      } else {
-        self.worldNode?.addChild(sceneNode)
-      }
+    }
+    sceneNode.zPosition = zPosition
+    if directlyToScene {
+      addChild(sceneNode)
+    } else {
+      self.worldNode?.addChild(sceneNode)
     }
   }
   
@@ -244,10 +236,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Returns the scale value (not a scaled value, but rather the scaling factor itself).
   func getScaleValue() -> CGFloat {
-    if let worldSize = self.worldSize {
-      return worldSize
-    }
-    return 1.0
+    return self.frame.height
   }
   
   // Sets the current GameScene to the object defined in the given GameScene file. This GameScene will be presented to the view.

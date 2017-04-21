@@ -66,7 +66,7 @@ class GameObject: GameStateListener {
   // Called in GameObject's init().
   func createGameSceneNode(scale: CGFloat) -> SKNode {
     // Override as needed.
-    let size = 0.15 * scale
+    let size = GameConfiguration.smallObjectSize * scale
     let node = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
     node.position = position
     node.fillColor = SKColor.blue

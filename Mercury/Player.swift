@@ -47,7 +47,7 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   
   // TODO: temporary color and shape.
   override func createGameSceneNode(scale: CGFloat) -> SKNode {
-    let size = 0.15 * scale
+    let size = GameConfiguration.playerSize * scale
     let node = SKShapeNode.init(rectOf: CGSize.init(width: size, height: size))
     node.position = getPosition()
     node.fillColor = SKColor.blue
@@ -100,7 +100,7 @@ class Player: PhysicsEnabledGameObject, ArmedWithProjectiles {
   // Called by the fireBulletTimer at each fire interval to shoot a bullet.
   func fireBullet() {
     let playerPosition = Util.getPlayerWorldPosition()
-    let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: 2.0, damage: self.bulletDamage)
+    let bullet = Bullet(position: CGPoint(x: playerPosition.x, y: playerPosition.y), speed: GameConfiguration.playerBulletSpeed, damage: self.bulletDamage)
     bullet.setColor(to: GameConfiguration.friendlyColor)
     bullet.setMovementDirection(to: CGVector(dx: 0.0, dy: 1.0))
     bullet.addCollisionTestCategory(PhysicsCollisionBitMask.enemy)

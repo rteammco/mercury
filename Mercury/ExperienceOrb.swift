@@ -24,7 +24,7 @@ class ExperienceOrb: LootItem {
   
   // Creates the LootItem node depending on the type of loot item this is.
   override func createGameSceneNode(scale: CGFloat) -> SKNode {
-    let radius = 0.005 * scale
+    let radius = GameConfiguration.miniObjectSize * scale
     return createLootOrb(ofRadius: radius, withColor: GameConfiguration.hudExperienceBarColor, withAnimationFile: "LootOrbExperience.sks")
   }
   

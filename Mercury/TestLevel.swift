@@ -14,7 +14,7 @@ class TestLevel: GameScene {
   override func initializeScene() {
     super.initializeScene()
     createBackground()
-    createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
+    createPlayer(atPosition: CGPoint(x: 0.0, y: GameConfiguration.defaultPlayerSpawnYPosition))
     createGUI()
     
     // TODO: The loot values should be aquired from the GameState or something.
@@ -26,7 +26,7 @@ class TestLevel: GameScene {
     let phase1 = createEventPhase()
     phase1.execute(action: SpawnEnemy("test"))
     phase1.execute(action: DisplayText("GO"))
-    phase1.when(EnemyDies()).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 10)).then(DisplayText("You Did It!!"))
+    phase1.when(EnemyDies()).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 25)).then(DisplayText("You Did It!!"))
     
     let phase2 = createEventPhase()
     phase2.when(TimerFires(afterSeconds: 3)).execute(action: DisplayText("PHASE 2")).then(when: TimerFires(afterSeconds: 3)).execute(action: DisplayText("DONE"))
@@ -38,7 +38,7 @@ class TestLevel: GameScene {
   override func reset() {
     super.reset()
     createBackground()
-    createPlayer(atPosition: CGPoint(x: 0.0, y: -1.0))
+    createPlayer(atPosition: CGPoint(x: 0.0, y: GameConfiguration.defaultPlayerSpawnYPosition))
     createGUI()
   }
   

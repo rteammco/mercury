@@ -76,12 +76,12 @@ class LevelHud: GameObject {
   // Sets up the HUD node, which contains children nodes (the health bar and text) that get updated as the level continues.
   override func createGameSceneNode(scale: CGFloat) -> SKNode {
     // The HUD node itself is just the outline of the health bar. We will add things in and around it.
-    let width = 0.7 * scale
+    let width = GameConfiguration.hudBarWidth * scale
     self.barWidth = width
-    let height = 0.05 * scale
+    let height = GameConfiguration.hudBarHeight * scale
     let hudNode = SKShapeNode(rectOf: CGSize(width: width, height: height))
-    hudNode.position = CGPoint(x: 0, y: scale * 0.8)
-    hudNode.lineWidth = 3.0
+    hudNode.position = CGPoint(x: 0, y: scale * GameConfiguration.hudBarYPosition)
+    hudNode.lineWidth = GameConfiguration.hudBarOutlineWidth
     hudNode.strokeColor = SKColor.red
     
     // Create the health bar part of the HUD.
@@ -103,9 +103,9 @@ class LevelHud: GameObject {
     hudNode.addChild(healthBarText)
     
     // Create the XP bar.
-    let experienceBarHeight = 0.01 * scale
+    let experienceBarHeight = height * 0.2  // One fifth of the health bar height.
     let experienceBar = SKShapeNode(rectOf: CGSize(width: width, height: experienceBarHeight))
-    experienceBar.position = CGPoint(x: 0, y: (height / 2.0 + 3.0))  // Right above the HP bar.
+    experienceBar.position = CGPoint(x: 0, y: (height / 2.0 + GameConfiguration.hudBarOutlineWidth))  // Right above the HP bar.
     experienceBar.fillColor = GameConfiguration.hudExperienceBarColor
     experienceBar.alpha = GameConfiguration.hudBarAlpha
     self.experienceBarNode = experienceBar
