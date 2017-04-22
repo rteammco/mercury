@@ -177,7 +177,29 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     }
     self.speed = speed
     self.physicsWorld.speed = speed
-    // TODO: this doesn't affect particle emitters, which should be slowed/sped up too.
+    // Also scale all of the particle effects. This requires looping through and manually setting each one.
+    if speed > 0 {
+      scaleParticleEmitterSpeed(forNode: self, withScale: speed)
+      if let worldNode = self.worldNode {
+        scaleParticleEmitterSpeed(forNode: worldNode, withScale: speed)
+      }
+    }
+  }
+  // Helper method for scaling particle emitter speeds. Loops over all emitter node children of the given node or scene and scales them to the given speed scale.
+  private func scaleParticleEmitterSpeed(forNode node: SKNode, withScale speedScale: CGFloat) {
+    for childNode in node.children {
+      if let emitter = childNode as? SKEmitterNode {
+        emitter.speed = speedScale
+        emitter.particleBirthRate *= speedScale
+        emitter.particleLifetime /= speedScale
+        emitter.particleSpeed *= speedScale
+        emitter.particleSpeedRange *= speedScale
+        emitter.particleAlphaSpeed *= speedScale
+        emitter.particleAlphaRange *= speedScale
+        emitter.particleScaleSpeed *= speedScale
+        emitter.particleScaleRange *= speedScale
+      }
+    }
   }
   
   // Pauses the game and creates a pause menu on the screen.
@@ -448,8 +470,12 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     case .createParticleEffect:
       // Add particle effects nodes.
       if let emitter = value as? SKEmitterNode {
-        emitter.targetNode = self
-        addChild(emitter)
+        if let worldNode = self.worldNode {
+          emitter.targetNode = worldNode
+          worldNode.addChild(emitter)
+        } else {
+          addChild(emitter)
+        }
       }
     case .pauseGame:
       pauseGame()
