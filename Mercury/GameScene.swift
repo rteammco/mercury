@@ -440,12 +440,17 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Subscribe this GameScene to all relevant game state changes that it needs to handle. Extend as needed with custom subscriptions for a given level.
   func subscribeToStateChanges() {
+    // User actions:
     GameScene.gameState.subscribe(self, to: .pauseGame)
     GameScene.gameState.subscribe(self, to: .resumeGame)
+    // Player events:
     GameScene.gameState.subscribe(self, to: .playerPosition)
+    // Spawning and visual effect creation events:
     GameScene.gameState.subscribe(self, to: .spawnPlayerBullet)
     GameScene.gameState.subscribe(self, to: .spawnEnemyBullet)
     GameScene.gameState.subscribe(self, to: .createParticleEffect)
+    // Level tracking:
+    GameScene.gameState.subscribe(self, to: .spawnEnemy)
   }
 
   // When a game state change is reported, handle it here. Extend as needed with custom handlers for a given level.
@@ -453,6 +458,10 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   // TODO: Some of these might work better as separate functions, specific EventActions that handle all the mechanics, or even factory objects to make the code cleaner.
   func reportStateChange(key: GameStateKey, value: Any) {
     switch key {
+    case .pauseGame:
+      pauseGame()
+    case .resumeGame:
+      resumePausedGame()
     case .playerPosition:
       // If player moves, update the world node position.
       if let position = value as? CGPoint, let worldNode = self.worldNode {
@@ -477,10 +486,10 @@ class GameScene: SKScene, EventCaller, GameStateListener {
           addChild(emitter)
         }
       }
-    case .pauseGame:
-      pauseGame()
-    case .resumeGame:
-      resumePausedGame()
+    case .spawnEnemy:
+      // When an enemy spawns, increment the GameState's counter.
+      let numEnemiesSpawned = GameScene.gameState.getInt(forKey: .numSpawnedEnemies)
+      GameScene.gameState.set(.numSpawnedEnemies, to: numEnemiesSpawned + 1)
     default:
       break
     }

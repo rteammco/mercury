@@ -24,7 +24,7 @@ enum GameStateKey: String {
   // Tracked player variables:
   case playerPosition, playerPositionXScaling, playerHealth, playerHealthChange, playerStatus, playerExperienceChange, playerLeveledUp
   
-  // Tracked enemy variables:
+  // Level counters: these values are automatically tracked by the GameScene as events occur. Any object can access these for real-time value updates.
   case numSpawnedEnemies
   
   // Game balance and damage exchange variables.

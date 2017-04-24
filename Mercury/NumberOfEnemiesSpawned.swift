@@ -21,6 +21,7 @@ class NumberOfEnemiesSpawned: EventStopper {
     self.numEnemiesAtStart = GameScene.gameState.getInt(forKey: .numSpawnedEnemies, defaultValue: 0)
   }
   
+  // We use GameState's tracking directly in case there's a phase reset. Phase reset will cause the number of enemies spawned counter to reset to what it was before the phase began.
   override func isSatisfied() -> Bool {
     let maxNumEnemies = getRequiredNumberOfEnemies()
     let count = GameScene.gameState.getInt(forKey: .numSpawnedEnemies)

@@ -49,10 +49,8 @@ class SpawnEnemy: EventAction {
         let enemyPath = BasicEnemyPath(inScene: gameScene)
         enemyPath.run(on: enemy)
       
-        // Inform the GameState of the change and update the global game state by incrementing the enemy spawn count value.
+        // Inform the GameState of the change.
         GameScene.gameState.inform(.spawnEnemy, value: enemy)
-        let numEnemiesSpawned = GameScene.gameState.getInt(forKey: .numSpawnedEnemies)
-        GameScene.gameState.set(.numSpawnedEnemies, to: numEnemiesSpawned + 1)
       }
     }
   }
