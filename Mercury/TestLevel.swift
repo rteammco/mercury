@@ -23,6 +23,12 @@ class TestLevel: GameScene {
     lootPackage.setHealthReward(to: 50, withDropRate: 0.2)
     when(EnemyDies()).execute(action: CreateLootPackage(lootPackage: lootPackage))
     
+//    let phase0 = createEventPhase()
+//    phase0.execute(action: SpawnEnemy("test1", count: 10))
+//    phase0.when(EnemyDies(count: 10))
+//      .execute(actions: SpawnEnemy("test1", count: 10))
+//      .until(NumberOfEnemiesSpawned(equals: 100))
+    
     // Phase 1: 1 enemy at a time, 10 enemies total.
     let phase1 = createEventPhase()
     phase1.execute(action: DisplayText("Phase 1: 10x1"))

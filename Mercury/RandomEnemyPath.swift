@@ -25,7 +25,8 @@ class RandomEnemyPath: GameObjectPath {
     let regionWidthPerEnemy = boundary.width / CGFloat(count)
     for i in 0 ..< count {
       let nextX = boundary.minX + (CGFloat(i) * regionWidthPerEnemy)
-      let subBoundary = CGRect(x: nextX, y: boundary.minY, width: regionWidthPerEnemy, height: boundary.height)
+      let subBoundaryWidth = regionWidthPerEnemy / 2  // Divide by 2 to leave some padding room.
+      let subBoundary = CGRect(x: nextX, y: boundary.minY, width: subBoundaryWidth, height: boundary.height)
       paths.append(RandomEnemyPath(inScene: gameScene, withinBoundary: subBoundary))
     }
     return paths
