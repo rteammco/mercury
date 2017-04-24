@@ -47,6 +47,24 @@ class SpawnEnemy: EventAction {
         gameScene.addGameObject(enemy, withPhysicsScaling: true)
         enemyPath.run(on: enemy)
         GameScene.gameState.inform(.spawnEnemy, value: enemy)
+        
+        // TODO: This is just for testing. Remove this.
+        var color = SKColor.cyan
+        switch self.enemyName {
+        case "test1":
+          color = SKColor.cyan
+        case "test2":
+          color = SKColor.brown
+        case "test3":
+          color = SKColor.yellow
+        case "test4":
+          color = SKColor.blue
+        default:
+          break
+        }
+        if let node = enemy.gameSceneNode as? SKShapeNode {
+          node.fillColor = color
+        }
       }
     }
   }
