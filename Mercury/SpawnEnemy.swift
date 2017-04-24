@@ -39,17 +39,13 @@ class SpawnEnemy: EventAction {
     // TODO: Switch between the appropriate enemies.
     if let gameScene = self.caller {
       
-      // TODO: Implement support for all positioning methods: random, clustered, line, formation.
+      // TODO: Implement support for all positioning methods: clustered, line, formation.
       
-      for _ in 1...numEnemiesToSpawn {
-        // Create the enemy and spawn it using the GameScene.
+      let paths = RandomEnemyPath.getMultiplePaths(inScene: gameScene, forNumEnemies: self.numEnemiesToSpawn)
+      for enemyPath in paths {
         let enemy = Enemy(position: SpawnEnemy.defaultSpawnLocation)
         gameScene.addGameObject(enemy, withPhysicsScaling: true)
-        // Make a path for the enemy.
-        let enemyPath = BasicEnemyPath(inScene: gameScene)
         enemyPath.run(on: enemy)
-      
-        // Inform the GameState of the change.
         GameScene.gameState.inform(.spawnEnemy, value: enemy)
       }
     }

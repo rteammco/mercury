@@ -29,7 +29,7 @@
 		796FA7B41E96C3D7006255BF /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796FA7B31E96C3D7006255BF /* Util.swift */; };
 		797EDF531EA1329E003CCB81 /* LootOrbExperience.sks in Resources */ = {isa = PBXBuildFile; fileRef = 797EDF521EA1329E003CCB81 /* LootOrbExperience.sks */; };
 		797EDF551EA1393F003CCB81 /* LootPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF541EA1393F003CCB81 /* LootPackage.swift */; };
-		797EDF591EA28E48003CCB81 /* BasicEnemyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF581EA28E48003CCB81 /* BasicEnemyPath.swift */; };
+		797EDF591EA28E48003CCB81 /* RandomEnemyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF581EA28E48003CCB81 /* RandomEnemyPath.swift */; };
 		797EDF5E1EA2A44A003CCB81 /* ExperienceOrb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF5D1EA2A44A003CCB81 /* ExperienceOrb.swift */; };
 		797EDF601EA2A5CA003CCB81 /* HealthOrb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EDF5F1EA2A5CA003CCB81 /* HealthOrb.swift */; };
 		797EDF6B1EA3F579003CCB81 /* FlyingStars.sks in Resources */ = {isa = PBXBuildFile; fileRef = 797EDF6A1EA3F579003CCB81 /* FlyingStars.sks */; };
@@ -107,7 +107,7 @@
 		796FA7B31E96C3D7006255BF /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		797EDF521EA1329E003CCB81 /* LootOrbExperience.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LootOrbExperience.sks; sourceTree = "<group>"; };
 		797EDF541EA1393F003CCB81 /* LootPackage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LootPackage.swift; sourceTree = "<group>"; };
-		797EDF581EA28E48003CCB81 /* BasicEnemyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicEnemyPath.swift; sourceTree = "<group>"; };
+		797EDF581EA28E48003CCB81 /* RandomEnemyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomEnemyPath.swift; sourceTree = "<group>"; };
 		797EDF5D1EA2A44A003CCB81 /* ExperienceOrb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperienceOrb.swift; sourceTree = "<group>"; };
 		797EDF5F1EA2A5CA003CCB81 /* HealthOrb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthOrb.swift; sourceTree = "<group>"; };
 		797EDF6A1EA3F579003CCB81 /* FlyingStars.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FlyingStars.sks; sourceTree = "<group>"; };
@@ -248,7 +248,7 @@
 		797EDF571EA28E2C003CCB81 /* Paths */ = {
 			isa = PBXGroup;
 			children = (
-				797EDF581EA28E48003CCB81 /* BasicEnemyPath.swift */,
+				797EDF581EA28E48003CCB81 /* RandomEnemyPath.swift */,
 			);
 			name = Paths;
 			sourceTree = "<group>";
@@ -605,7 +605,7 @@
 				799424BA1E8194D900C2BD88 /* CollisionBitMasks.swift in Sources */,
 				79154F6A1E41469100D9B71A /* SpawnEnemy.swift in Sources */,
 				79C4ABC01DFDEF1B006DDCAF /* ContactDelegate.swift in Sources */,
-				797EDF591EA28E48003CCB81 /* BasicEnemyPath.swift in Sources */,
+				797EDF591EA28E48003CCB81 /* RandomEnemyPath.swift in Sources */,
 				79DEC4721DD7BBF000A5BF16 /* AppDelegate.swift in Sources */,
 				79B605EA1E7499310090C791 /* ScreenTouchInfo.swift in Sources */,
 				79CCAB1F1E95657D0015E9A1 /* ArmedWithProjectiles.swift in Sources */,
