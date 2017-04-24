@@ -34,7 +34,7 @@ class TestLevel: GameScene {
     // Phase 2: 2 enemies at a time, 20 enemies total. Player gets bonus XP per enemy pair.
     let phase2 = createEventPhase()
     let phase2Rewards = LootPackage()
-    phase2Rewards.setExperieceReward(to: 20)
+    phase2Rewards.setExperieceReward(to: 15)
     phase2.execute(action: DisplayText("Phase 2: 20x2"))
     phase2.execute(action: SpawnEnemy("test2", count: 2))
     phase2.when(EnemyDies(count: 2))
@@ -44,7 +44,7 @@ class TestLevel: GameScene {
     // Phase 3: 3 enemies at a time, 30 enemies total. Player gets bonus XP per enemy set.
     let phase3 = createEventPhase()
     let phase3Rewards = LootPackage()
-    phase3Rewards.setExperieceReward(to: 30)
+    phase3Rewards.setExperieceReward(to: 20)
     phase3.execute(action: DisplayText("Phase 3: 30x3"))
     phase3.execute(action: SpawnEnemy("test3", count: 3))
     phase3.when(EnemyDies(count: 3))
@@ -54,8 +54,8 @@ class TestLevel: GameScene {
     // Phase 4: 5 enemies at a time, 100 enemies total. Player gets bonus XP and health per enemy set.
     let phase4 = createEventPhase()
     let phase4Rewards = LootPackage()
-    phase4Rewards.setExperieceReward(to: 50)
-    phase4Rewards.setHealthReward(between: 100, and: 300)
+    phase4Rewards.setExperieceReward(to: 30)
+    phase4Rewards.setHealthReward(between: 50, and: 100)
     phase4.execute(action: DisplayText("Phase 4: 100x5"))
     phase4.execute(action: SpawnEnemy("test4", count: 5))
     phase4.when(EnemyDies(count: 5))

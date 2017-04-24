@@ -31,13 +31,13 @@ class PlayerStatus {
     self.playerLevel = 1
     
     self.basePlayerExperienceRequirement = 100
-    self.playerExperienceRequirementGrowthRate = 1.5
+    self.playerExperienceRequirementGrowthRate = 1.75
     self.currentPlayerExperience = 0
     
     self.basePlayerDamage = 10
-    self.playerDamageScaling = 1.5
+    self.playerDamageScaling = 1.25
     self.basePlayerHealth = 100
-    self.playerHealthScaling = 1.5
+    self.playerHealthScaling = 1.25
   }
   
   init(copyFrom other: PlayerStatus) {
