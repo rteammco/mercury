@@ -11,16 +11,29 @@ import SpriteKit
 
 class EnemyDies: Event {
   
+  let numEnemiesToDie: Int
+  var numEnemiesDied: Int
+  
+  // Triggered when the given number of enemies die.
+  init(count: Int = 1) {
+    self.numEnemiesToDie = count
+    self.numEnemiesDied = 0
+  }
+  
   // Subscribe to the "enemy dies" game state event.
   override func start() {
     super.start()
+    self.numEnemiesDied = 0
     subscribeTo(stateChanges: .enemyDied)
   }
   
   // When the "enemy dies" game state event occurs, trigger this event.
   override func reportStateChange(key: GameStateKey, value: Any) {
     if key == .enemyDied {
-      trigger(withOptionalValue: value)  // value here should be the Enemy object that died.
+      self.numEnemiesDied += 1
+      if self.numEnemiesDied >= self.numEnemiesToDie {
+        trigger(withOptionalValue: value)  // value here should be the Enemy object that died.
+      }
     }
   }
   

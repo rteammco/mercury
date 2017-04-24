@@ -24,9 +24,9 @@ class TestLevel: GameScene {
     when(EnemyDies()).execute(action: CreateLootPackage(lootPackage: lootPackage))
     
     let phase1 = createEventPhase()
-    phase1.execute(action: SpawnEnemy("test"))
     phase1.execute(action: DisplayText("GO"))
-    phase1.when(EnemyDies()).execute(action: SpawnEnemy("test")).until(NumberOfEnemiesSpawned(equals: 25)).then(DisplayText("You Did It!!"))
+    phase1.execute(action: SpawnEnemy("test", count: 3))
+    phase1.when(EnemyDies(count: 3)).execute(action: SpawnEnemy("test", count: 3)).until(NumberOfEnemiesSpawned(equals: 30)).then(DisplayText("You Did It!!"))
     
     let phase2 = createEventPhase()
     phase2.when(TimerFires(afterSeconds: 3)).execute(action: DisplayText("PHASE 2")).then(when: TimerFires(afterSeconds: 3)).execute(action: DisplayText("DONE"))
