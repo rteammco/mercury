@@ -19,17 +19,28 @@ class TestLevel: GameScene {
     
     // TODO: The loot values should be aquired from the GameState or something.
     let lootPackage = LootPackage()
-    lootPackage.setExperieceReward(to: 25)
+    lootPackage.setExperieceReward(to: 5)
     lootPackage.setHealthReward(to: 50, withDropRate: 0.2)
     when(EnemyDies()).execute(action: CreateLootPackage(lootPackage: lootPackage))
     
     let phase1 = createEventPhase()
+    let bonusExperience = LootPackage()
+    bonusExperience.setExperieceReward(to: 25)
+    let totalNumEnemies: Int = 30
+    let numEnemiesAtATime: Int = 3
     phase1.execute(action: DisplayText("GO"))
-    phase1.execute(action: SpawnEnemy("test", count: 3))
-    phase1.when(EnemyDies(count: 3)).execute(action: SpawnEnemy("test", count: 3)).until(NumberOfEnemiesSpawned(equals: 30)).then(DisplayText("You Did It!!"))
+    phase1.execute(action: SpawnEnemy("test", count: numEnemiesAtATime))
+    phase1.when(EnemyDies(count: numEnemiesAtATime))
+      .execute(actions: SpawnEnemy("test", count: numEnemiesAtATime), CreateLootPackage(lootPackage: bonusExperience))
+      .until(NumberOfEnemiesSpawned(equals: totalNumEnemies))
+    phase1.when(EnemyDies(count: totalNumEnemies))
+      .execute(action: DisplayText("You Did It!!"))
     
     let phase2 = createEventPhase()
-    phase2.when(TimerFires(afterSeconds: 3)).execute(action: DisplayText("PHASE 2")).then(when: TimerFires(afterSeconds: 3)).execute(action: DisplayText("DONE"))
+    phase2.when(TimerFires(afterSeconds: 3))
+      .execute(action: DisplayText("PHASE 2"))
+      .then(when: TimerFires(afterSeconds: 3))
+      .execute(action: DisplayText("DONE"))
     
     setPhaseSequence(phase1, phase2)
     start(withCountdown: 3)

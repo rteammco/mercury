@@ -31,7 +31,7 @@ class EnemyDies: Event {
   override func reportStateChange(key: GameStateKey, value: Any) {
     if key == .enemyDied {
       self.numEnemiesDied += 1
-      if self.numEnemiesDied >= self.numEnemiesToDie {
+      if self.numEnemiesDied % self.numEnemiesToDie == 0 {
         trigger(withOptionalValue: value)  // value here should be the Enemy object that died.
       }
     }

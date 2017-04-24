@@ -76,7 +76,7 @@ class Event: EventStopCriteria, GameStateListener {
   // A set of actions to be performed when this event is triggered.
   @discardableResult func execute(actions: EventAction...) -> Event {
     for action in actions {
-      _ = execute(action: action)
+      execute(action: action)
     }
     return self
   }
