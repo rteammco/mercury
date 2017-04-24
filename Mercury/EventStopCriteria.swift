@@ -18,6 +18,9 @@ protocol EventStopCriteria {
   // Returns true if the condition to stop the Event is satisfied.
   func isSatisfied() -> Bool
   
+  // This is called to initialize the stopper criteria. This should be called when an Event is started, to align the stop criteria with the GameState at the Event's starting point.
+  func startTrackingStopCriteria()
+  
 }
 
 
@@ -29,6 +32,9 @@ class EventStopper: EventStopCriteria {
   func setCaller(to caller: GameScene) {
     self.caller = caller
   }
+  
+  // Override as needed.
+  func startTrackingStopCriteria() {}
   
   // Override as needed.
   func isSatisfied() -> Bool {

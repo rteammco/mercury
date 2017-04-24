@@ -43,6 +43,7 @@ class EventPhase: EventAction, EventCaller {
     for event in self.events {
       event.reset()  // Reset, in case this phase is being restarted.
       event.finally(self)
+      event.startTrackingStopCriteria()
       event.start()
     }
     for action in self.actions {
@@ -72,6 +73,7 @@ class EventPhase: EventAction, EventCaller {
       self.gameScene.setNextPhase(to: nextPhase)
       nextPhase.start()
     }
+    stop()
   }
   
   //------------------------------------------------------------------------------

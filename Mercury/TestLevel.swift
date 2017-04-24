@@ -38,7 +38,7 @@ class TestLevel: GameScene {
     phase2.execute(action: DisplayText("Phase 2: 20x2"))
     phase2.execute(action: SpawnEnemy("test2", count: 2))
     phase2.when(EnemyDies(count: 2))
-      .execute(actions: SpawnEnemy("test2"), CreateLootPackage(lootPackage: phase2Rewards))
+      .execute(actions: SpawnEnemy("test2", count: 2), CreateLootPackage(lootPackage: phase2Rewards))
       .until(NumberOfEnemiesSpawned(equals: 20))
     
     // Phase 3: 3 enemies at a time, 30 enemies total. Player gets bonus XP per enemy set.
@@ -56,17 +56,18 @@ class TestLevel: GameScene {
     let phase4Rewards = LootPackage()
     phase4Rewards.setExperieceReward(to: 50)
     phase4Rewards.setHealthReward(between: 100, and: 300)
-    phase3.execute(action: DisplayText("Phase 4: 100x5"))
-    phase3.execute(action: SpawnEnemy("test4", count: 5))
-    phase3.when(EnemyDies(count: 5))
+    phase4.execute(action: DisplayText("Phase 4: 100x5"))
+    phase4.execute(action: SpawnEnemy("test4", count: 5))
+    phase4.when(EnemyDies(count: 5))
       .execute(actions: SpawnEnemy("test4", count: 5), CreateLootPackage(lootPackage: phase4Rewards))
+      .until(NumberOfEnemiesSpawned(equals: 100))
     phase4.when(EnemyDies(count: 100))
       .execute(action: DisplayText("You Did It!!"))
     
     // Phase 5 is just text displays.
     let phase5 = createEventPhase()
     phase5.when(TimerFires(afterSeconds: 3))
-      .execute(action: DisplayText("PHASE 2"))
+      .execute(action: DisplayText("Last Phase...?"))
       .then(when: TimerFires(afterSeconds: 3))
       .execute(action: DisplayText("DONE"))
     

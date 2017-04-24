@@ -64,7 +64,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
     GameScene.gameState.set(.canPauseGame, to: true)
     // TODO: These values should be adjusted from a database or some configuration file.
     let playerStatus = PlayerStatus()
-    playerStatus.addPlayerExperience(15)  // TODO: This is just here for testing.
+    playerStatus.addPlayerExperience(15000)  // TODO: This is just here for testing.
     GameScene.gameState.set(.playerStatus, to: playerStatus)
     GameScene.gameState.setCGFloat(.playerHealth, to: playerStatus.getMaxPlayerHealth())
     GameScene.gameState.setTimeInterval(.playerBulletFireInterval, to: 0.1)
@@ -425,6 +425,7 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   func when(_ event: Event) -> Event {
     event.setCaller(to: self)
+    event.startTrackingStopCriteria()
     event.start()
     return event
   }

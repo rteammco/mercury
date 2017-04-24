@@ -175,6 +175,14 @@ class Event: EventStopCriteria, GameStateListener {
     return self.wasTriggered
   }
   
+  // Starts tracking the stop criteria. If this Event is attached directly to a GameScene, call this immediately to start tracking. If this Event is attached to an EventPhase, start tracking when the phase begins.
+  // Also required for EventStopCriteria protocol.
+  func startTrackingStopCriteria() {
+    if let stopCriteria = self.stopCriteria {
+      stopCriteria.startTrackingStopCriteria()
+    }
+  }
+  
   // Subscribes this event to the given set of keys. This will only work the first time it is called. Use this method in the start() method instead of directly subscribing to GameState changes for optimal results.
   func subscribeTo(stateChanges keys: GameStateKey...) {
     // NOTE: We block the subscribe changes because start() typically runs the subscriptions, and start() is called in event loops.

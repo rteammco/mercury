@@ -15,9 +15,8 @@ class NumberOfEnemiesSpawned: EventStopper {
     self.numEnemiesToSpawn = count
   }
   
-  // Override so when the caller GameScene is set, the initial number of enemies that was spawned is known.
-  override func setCaller(to caller: GameScene) {
-    super.setCaller(to: caller)
+  // When the parent Event starts, the initial number of enemies that was spawned is known.
+  override func startTrackingStopCriteria() {
     self.numEnemiesAtStart = GameScene.gameState.getInt(forKey: .numSpawnedEnemies, defaultValue: 0)
   }
   
