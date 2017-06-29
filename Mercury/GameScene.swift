@@ -19,7 +19,13 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   static let zPositionForGUI: CGFloat = 2
   static let zPositionForOverlayMenu: CGFloat = 3
   
-  // The contact delegate needs to be a local variable or else it disappears.
+  // GameState that keeps track of all of the game's state variables. If Phases are running, this will keep track of the GameState as it was *before* the phase began and it is updated whenever a phase finishes. Hence, this variable might be out-of-date for any given phase.
+  static var gameState = GameState()
+  
+  // The scene tracks the most recent touch position.
+  private var lastTouchPosition: CGPoint?
+  
+  // The physics system contact delegate needs to be a local variable or else it disappears.
   private var contactDelegate: ContactDelegate?
   
   // The phase sequence that will be executed when this GameScene is started.
@@ -30,9 +36,6 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Animation variables.
   private var lastFrameTime: TimeInterval?
-  
-  // GameState that keeps track of all of the game's state variables. If Phases are running, this will keep track of the GameState as it was *before* the phase began and it is updated whenever a phase finishes. Hence, this variable might be out-of-date for any given phase.
-  static var gameState = GameState()
   
   // This is a GameState copied before the current phase began. In the event of a phase reset, this copy will be used to reset the current GameState.
   private var previousGameState: GameState?
@@ -349,16 +352,32 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   private func touchDown(atPoint pos: CGPoint) {
     let touchedNodes: [SKNode] = nodes(at: pos)
     GameScene.gameState.inform(.screenTouchDown, value: ScreenTouchInfo(pos, touchedNodes))
+    self.lastTouchPosition = pos
   }
   
   private func touchMoved(toPoint pos: CGPoint) {
     let touchedNodes: [SKNode] = nodes(at: pos)
     GameScene.gameState.inform(.screenTouchMoved, value: ScreenTouchInfo(pos, touchedNodes))
+    self.lastTouchPosition = pos
   }
   
   private func touchUp(atPoint pos: CGPoint) {
     let touchedNodes: [SKNode] = nodes(at: pos)
     GameScene.gameState.inform(.screenTouchUp, value: ScreenTouchInfo(pos, touchedNodes))
+    self.lastTouchPosition = pos
+  }
+  
+  // Returns the absolute screen pixel position of the most recent touch event (touch down/moved/up). If no touch events occured, returns a default location point of (0, 0).
+  func getLastTouchPosition() -> CGPoint {
+    if let lastTouchPosition = self.lastTouchPosition {
+      return lastTouchPosition
+    }
+    return CGPoint(x: 0.0, y: 0.0)
+  }
+  
+  // Stops any ongoing touch actions acting on the scene.
+  func releaseAllTouches() {
+    touchUp(atPoint: getLastTouchPosition())
   }
   
   //------------------------------------------------------------------------------
@@ -401,22 +420,30 @@ class GameScene: SKScene, EventCaller, GameStateListener {
   
   // Called when user starts a touch action.
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+    for t in touches {
+      touchDown(atPoint: t.location(in: self))
+    }
   }
   
   // Called when user moves (drags) during a touch action.
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-    for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+    for t in touches {
+      touchMoved(toPoint: t.location(in: self))
+    }
   }
   
   // Called when user finishes a touch action.
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+    for t in touches {
+      touchUp(atPoint: t.location(in: self))
+    }
   }
   
   // Called when a touch action is interrupted or otherwise cancelled.
   override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-    for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+    for t in touches {
+      touchUp(atPoint: t.location(in: self))
+    }
   }
   
   //------------------------------------------------------------------------------

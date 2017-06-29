@@ -13,9 +13,13 @@ class HandlePlayerDeath: EventAction {
   
   override func execute(withOptionalValue optionalValue: Any? = nil) {
     if let gameScene = self.caller {
+      // Add an explosion at the player's location, slow down the game's speed, and stop the execution of the current active level phase.
       ParticleSystems.runExplosionEffect(atPosition: Util.getPlayerWorldPosition())
       gameScene.setGameSpeed(to: 0.1)
+      gameScene.getCurrentPhase()?.stop()
+      gameScene.releaseAllTouches()
       
+      // Create a "Player Died" menu, with options to restart the last level phase or to return to the main menu.
       let playerDiedMenu = MenuNode(inFrame: gameScene.frame, withBackgroundAlpha: 0.5)
       playerDiedMenu.add(label: SKLabelNode(text: "Player Died"))
       
@@ -34,7 +38,6 @@ class HandlePlayerDeath: EventAction {
       }
       playerDiedMenu.add(button: mainMenuButton)
       
-      gameScene.getCurrentPhase()?.stop()
       GameScene.gameState.set(.canPauseGame, to: false)
       gameScene.addChild(playerDiedMenu)
     }
